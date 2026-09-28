@@ -1,0 +1,891 @@
+{
+  "tracks": [
+    {
+      "id": "ai-assistants",
+      "label": "AI assistants",
+      "description": "Chat assistants and generative-AI product terms: what they do with your prompts, and how that feeds AI training."
+    },
+    {
+      "id": "dating",
+      "label": "Dating apps",
+      "description": "Some of the most sensitive personal data people hand over voluntarily: photos, location, sexuality, health."
+    },
+    {
+      "id": "typing",
+      "label": "Things you type into",
+      "description": "Writing assistants, keyboards, notes, translation, transcription, and email -- everywhere AI now reads what you type."
+    },
+    {
+      "id": "dev-tools",
+      "label": "Developer tools",
+      "description": "Telemetry, AI training on your code, and credit- or usage-based pricing terms at the platforms developers build on."
+    },
+    {
+      "id": "consumer",
+      "label": "Consumer apps",
+      "description": "The broad social, video, and marketplace apps most people use every day."
+    }
+  ],
+  "ota_repos": {
+    "pga-versions": {
+      "clone_url": "https://github.com/OpenTermsArchive/pga-versions.git",
+      "slug": "OpenTermsArchive/pga-versions",
+      "collection": "Platform Governance Archive (PGA), ZeMKI, University of Bremen",
+      "collection_url": "https://www.platformgovernancearchive.org/"
+    },
+    "genai-eu-versions": {
+      "clone_url": "https://github.com/OpenTermsArchive/genai-eu-versions.git",
+      "slug": "OpenTermsArchive/genai-eu-versions",
+      "collection": "GenAI Governance Archive, ZeMKI, University of Bremen",
+      "collection_url": "https://opentermsarchive.org/en/"
+    },
+    "genai-contrib-versions": {
+      "clone_url": "https://github.com/OpenTermsArchive/genai-contrib-versions.git",
+      "slug": "OpenTermsArchive/genai-contrib-versions",
+      "collection": "GenAI Governance Archive (contrib)",
+      "collection_url": "https://opentermsarchive.org/en/"
+    },
+    "dating-versions": {
+      "clone_url": "https://github.com/OpenTermsArchive/dating-versions.git",
+      "slug": "OpenTermsArchive/dating-versions",
+      "collection": "Dating apps collection",
+      "collection_url": "https://opentermsarchive.org/en/"
+    },
+    "contrib-versions": {
+      "clone_url": "https://github.com/OpenTermsArchive/contrib-versions.git",
+      "slug": "OpenTermsArchive/contrib-versions",
+      "collection": "Open Terms Archive contrib collection (catch-all; used only where no topical collection has a declaration)",
+      "collection_url": "https://opentermsarchive.org/en/"
+    },
+    "vlopses-us-versions": {
+      "clone_url": "https://github.com/OpenTermsArchive/vlopses-us-versions.git",
+      "slug": "OpenTermsArchive/vlopses-us-versions",
+      "collection": "Very Large Online Platforms & Search Engines (EU DSA), US mirror",
+      "collection_url": "https://opentermsarchive.org/en/"
+    }
+  },
+  "documents": [
+    {
+      "vendor": "Facebook",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "Facebook/Privacy Policy.md",
+      "source_url": "https://mbasic.facebook.com/privacy/policy/printable/",
+      "track": "consumer",
+      "parent_company": "Meta",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Facebook",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "Facebook/Terms of Service.md",
+      "source_url": "https://www.facebook.com/legal/terms/plain_text_terms",
+      "track": "consumer",
+      "parent_company": "Meta",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Instagram",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "Instagram/Privacy Policy.md",
+      "source_url": "https://privacycenter.instagram.com/policy",
+      "track": "consumer",
+      "parent_company": "Meta",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Instagram",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "Instagram/Terms of Service.md",
+      "source_url": "https://help.instagram.com/581066165581870",
+      "track": "consumer",
+      "parent_company": "Meta",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "WhatsApp",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "WhatsApp/Privacy Policy.md",
+      "source_url": "https://www.whatsapp.com/legal/privacy-policy-eea?lang=en",
+      "track": "consumer",
+      "parent_company": "Meta",
+      "headline": false,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "WhatsApp",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "WhatsApp/Terms of Service.md",
+      "source_url": "https://www.whatsapp.com/legal/terms-of-service-eea?lang=en",
+      "track": "consumer",
+      "parent_company": "Meta",
+      "headline": false,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Threads",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "Threads/Privacy Policy.md",
+      "source_url": "https://help.instagram.com/515230437301944",
+      "track": "consumer",
+      "parent_company": "Meta",
+      "headline": false,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Threads",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "Threads/Terms of Service.md",
+      "source_url": "https://help.instagram.com/769983657850450",
+      "track": "consumer",
+      "parent_company": "Meta",
+      "headline": false,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Meta AI",
+      "doc": "Terms of Service",
+      "repo": "genai-eu-versions",
+      "path": "Meta AI/Terms of Service.md",
+      "source_url": "https://www.facebook.com/legal/eu-ai-terms",
+      "track": "ai-assistants",
+      "parent_company": "Meta",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "ChatGPT",
+      "doc": "Privacy Policy",
+      "repo": "genai-eu-versions",
+      "path": "ChatGPT/Privacy Policy.md",
+      "source_url": "https://openai.com/policies/eu-privacy-policy/",
+      "track": "ai-assistants",
+      "parent_company": "OpenAI",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "ChatGPT",
+      "doc": "Terms of Service",
+      "repo": "genai-eu-versions",
+      "path": "ChatGPT/Terms of Service.md",
+      "source_url": "https://openai.com/policies/eu-terms-of-use/",
+      "track": "ai-assistants",
+      "parent_company": "OpenAI",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Google Generative AI Services",
+      "doc": "Privacy Policy",
+      "repo": "genai-eu-versions",
+      "path": "Google Generative AI Services/Privacy Policy.md",
+      "source_url": "https://policies.google.com/privacy?hl=en-GB&gl=IE",
+      "track": "ai-assistants",
+      "parent_company": "Alphabet",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Google Generative AI Services",
+      "doc": "Terms of Service",
+      "repo": "genai-eu-versions",
+      "path": "Google Generative AI Services/Terms of Service.md",
+      "source_url": "https://policies.google.com/terms?hl=en-GB&gl=IE",
+      "track": "ai-assistants",
+      "parent_company": "Alphabet",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Microsoft Copilot",
+      "doc": "Privacy Policy",
+      "repo": "genai-eu-versions",
+      "path": "Microsoft Copilot/Privacy Policy.md",
+      "source_url": "https://privacy.microsoft.com/en-ie/privacystatement",
+      "track": "ai-assistants",
+      "parent_company": "Microsoft",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Microsoft Copilot",
+      "doc": "Terms of Service",
+      "repo": "genai-eu-versions",
+      "path": "Microsoft Copilot/Terms of Service.md",
+      "source_url": "https://www.microsoft.com/en-us/microsoft-copilot/for-individuals/termsofuse",
+      "track": "ai-assistants",
+      "parent_company": "Microsoft",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Claude.ai",
+      "doc": "Privacy Policy",
+      "repo": "genai-eu-versions",
+      "path": "Claude.ai/Privacy Policy.md",
+      "source_url": "https://www.anthropic.com/legal/privacy",
+      "track": "ai-assistants",
+      "parent_company": "Anthropic",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Claude.ai",
+      "doc": "Terms of Service",
+      "repo": "genai-eu-versions",
+      "path": "Claude.ai/Terms of Service.md",
+      "source_url": "https://www.anthropic.com/legal/consumer-terms",
+      "track": "ai-assistants",
+      "parent_company": "Anthropic",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Grok",
+      "doc": "Privacy Policy",
+      "repo": "genai-eu-versions",
+      "path": "Grok/Privacy Policy.md",
+      "source_url": "https://x.ai/legal/privacy-policy/",
+      "track": "ai-assistants",
+      "parent_company": "X/xAI",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Grok",
+      "doc": "Terms of Service",
+      "repo": "genai-eu-versions",
+      "path": "Grok/Terms of Service.md",
+      "source_url": "https://x.ai/legal/terms-of-service",
+      "track": "ai-assistants",
+      "parent_company": "X/xAI",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Perplexity",
+      "doc": "Privacy Policy",
+      "repo": "genai-eu-versions",
+      "path": "Perplexity/Privacy Policy.md",
+      "source_url": "https://www.perplexity.ai/hub/legal/privacy-policy",
+      "track": "ai-assistants",
+      "parent_company": "Perplexity",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Perplexity",
+      "doc": "Terms of Service",
+      "repo": "genai-eu-versions",
+      "path": "Perplexity/Terms of Service.md",
+      "source_url": "https://www.perplexity.ai/hub/legal/terms-of-service",
+      "track": "ai-assistants",
+      "parent_company": "Perplexity",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "DeepSeek",
+      "doc": "Privacy Policy",
+      "repo": "genai-eu-versions",
+      "path": "DeepSeek/Privacy Policy.md",
+      "source_url": "https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html",
+      "track": "ai-assistants",
+      "parent_company": "DeepSeek",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "DeepSeek",
+      "doc": "Terms of Service",
+      "repo": "genai-eu-versions",
+      "path": "DeepSeek/Terms of Service.md",
+      "source_url": "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html",
+      "track": "ai-assistants",
+      "parent_company": "DeepSeek",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Tinder",
+      "doc": "Privacy Policy",
+      "repo": "dating-versions",
+      "path": "Tinder/Privacy Policy.md",
+      "source_url": "https://policies.tinder.com/privacy/intl/en",
+      "track": "dating",
+      "parent_company": "Match Group",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "Tinder",
+      "doc": "Terms of Service",
+      "repo": "dating-versions",
+      "path": "Tinder/Terms of Service.md",
+      "source_url": "https://policies.tinder.com/terms/intl/en",
+      "track": "dating",
+      "parent_company": "Match Group",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "Match",
+      "doc": "Privacy Policy",
+      "repo": "dating-versions",
+      "path": "Match/Privacy Policy.md",
+      "source_url": "https://uk.match.com/pages/misc/privacy",
+      "track": "dating",
+      "parent_company": "Match Group",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "Match",
+      "doc": "Terms of Service",
+      "repo": "dating-versions",
+      "path": "Match/Terms of Service.md",
+      "source_url": "https://uk.match.com/pages/misc/terms",
+      "track": "dating",
+      "parent_company": "Match Group",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "Bumble",
+      "doc": "Privacy Policy",
+      "repo": "dating-versions",
+      "path": "Bumble/Privacy Policy.md",
+      "source_url": "https://bumble.com/en/privacy",
+      "track": "dating",
+      "parent_company": "Bumble Inc.",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "Bumble",
+      "doc": "Terms of Service",
+      "repo": "dating-versions",
+      "path": "Bumble/Terms of Service.md",
+      "source_url": "https://bumble.com/en/terms",
+      "track": "dating",
+      "parent_company": "Bumble Inc.",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "Grindr",
+      "doc": "Privacy Policy",
+      "repo": "dating-versions",
+      "path": "Grindr/Privacy Policy.md",
+      "source_url": "https://www.grindr.com/privacy-policy/",
+      "track": "dating",
+      "parent_company": "Grindr Inc.",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "Grindr",
+      "doc": "Terms of Service",
+      "repo": "dating-versions",
+      "path": "Grindr/Terms of Service.md",
+      "source_url": "https://www.grindr.com/terms-of-service",
+      "track": "dating",
+      "parent_company": "Grindr Inc.",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "happn",
+      "doc": "Privacy Policy",
+      "repo": "dating-versions",
+      "path": "happn/Privacy Policy.md",
+      "source_url": "https://support.happn.fr/hc/en-us/p/privacy/",
+      "track": "dating",
+      "parent_company": "happn",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "eharmony",
+      "doc": "Privacy Policy",
+      "repo": "dating-versions",
+      "path": "eharmony/Privacy Policy.md",
+      "source_url": "https://www.eharmony.co.uk/privacypolicy/",
+      "track": "dating",
+      "parent_company": "eharmony",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "eharmony",
+      "doc": "Terms of Service",
+      "repo": "dating-versions",
+      "path": "eharmony/Terms of Service.md",
+      "source_url": "https://www.eharmony.co.uk/termsandconditions/",
+      "track": "dating",
+      "parent_company": "eharmony",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "happn",
+      "doc": "Terms of Service",
+      "repo": "dating-versions",
+      "path": "happn/Terms of Service.md",
+      "source_url": "https://support.happn.fr/hc/en-us/p/terms",
+      "track": "dating",
+      "parent_company": "happn",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/dating-versions"
+    },
+    {
+      "vendor": "Grammarly",
+      "doc": "Privacy Policy",
+      "repo": "contrib-versions",
+      "path": "Grammarly/Privacy Policy.md",
+      "source_url": "https://www.grammarly.com/privacy-policy",
+      "track": "typing",
+      "parent_company": "Grammarly",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Grammarly",
+      "doc": "Terms of Service",
+      "repo": "contrib-versions",
+      "path": "Grammarly/Terms of Service.md",
+      "source_url": "https://www.grammarly.com/terms",
+      "track": "typing",
+      "parent_company": "Grammarly",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Zoom",
+      "doc": "Privacy Policy",
+      "repo": "contrib-versions",
+      "path": "Zoom/Privacy Policy.md",
+      "source_url": "https://zoom.us/privacy",
+      "track": "typing",
+      "parent_company": "Zoom",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Zoom",
+      "doc": "Terms of Service",
+      "repo": "contrib-versions",
+      "path": "Zoom/Terms of Service.md",
+      "source_url": "https://zoom.us/terms",
+      "track": "typing",
+      "parent_company": "Zoom",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Gmail",
+      "doc": "Privacy Policy",
+      "repo": "contrib-versions",
+      "path": "Gmail/Privacy Policy.md",
+      "source_url": "https://policies.google.com/privacy?hl=en-GB",
+      "track": "typing",
+      "parent_company": "Alphabet",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Gmail",
+      "doc": "Terms of Service",
+      "repo": "contrib-versions",
+      "path": "Gmail/Terms of Service.md",
+      "source_url": "https://policies.google.com/terms?hl=en-GB",
+      "track": "typing",
+      "parent_company": "Alphabet",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "GitHub Copilot",
+      "doc": "Privacy Policy",
+      "repo": "genai-contrib-versions",
+      "path": "GitHub Copilot/Privacy Policy.md",
+      "source_url": "https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement",
+      "track": "dev-tools",
+      "parent_company": "Microsoft",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-contrib-versions"
+    },
+    {
+      "vendor": "GitHub Copilot",
+      "doc": "Terms of Service",
+      "repo": "genai-contrib-versions",
+      "path": "GitHub Copilot/Terms of Service.md",
+      "source_url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+      "track": "dev-tools",
+      "parent_company": "Microsoft",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-contrib-versions"
+    },
+    {
+      "vendor": "Cursor",
+      "doc": "Privacy Policy",
+      "repo": "genai-contrib-versions",
+      "path": "Cursor/Privacy Policy.md",
+      "source_url": "https://www.cursor.com/privacy",
+      "track": "dev-tools",
+      "parent_company": "Anysphere",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-contrib-versions"
+    },
+    {
+      "vendor": "Cursor",
+      "doc": "Terms of Service",
+      "repo": "genai-contrib-versions",
+      "path": "Cursor/Terms of Service.md",
+      "source_url": "https://www.cursor.com/terms-of-service",
+      "track": "dev-tools",
+      "parent_company": "Anysphere",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-contrib-versions"
+    },
+    {
+      "vendor": "ChatGPT",
+      "doc": "Developer Terms",
+      "repo": "genai-eu-versions",
+      "path": "ChatGPT/Developer Terms.md",
+      "source_url": "https://openai.com/policies/connectors-actions-terms/",
+      "track": "dev-tools",
+      "parent_company": "OpenAI",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Claude.ai",
+      "doc": "Developer Terms",
+      "repo": "genai-eu-versions",
+      "path": "Claude.ai/Developer Terms.md",
+      "source_url": "https://support.claude.com/en/articles/13145338-anthropic-software-directory-terms",
+      "track": "dev-tools",
+      "parent_company": "Anthropic",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-eu-versions"
+    },
+    {
+      "vendor": "Cloudflare",
+      "doc": "Privacy Policy",
+      "repo": "contrib-versions",
+      "path": "Cloudflare/Privacy Policy.md",
+      "source_url": "https://www.cloudflare.com/privacypolicy/",
+      "track": "dev-tools",
+      "parent_company": "Cloudflare",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Cloudflare",
+      "doc": "Terms of Service",
+      "repo": "contrib-versions",
+      "path": "Cloudflare/Terms of Service.md",
+      "source_url": "https://www.cloudflare.com/terms/",
+      "track": "dev-tools",
+      "parent_company": "Cloudflare",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Google Maps",
+      "doc": "Privacy Policy",
+      "repo": "vlopses-us-versions",
+      "path": "Google Maps/Privacy Policy.md",
+      "source_url": "https://policies.google.com/privacy",
+      "track": "consumer",
+      "parent_company": "Alphabet",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/vlopses-us-versions"
+    },
+    {
+      "vendor": "Google Maps",
+      "doc": "Terms of Service",
+      "repo": "vlopses-us-versions",
+      "path": "Google Maps/Terms of Service.md",
+      "source_url": "https://policies.google.com/terms",
+      "track": "consumer",
+      "parent_company": "Alphabet",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/vlopses-us-versions"
+    },
+    {
+      "vendor": "TikTok",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "TikTok/Privacy Policy.md",
+      "source_url": "https://www.tiktok.com/legal/privacy-policy-eea?lang=en",
+      "track": "consumer",
+      "parent_company": "ByteDance",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "TikTok",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "TikTok/Terms of Service.md",
+      "source_url": "https://www.tiktok.com/legal/terms-of-use?lang=en",
+      "track": "consumer",
+      "parent_company": "ByteDance",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Snapchat",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "Snapchat/Privacy Policy.md",
+      "source_url": "https://www.snap.com/en-GB/privacy/privacy-policy",
+      "track": "consumer",
+      "parent_company": "Snap Inc.",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Snapchat",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "Snapchat/Terms of Service.md",
+      "source_url": "https://www.snap.com/en-GB/terms",
+      "track": "consumer",
+      "parent_company": "Snap Inc.",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Reddit",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "Reddit/Privacy Policy.md",
+      "source_url": "https://www.redditinc.com/policies/privacy-policy",
+      "track": "consumer",
+      "parent_company": "Reddit",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Reddit",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "Reddit/Terms of Service.md",
+      "source_url": "https://www.redditinc.com/policies/user-agreement",
+      "track": "consumer",
+      "parent_company": "Reddit",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "YouTube",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "YouTube/Privacy Policy.md",
+      "source_url": "https://policies.google.com/privacy",
+      "track": "consumer",
+      "parent_company": "Alphabet",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "YouTube",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "YouTube/Terms of Service.md",
+      "source_url": "https://www.youtube.com/t/terms",
+      "track": "consumer",
+      "parent_company": "Alphabet",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Spotify",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "Spotify/Privacy Policy.md",
+      "source_url": "https://www.spotify.com/us/legal/privacy-policy/",
+      "track": "consumer",
+      "parent_company": "Spotify",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Spotify",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "Spotify/Terms of Service.md",
+      "source_url": "https://www.spotify.com/us/legal/end-user-agreement/",
+      "track": "consumer",
+      "parent_company": "Spotify",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Telegram",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "Telegram/Privacy Policy.md",
+      "source_url": "https://telegram.org/privacy",
+      "track": "consumer",
+      "parent_company": "Telegram",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Telegram",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "Telegram/Terms of Service.md",
+      "source_url": "https://telegram.org/tos",
+      "track": "consumer",
+      "parent_company": "Telegram",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Twitch",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "Twitch/Privacy Policy.md",
+      "source_url": "https://www.twitch.tv/p/en/legal/privacy-notice/",
+      "track": "consumer",
+      "parent_company": "Amazon",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "Twitch",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "Twitch/Terms of Service.md",
+      "source_url": "https://www.twitch.tv/p/en/legal/terms-of-service/",
+      "track": "consumer",
+      "parent_company": "Amazon",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "LinkedIn",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "LinkedIn/Privacy Policy.md",
+      "source_url": "https://www.linkedin.com/legal/privacy/eu",
+      "track": "consumer",
+      "parent_company": "Microsoft",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "LinkedIn",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "LinkedIn/Terms of Service.md",
+      "source_url": "https://www.linkedin.com/legal/user-agreement",
+      "track": "consumer",
+      "parent_company": "Microsoft",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "X",
+      "doc": "Privacy Policy",
+      "repo": "pga-versions",
+      "path": "X/Privacy Policy.md",
+      "source_url": "https://x.com/en/privacy",
+      "track": "consumer",
+      "parent_company": "X/xAI",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "X",
+      "doc": "Terms of Service",
+      "repo": "pga-versions",
+      "path": "X/Terms of Service.md",
+      "source_url": "https://x.com/tos",
+      "track": "consumer",
+      "parent_company": "X/xAI",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/pga-versions"
+    }
+  ],
+  "web_pages": [
+    {
+      "vendor": "Muse",
+      "doc": "How Muse handles your privacy, safety and security",
+      "url": "https://www.meta.com/help/artificial-intelligence/1047255454427887/",
+      "track": "ai-assistants",
+      "parent_company": "Meta",
+      "headline": false,
+      "source": "direct"
+    }
+  ],
+  "direct_pages": [
+    {
+      "vendor": "Vercel",
+      "doc": "Privacy Policy",
+      "url": "https://vercel.com/legal/privacy-policy",
+      "slug": "vercel",
+      "track": "dev-tools",
+      "parent_company": "Vercel",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Netlify",
+      "doc": "Privacy Policy",
+      "url": "https://www.netlify.com/privacy/",
+      "slug": "netlify",
+      "track": "dev-tools",
+      "parent_company": "Netlify",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Supabase",
+      "doc": "Privacy Policy",
+      "url": "https://supabase.com/privacy",
+      "slug": "supabase",
+      "track": "dev-tools",
+      "parent_company": "Supabase",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "DeepL",
+      "doc": "Privacy Policy",
+      "url": "https://www.deepl.com/en/privacy",
+      "slug": "deepl",
+      "track": "typing",
+      "parent_company": "DeepL",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Otter",
+      "doc": "Privacy Policy",
+      "url": "https://otter.ai/privacy-policy",
+      "slug": "otter",
+      "track": "typing",
+      "parent_company": "Otter.ai",
+      "headline": true,
+      "source": "direct"
+    }
+  ]
+}

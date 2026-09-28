@@ -1,0 +1,3352 @@
+{
+ "generated": "2026-09-26",
+ "note": "tracked: alerted on tos.watch. archived: has Open Terms Archive history but is not on tos.watch yet -- request it. Anything else is unknown to both.",
+ "services": [
+  {
+   "name": "Bumble",
+   "slug": "bumble",
+   "status": "tracked",
+   "tracks": [
+    "dating"
+   ]
+  },
+  {
+   "name": "ChatGPT",
+   "slug": "chatgpt",
+   "status": "tracked",
+   "tracks": [
+    "ai-assistants",
+    "dev-tools"
+   ]
+  },
+  {
+   "name": "Claude.ai",
+   "slug": "claude-ai",
+   "status": "tracked",
+   "tracks": [
+    "ai-assistants",
+    "dev-tools"
+   ]
+  },
+  {
+   "name": "Cloudflare",
+   "slug": "cloudflare",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
+   "name": "Cursor",
+   "slug": "cursor",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
+   "name": "DeepL",
+   "slug": "deepl",
+   "status": "tracked",
+   "tracks": [
+    "typing"
+   ]
+  },
+  {
+   "name": "DeepSeek",
+   "slug": "deepseek",
+   "status": "tracked",
+   "tracks": [
+    "ai-assistants"
+   ]
+  },
+  {
+   "name": "Facebook",
+   "slug": "facebook",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "GitHub Copilot",
+   "slug": "github-copilot",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
+   "name": "Gmail",
+   "slug": "gmail",
+   "status": "tracked",
+   "tracks": [
+    "typing"
+   ]
+  },
+  {
+   "name": "Google Generative AI Services",
+   "slug": "google-generative-ai-services",
+   "status": "tracked",
+   "tracks": [
+    "ai-assistants"
+   ]
+  },
+  {
+   "name": "Google Maps",
+   "slug": "google-maps",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "Grammarly",
+   "slug": "grammarly",
+   "status": "tracked",
+   "tracks": [
+    "typing"
+   ]
+  },
+  {
+   "name": "Grindr",
+   "slug": "grindr",
+   "status": "tracked",
+   "tracks": [
+    "dating"
+   ]
+  },
+  {
+   "name": "Grok",
+   "slug": "grok",
+   "status": "tracked",
+   "tracks": [
+    "ai-assistants"
+   ]
+  },
+  {
+   "name": "Instagram",
+   "slug": "instagram",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "LinkedIn",
+   "slug": "linkedin",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "Match",
+   "slug": "match",
+   "status": "tracked",
+   "tracks": [
+    "dating"
+   ]
+  },
+  {
+   "name": "Meta AI",
+   "slug": "meta-ai",
+   "status": "tracked",
+   "tracks": [
+    "ai-assistants"
+   ]
+  },
+  {
+   "name": "Microsoft Copilot",
+   "slug": "microsoft-copilot",
+   "status": "tracked",
+   "tracks": [
+    "ai-assistants"
+   ]
+  },
+  {
+   "name": "Muse",
+   "slug": "muse",
+   "status": "tracked",
+   "tracks": [
+    "ai-assistants"
+   ]
+  },
+  {
+   "name": "Netlify",
+   "slug": "netlify",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
+   "name": "Otter",
+   "slug": "otter",
+   "status": "tracked",
+   "tracks": [
+    "typing"
+   ]
+  },
+  {
+   "name": "Perplexity",
+   "slug": "perplexity",
+   "status": "tracked",
+   "tracks": [
+    "ai-assistants"
+   ]
+  },
+  {
+   "name": "Reddit",
+   "slug": "reddit",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "Snapchat",
+   "slug": "snapchat",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "Spotify",
+   "slug": "spotify",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "Supabase",
+   "slug": "supabase",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
+   "name": "Telegram",
+   "slug": "telegram",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "Threads",
+   "slug": "threads",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "TikTok",
+   "slug": "tiktok",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "Tinder",
+   "slug": "tinder",
+   "status": "tracked",
+   "tracks": [
+    "dating"
+   ]
+  },
+  {
+   "name": "Twitch",
+   "slug": "twitch",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "Vercel",
+   "slug": "vercel",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
+   "name": "WhatsApp",
+   "slug": "whatsapp",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "X",
+   "slug": "x",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "YouTube",
+   "slug": "youtube",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
+   "name": "Zoom",
+   "slug": "zoom",
+   "status": "tracked",
+   "tracks": [
+    "typing"
+   ]
+  },
+  {
+   "name": "eharmony",
+   "slug": "eharmony",
+   "status": "tracked",
+   "tracks": [
+    "dating"
+   ]
+  },
+  {
+   "name": "happn",
+   "slug": "happn",
+   "status": "tracked",
+   "tracks": [
+    "dating"
+   ]
+  },
+  {
+   "name": "123Greetings",
+   "slug": "123greetings",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/123Greetings"
+  },
+  {
+   "name": "ACDelco",
+   "slug": "acdelco",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/ACDelco"
+  },
+  {
+   "name": "ASKfm",
+   "slug": "askfm",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/ASKfm"
+  },
+  {
+   "name": "ASUS",
+   "slug": "asus",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/ASUS"
+  },
+  {
+   "name": "Academia.edu",
+   "slug": "academia-edu",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Academia.edu"
+  },
+  {
+   "name": "AcuityAds",
+   "slug": "acuityads",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/AcuityAds"
+  },
+  {
+   "name": "AdMob",
+   "slug": "admob",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/AdMob"
+  },
+  {
+   "name": "AdRoll",
+   "slug": "adroll",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/AdRoll"
+  },
+  {
+   "name": "AdSense",
+   "slug": "adsense",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/AdSense"
+  },
+  {
+   "name": "AdSupply",
+   "slug": "adsupply",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/AdSupply"
+  },
+  {
+   "name": "AdopteUnMec",
+   "slug": "adopteunmec",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/AdopteUnMec"
+  },
+  {
+   "name": "Aetna",
+   "slug": "aetna",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Aetna"
+  },
+  {
+   "name": "Airbnb",
+   "slug": "airbnb",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Airbnb"
+  },
+  {
+   "name": "Airon",
+   "slug": "airon",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Airon"
+  },
+  {
+   "name": "Alexa",
+   "slug": "alexa",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Alexa"
+  },
+  {
+   "name": "AliExpress",
+   "slug": "aliexpress",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/vlopses-us-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/vlopses-us-versions/tree/main/AliExpress"
+  },
+  {
+   "name": "Alibaba.com",
+   "slug": "alibaba-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Alibaba.com"
+  },
+  {
+   "name": "Allrecipes",
+   "slug": "allrecipes",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Allrecipes"
+  },
+  {
+   "name": "Allstate",
+   "slug": "allstate",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Allstate"
+  },
+  {
+   "name": "Alpha Vantage",
+   "slug": "alpha-vantage",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Alpha%20Vantage"
+  },
+  {
+   "name": "Amazon Advertising",
+   "slug": "amazon-advertising",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Advertising"
+  },
+  {
+   "name": "Amazon Appstore",
+   "slug": "amazon-appstore",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Appstore"
+  },
+  {
+   "name": "Amazon Coins",
+   "slug": "amazon-coins",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Coins"
+  },
+  {
+   "name": "Amazon Device",
+   "slug": "amazon-device",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Device"
+  },
+  {
+   "name": "Amazon E-Reader and Fire Tablet",
+   "slug": "amazon-e-reader-and-fire-tablet",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20E-Reader%20and%20Fire%20Tablet"
+  },
+  {
+   "name": "Amazon Kindle Store",
+   "slug": "amazon-kindle-store",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Kindle%20Store"
+  },
+  {
+   "name": "Amazon Maps",
+   "slug": "amazon-maps",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Maps"
+  },
+  {
+   "name": "Amazon Monthly Payments",
+   "slug": "amazon-monthly-payments",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Monthly%20Payments"
+  },
+  {
+   "name": "Amazon Music",
+   "slug": "amazon-music",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Music"
+  },
+  {
+   "name": "Amazon Photos",
+   "slug": "amazon-photos",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Photos"
+  },
+  {
+   "name": "Amazon Prime",
+   "slug": "amazon-prime",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Prime"
+  },
+  {
+   "name": "Amazon Publisher",
+   "slug": "amazon-publisher",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Publisher"
+  },
+  {
+   "name": "Amazon Seller Central",
+   "slug": "amazon-seller-central",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Seller%20Central"
+  },
+  {
+   "name": "Amazon Silk",
+   "slug": "amazon-silk",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Silk"
+  },
+  {
+   "name": "Amazon Web Services",
+   "slug": "amazon-web-services",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon%20Web%20Services"
+  },
+  {
+   "name": "Amazon.com",
+   "slug": "amazon-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Amazon.com"
+  },
+  {
+   "name": "App Store",
+   "slug": "app-store",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/App%20Store"
+  },
+  {
+   "name": "Apple",
+   "slug": "apple",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Apple"
+  },
+  {
+   "name": "Apple Business Connect",
+   "slug": "apple-business-connect",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Apple%20Business%20Connect"
+  },
+  {
+   "name": "Apple Game Center",
+   "slug": "apple-game-center",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Apple%20Game%20Center"
+  },
+  {
+   "name": "Arc",
+   "slug": "arc",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Arc"
+  },
+  {
+   "name": "ArtStation",
+   "slug": "artstation",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/ArtStation"
+  },
+  {
+   "name": "Arweave",
+   "slug": "arweave",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Arweave"
+  },
+  {
+   "name": "Atlassian",
+   "slug": "atlassian",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Atlassian"
+  },
+  {
+   "name": "BBC",
+   "slug": "bbc",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/BBC"
+  },
+  {
+   "name": "BRED Access",
+   "slug": "bred-access",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/BRED%20Access"
+  },
+  {
+   "name": "Badoo",
+   "slug": "badoo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Badoo"
+  },
+  {
+   "name": "Bandcamp",
+   "slug": "bandcamp",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Bandcamp"
+  },
+  {
+   "name": "BankID",
+   "slug": "bankid",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/BankID"
+  },
+  {
+   "name": "Bardeen",
+   "slug": "bardeen",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Bardeen"
+  },
+  {
+   "name": "Base",
+   "slug": "base",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Base"
+  },
+  {
+   "name": "BeReal",
+   "slug": "bereal",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/BeReal"
+  },
+  {
+   "name": "Berget AI",
+   "slug": "berget-ai",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Berget%20AI"
+  },
+  {
+   "name": "Better Stack",
+   "slug": "better-stack",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Better%20Stack"
+  },
+  {
+   "name": "Binance",
+   "slug": "binance",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Binance"
+  },
+  {
+   "name": "Bing",
+   "slug": "bing",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Bing"
+  },
+  {
+   "name": "Bitwarden",
+   "slug": "bitwarden",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Bitwarden"
+  },
+  {
+   "name": "Blizzard",
+   "slug": "blizzard",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Blizzard"
+  },
+  {
+   "name": "Blizzard Entertainment",
+   "slug": "blizzard-entertainment",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Blizzard%20Entertainment"
+  },
+  {
+   "name": "Blockworks",
+   "slug": "blockworks",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Blockworks"
+  },
+  {
+   "name": "Blogger",
+   "slug": "blogger",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Blogger"
+  },
+  {
+   "name": "Bluesky",
+   "slug": "bluesky",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/Bluesky"
+  },
+  {
+   "name": "Bolt",
+   "slug": "bolt",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Bolt"
+  },
+  {
+   "name": "Bolt Drivers",
+   "slug": "bolt-drivers",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Bolt%20Drivers"
+  },
+  {
+   "name": "Bolt.new",
+   "slug": "bolt-new",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Bolt.new"
+  },
+  {
+   "name": "Booking.com",
+   "slug": "booking-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Booking.com"
+  },
+  {
+   "name": "Brave",
+   "slug": "brave",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Brave"
+  },
+  {
+   "name": "CNN International",
+   "slug": "cnn-international",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/CNN%20International"
+  },
+  {
+   "name": "CafeMom",
+   "slug": "cafemom",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/CafeMom"
+  },
+  {
+   "name": "Cdiscount",
+   "slug": "cdiscount",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Cdiscount"
+  },
+  {
+   "name": "Chayn",
+   "slug": "chayn",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Chayn"
+  },
+  {
+   "name": "ChristianMingle",
+   "slug": "christianmingle",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/ChristianMingle"
+  },
+  {
+   "name": "Chrome and Chrome OS",
+   "slug": "chrome-and-chrome-os",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Chrome%20and%20Chrome%20OS"
+  },
+  {
+   "name": "Civitai",
+   "slug": "civitai",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Civitai"
+  },
+  {
+   "name": "Cloudant",
+   "slug": "cloudant",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Cloudant"
+  },
+  {
+   "name": "Codeium",
+   "slug": "codeium",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Codeium"
+  },
+  {
+   "name": "Coffee Meets Bagel",
+   "slug": "coffee-meets-bagel",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Coffee%20Meets%20Bagel"
+  },
+  {
+   "name": "Coinbase",
+   "slug": "coinbase",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Coinbase"
+  },
+  {
+   "name": "Coindesk",
+   "slug": "coindesk",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Coindesk"
+  },
+  {
+   "name": "CommentCaMarche",
+   "slug": "commentcamarche",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/CommentCaMarche"
+  },
+  {
+   "name": "Coolmath4Kids",
+   "slug": "coolmath4kids",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Coolmath4Kids"
+  },
+  {
+   "name": "Copy.AI",
+   "slug": "copy-ai",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Copy.AI"
+  },
+  {
+   "name": "Couchsurfing",
+   "slug": "couchsurfing",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Couchsurfing"
+  },
+  {
+   "name": "Coursera",
+   "slug": "coursera",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Coursera"
+  },
+  {
+   "name": "Criteo",
+   "slug": "criteo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Criteo"
+  },
+  {
+   "name": "CrowdTangle",
+   "slug": "crowdtangle",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/CrowdTangle"
+  },
+  {
+   "name": "Crunchyroll",
+   "slug": "crunchyroll",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Crunchyroll"
+  },
+  {
+   "name": "DALL\u00b7E",
+   "slug": "dall-e",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/DALL\u00b7E"
+  },
+  {
+   "name": "Daily Mail",
+   "slug": "daily-mail",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Daily%20Mail"
+  },
+  {
+   "name": "Dailymotion",
+   "slug": "dailymotion",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Dailymotion"
+  },
+  {
+   "name": "Deliveroo",
+   "slug": "deliveroo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Deliveroo"
+  },
+  {
+   "name": "Deutsche Bahn",
+   "slug": "deutsche-bahn",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Deutsche%20Bahn"
+  },
+  {
+   "name": "DeviantArt",
+   "slug": "deviantart",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/DeviantArt"
+  },
+  {
+   "name": "Discord",
+   "slug": "discord",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Discord"
+  },
+  {
+   "name": "DisonsDemain",
+   "slug": "disonsdemain",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/DisonsDemain"
+  },
+  {
+   "name": "Disqus",
+   "slug": "disqus",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Disqus"
+  },
+  {
+   "name": "DistroKid",
+   "slug": "distrokid",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/DistroKid"
+  },
+  {
+   "name": "Donkey Republic",
+   "slug": "donkey-republic",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Donkey%20Republic"
+  },
+  {
+   "name": "Doubao",
+   "slug": "doubao",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Doubao"
+  },
+  {
+   "name": "DuckDuckGo",
+   "slug": "duckduckgo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/DuckDuckGo"
+  },
+  {
+   "name": "Dune",
+   "slug": "dune",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Dune"
+  },
+  {
+   "name": "Energia",
+   "slug": "energia",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Energia"
+  },
+  {
+   "name": "Epassi",
+   "slug": "epassi",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Epassi"
+  },
+  {
+   "name": "Ethereum",
+   "slug": "ethereum",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Ethereum"
+  },
+  {
+   "name": "Evernote",
+   "slug": "evernote",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Evernote"
+  },
+  {
+   "name": "Exponential",
+   "slug": "exponential",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Exponential"
+  },
+  {
+   "name": "Facebook Ads",
+   "slug": "facebook-ads",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Facebook%20Ads"
+  },
+  {
+   "name": "Facebook Payments",
+   "slug": "facebook-payments",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Facebook%20Payments"
+  },
+  {
+   "name": "FedEx",
+   "slug": "fedex",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/FedEx"
+  },
+  {
+   "name": "Feddit",
+   "slug": "feddit",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Feddit"
+  },
+  {
+   "name": "Financial Times",
+   "slug": "financial-times",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Financial%20Times"
+  },
+  {
+   "name": "Finnair",
+   "slug": "finnair",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Finnair"
+  },
+  {
+   "name": "Finya",
+   "slug": "finya",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Finya"
+  },
+  {
+   "name": "Firefox",
+   "slug": "firefox",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Firefox"
+  },
+  {
+   "name": "Firefox Monitor",
+   "slug": "firefox-monitor",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Firefox%20Monitor"
+  },
+  {
+   "name": "Firefox Private Network",
+   "slug": "firefox-private-network",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Firefox%20Private%20Network"
+  },
+  {
+   "name": "Fireworks AI",
+   "slug": "fireworks-ai",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Fireworks%20AI"
+  },
+  {
+   "name": "Flickr",
+   "slug": "flickr",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Flickr"
+  },
+  {
+   "name": "Flutterwave",
+   "slug": "flutterwave",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Flutterwave"
+  },
+  {
+   "name": "Forbes",
+   "slug": "forbes",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Forbes"
+  },
+  {
+   "name": "Foursquare",
+   "slug": "foursquare",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Foursquare"
+  },
+  {
+   "name": "Fox News",
+   "slug": "fox-news",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Fox%20News"
+  },
+  {
+   "name": "Frank",
+   "slug": "frank",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Frank"
+  },
+  {
+   "name": "Freja eID",
+   "slug": "freja-eid",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Freja%20eID"
+  },
+  {
+   "name": "Fruitz",
+   "slug": "fruitz",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Fruitz"
+  },
+  {
+   "name": "Gartner",
+   "slug": "gartner",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Gartner"
+  },
+  {
+   "name": "GitHub",
+   "slug": "github",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/GitHub"
+  },
+  {
+   "name": "GitLab",
+   "slug": "gitlab",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/GitLab"
+  },
+  {
+   "name": "Glass",
+   "slug": "glass",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Glass"
+  },
+  {
+   "name": "Glassdoor",
+   "slug": "glassdoor",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Glassdoor"
+  },
+  {
+   "name": "Gofile",
+   "slug": "gofile",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Gofile"
+  },
+  {
+   "name": "Goodreads",
+   "slug": "goodreads",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Goodreads"
+  },
+  {
+   "name": "Google",
+   "slug": "google",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google"
+  },
+  {
+   "name": "Google APIs",
+   "slug": "google-apis",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20APIs"
+  },
+  {
+   "name": "Google Ads",
+   "slug": "google-ads",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Ads"
+  },
+  {
+   "name": "Google Analytics",
+   "slug": "google-analytics",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Analytics"
+  },
+  {
+   "name": "Google Antigravity",
+   "slug": "google-antigravity",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Antigravity"
+  },
+  {
+   "name": "Google Calendar",
+   "slug": "google-calendar",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Calendar"
+  },
+  {
+   "name": "Google Chat",
+   "slug": "google-chat",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Chat"
+  },
+  {
+   "name": "Google Classroom",
+   "slug": "google-classroom",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Classroom"
+  },
+  {
+   "name": "Google Cloud Platform",
+   "slug": "google-cloud-platform",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Cloud%20Platform"
+  },
+  {
+   "name": "Google Data Studio",
+   "slug": "google-data-studio",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Data%20Studio"
+  },
+  {
+   "name": "Google Drive",
+   "slug": "google-drive",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Drive"
+  },
+  {
+   "name": "Google Earth",
+   "slug": "google-earth",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Earth"
+  },
+  {
+   "name": "Google Flights",
+   "slug": "google-flights",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Flights"
+  },
+  {
+   "name": "Google Groups",
+   "slug": "google-groups",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Groups"
+  },
+  {
+   "name": "Google Hangouts",
+   "slug": "google-hangouts",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Hangouts"
+  },
+  {
+   "name": "Google Manufacturer Center",
+   "slug": "google-manufacturer-center",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Manufacturer%20Center"
+  },
+  {
+   "name": "Google Meet",
+   "slug": "google-meet",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Meet"
+  },
+  {
+   "name": "Google Merchant Center",
+   "slug": "google-merchant-center",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Merchant%20Center"
+  },
+  {
+   "name": "Google My Business",
+   "slug": "google-my-business",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20My%20Business"
+  },
+  {
+   "name": "Google Nest",
+   "slug": "google-nest",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Nest"
+  },
+  {
+   "name": "Google One",
+   "slug": "google-one",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20One"
+  },
+  {
+   "name": "Google Pay",
+   "slug": "google-pay",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Pay"
+  },
+  {
+   "name": "Google Photos",
+   "slug": "google-photos",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Photos"
+  },
+  {
+   "name": "Google Play",
+   "slug": "google-play",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Play"
+  },
+  {
+   "name": "Google Shopping",
+   "slug": "google-shopping",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/vlopses-us-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/vlopses-us-versions/tree/main/Google%20Shopping"
+  },
+  {
+   "name": "Google Store",
+   "slug": "google-store",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Store"
+  },
+  {
+   "name": "Google Tag Manager",
+   "slug": "google-tag-manager",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Tag%20Manager"
+  },
+  {
+   "name": "Google Voice",
+   "slug": "google-voice",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20Voice"
+  },
+  {
+   "name": "Google for Nonprofits",
+   "slug": "google-for-nonprofits",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google%20for%20Nonprofits"
+  },
+  {
+   "name": "GraphCMS",
+   "slug": "graphcms",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/GraphCMS"
+  },
+  {
+   "name": "Guilded",
+   "slug": "guilded",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Guilded"
+  },
+  {
+   "name": "Gumb",
+   "slug": "gumb",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Gumb"
+  },
+  {
+   "name": "HER",
+   "slug": "her",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/HER"
+  },
+  {
+   "name": "HSBC",
+   "slug": "hsbc",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/HSBC"
+  },
+  {
+   "name": "HackerOne",
+   "slug": "hackerone",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/HackerOne"
+  },
+  {
+   "name": "Hearst.com",
+   "slug": "hearst-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Hearst.com"
+  },
+  {
+   "name": "Hetzner",
+   "slug": "hetzner",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Hetzner"
+  },
+  {
+   "name": "Hily",
+   "slug": "hily",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Hily"
+  },
+  {
+   "name": "Honkai- Star Rail",
+   "slug": "honkai-star-rail",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Honkai-%20Star%20Rail"
+  },
+  {
+   "name": "Hugging Face",
+   "slug": "hugging-face",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Hugging%20Face"
+  },
+  {
+   "name": "Hygraph",
+   "slug": "hygraph",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Hygraph"
+  },
+  {
+   "name": "IGN Entertainment",
+   "slug": "ign-entertainment",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/IGN%20Entertainment"
+  },
+  {
+   "name": "IKEA Family",
+   "slug": "ikea-family",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/IKEA%20Family"
+  },
+  {
+   "name": "IMDb",
+   "slug": "imdb",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/IMDb"
+  },
+  {
+   "name": "IPinfo",
+   "slug": "ipinfo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/IPinfo"
+  },
+  {
+   "name": "Ikea",
+   "slug": "ikea",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Ikea"
+  },
+  {
+   "name": "Imgur",
+   "slug": "imgur",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Imgur"
+  },
+  {
+   "name": "Incredible",
+   "slug": "incredible",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Incredible"
+  },
+  {
+   "name": "IndieGala",
+   "slug": "indiegala",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/IndieGala"
+  },
+  {
+   "name": "Infolinks",
+   "slug": "infolinks",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Infolinks"
+  },
+  {
+   "name": "Inshallah",
+   "slug": "inshallah",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Inshallah"
+  },
+  {
+   "name": "Instacart",
+   "slug": "instacart",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Instacart"
+  },
+  {
+   "name": "Interstellar Lab",
+   "slug": "interstellar-lab",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Interstellar%20Lab"
+  },
+  {
+   "name": "Intric",
+   "slug": "intric",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Intric"
+  },
+  {
+   "name": "Jasper",
+   "slug": "jasper",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Jasper"
+  },
+  {
+   "name": "Jdate",
+   "slug": "jdate",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Jdate"
+  },
+  {
+   "name": "Jeeng",
+   "slug": "jeeng",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Jeeng"
+  },
+  {
+   "name": "Jottacloud",
+   "slug": "jottacloud",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Jottacloud"
+  },
+  {
+   "name": "Kbin",
+   "slug": "kbin",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Kbin"
+  },
+  {
+   "name": "Kick",
+   "slug": "kick",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Kick"
+  },
+  {
+   "name": "KimCartoon",
+   "slug": "kimcartoon",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/KimCartoon"
+  },
+  {
+   "name": "Kimi AI",
+   "slug": "kimi-ai",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Kimi%20AI"
+  },
+  {
+   "name": "Kivra",
+   "slug": "kivra",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Kivra"
+  },
+  {
+   "name": "Kraken",
+   "slug": "kraken",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Kraken"
+  },
+  {
+   "name": "LEX",
+   "slug": "lex",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/LEX"
+  },
+  {
+   "name": "LINE",
+   "slug": "line",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/LINE"
+  },
+  {
+   "name": "LOVOO",
+   "slug": "lovoo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/LOVOO"
+  },
+  {
+   "name": "Last.fm",
+   "slug": "last-fm",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Last.fm"
+  },
+  {
+   "name": "Le Chat",
+   "slug": "le-chat",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-eu-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-eu-versions/tree/main/Le%20Chat"
+  },
+  {
+   "name": "LibraryThing",
+   "slug": "librarything",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/LibraryThing"
+  },
+  {
+   "name": "Limitless",
+   "slug": "limitless",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Limitless"
+  },
+  {
+   "name": "Linear",
+   "slug": "linear",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Linear"
+  },
+  {
+   "name": "Lingualeo",
+   "slug": "lingualeo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Lingualeo"
+  },
+  {
+   "name": "Liquid AI",
+   "slug": "liquid-ai",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Liquid%20AI"
+  },
+  {
+   "name": "LiveJournal",
+   "slug": "livejournal",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/LiveJournal"
+  },
+  {
+   "name": "Llama API",
+   "slug": "llama-api",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-eu-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-eu-versions/tree/main/Llama%20API"
+  },
+  {
+   "name": "Local Guides",
+   "slug": "local-guides",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Local%20Guides"
+  },
+  {
+   "name": "Logitech",
+   "slug": "logitech",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Logitech"
+  },
+  {
+   "name": "Lovable",
+   "slug": "lovable",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Lovable"
+  },
+  {
+   "name": "LoveScout24",
+   "slug": "lovescout24",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/LoveScout24"
+  },
+  {
+   "name": "Lydia",
+   "slug": "lydia",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Lydia"
+  },
+  {
+   "name": "Lyft",
+   "slug": "lyft",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Lyft"
+  },
+  {
+   "name": "MDN Plus",
+   "slug": "mdn-plus",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/MDN%20Plus"
+  },
+  {
+   "name": "MSN",
+   "slug": "msn",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/MSN"
+  },
+  {
+   "name": "Mailjet",
+   "slug": "mailjet",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Mailjet"
+  },
+  {
+   "name": "Mastodon",
+   "slug": "mastodon",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/Mastodon"
+  },
+  {
+   "name": "Mattermost beta.gouv.fr",
+   "slug": "mattermost-beta-gouv-fr",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Mattermost%20beta.gouv.fr"
+  },
+  {
+   "name": "MediaFire",
+   "slug": "mediafire",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/MediaFire"
+  },
+  {
+   "name": "Meetic",
+   "slug": "meetic",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Meetic"
+  },
+  {
+   "name": "Meetup",
+   "slug": "meetup",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Meetup"
+  },
+  {
+   "name": "Mektoube",
+   "slug": "mektoube",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Mektoube"
+  },
+  {
+   "name": "Microsoft",
+   "slug": "microsoft",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Microsoft"
+  },
+  {
+   "name": "Microsoft Store",
+   "slug": "microsoft-store",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Microsoft%20Store"
+  },
+  {
+   "name": "Midjourney",
+   "slug": "midjourney",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Midjourney"
+  },
+  {
+   "name": "Miro",
+   "slug": "miro",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Miro"
+  },
+  {
+   "name": "Mix",
+   "slug": "mix",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Mix"
+  },
+  {
+   "name": "Moltbook",
+   "slug": "moltbook",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/Moltbook"
+  },
+  {
+   "name": "MouthShut",
+   "slug": "mouthshut",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/MouthShut"
+  },
+  {
+   "name": "Mozilla",
+   "slug": "mozilla",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Mozilla"
+  },
+  {
+   "name": "Mullvad",
+   "slug": "mullvad",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Mullvad"
+  },
+  {
+   "name": "Murf",
+   "slug": "murf",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Murf"
+  },
+  {
+   "name": "Myspace",
+   "slug": "myspace",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Myspace"
+  },
+  {
+   "name": "NOYB",
+   "slug": "noyb",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/NOYB"
+  },
+  {
+   "name": "National Geographic",
+   "slug": "national-geographic",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/National%20Geographic"
+  },
+  {
+   "name": "Netflix",
+   "slug": "netflix",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Netflix"
+  },
+  {
+   "name": "Nextdoor",
+   "slug": "nextdoor",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Nextdoor"
+  },
+  {
+   "name": "Ning",
+   "slug": "ning",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Ning"
+  },
+  {
+   "name": "Nissan",
+   "slug": "nissan",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Nissan"
+  },
+  {
+   "name": "NordVPN",
+   "slug": "nordvpn",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/NordVPN"
+  },
+  {
+   "name": "Nous Research chat",
+   "slug": "nous-research-chat",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Nous%20Research%20chat"
+  },
+  {
+   "name": "O'Reilly",
+   "slug": "o-reilly",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/O'Reilly"
+  },
+  {
+   "name": "OKX",
+   "slug": "okx",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/OKX"
+  },
+  {
+   "name": "OPay",
+   "slug": "opay",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/OPay"
+  },
+  {
+   "name": "OURA",
+   "slug": "oura",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/OURA"
+  },
+  {
+   "name": "OVHcloud",
+   "slug": "ovhcloud",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/OVHcloud"
+  },
+  {
+   "name": "OkCupid",
+   "slug": "okcupid",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/OkCupid"
+  },
+  {
+   "name": "Olvid",
+   "slug": "olvid",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Olvid"
+  },
+  {
+   "name": "OnlyFans",
+   "slug": "onlyfans",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/OnlyFans"
+  },
+  {
+   "name": "OpenRouter",
+   "slug": "openrouter",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/OpenRouter"
+  },
+  {
+   "name": "OpenSea",
+   "slug": "opensea",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/OpenSea"
+  },
+  {
+   "name": "Optimize",
+   "slug": "optimize",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Optimize"
+  },
+  {
+   "name": "Orange",
+   "slug": "orange",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Orange"
+  },
+  {
+   "name": "Outbrain",
+   "slug": "outbrain",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Outbrain"
+  },
+  {
+   "name": "Overleaf",
+   "slug": "overleaf",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Overleaf"
+  },
+  {
+   "name": "Palantir",
+   "slug": "palantir",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Palantir"
+  },
+  {
+   "name": "Palia",
+   "slug": "palia",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Palia"
+  },
+  {
+   "name": "Paradox Interactive",
+   "slug": "paradox-interactive",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Paradox%20Interactive"
+  },
+  {
+   "name": "Parler",
+   "slug": "parler",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/Parler"
+  },
+  {
+   "name": "Parship",
+   "slug": "parship",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Parship"
+  },
+  {
+   "name": "PayPal",
+   "slug": "paypal",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/PayPal"
+  },
+  {
+   "name": "Persumi",
+   "slug": "persumi",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Persumi"
+  },
+  {
+   "name": "Philip Morris International",
+   "slug": "philip-morris-international",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Philip%20Morris%20International"
+  },
+  {
+   "name": "Pinterest",
+   "slug": "pinterest",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/Pinterest"
+  },
+  {
+   "name": "Pirr",
+   "slug": "pirr",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Pirr"
+  },
+  {
+   "name": "Play",
+   "slug": "play",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Play"
+  },
+  {
+   "name": "PlayStation Network",
+   "slug": "playstation-network",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/PlayStation%20Network"
+  },
+  {
+   "name": "Polyfill.io",
+   "slug": "polyfill-io",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Polyfill.io"
+  },
+  {
+   "name": "Pornhub",
+   "slug": "pornhub",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/vlopses-us-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/vlopses-us-versions/tree/main/Pornhub"
+  },
+  {
+   "name": "PrivacySpy",
+   "slug": "privacyspy",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/PrivacySpy"
+  },
+  {
+   "name": "Proctorio",
+   "slug": "proctorio",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Proctorio"
+  },
+  {
+   "name": "Project Gutenberg",
+   "slug": "project-gutenberg",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Project%20Gutenberg"
+  },
+  {
+   "name": "Proton Mail",
+   "slug": "proton-mail",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Proton%20Mail"
+  },
+  {
+   "name": "ProtonVPN",
+   "slug": "protonvpn",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/ProtonVPN"
+  },
+  {
+   "name": "PubMatic",
+   "slug": "pubmatic",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/PubMatic"
+  },
+  {
+   "name": "Qiwi.gg",
+   "slug": "qiwi-gg",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Qiwi.gg"
+  },
+  {
+   "name": "Qobuz",
+   "slug": "qobuz",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Qobuz"
+  },
+  {
+   "name": "Quora",
+   "slug": "quora",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/Quora"
+  },
+  {
+   "name": "Qwant",
+   "slug": "qwant",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Qwant"
+  },
+  {
+   "name": "Qwen Chat",
+   "slug": "qwen-chat",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-eu-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-eu-versions/tree/main/Qwen%20Chat"
+  },
+  {
+   "name": "ROMEO",
+   "slug": "romeo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/ROMEO"
+  },
+  {
+   "name": "Rakuten",
+   "slug": "rakuten",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Rakuten"
+  },
+  {
+   "name": "Rephrase.ai",
+   "slug": "rephrase-ai",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Rephrase.ai"
+  },
+  {
+   "name": "Replicate",
+   "slug": "replicate",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Replicate"
+  },
+  {
+   "name": "Replit",
+   "slug": "replit",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Replit"
+  },
+  {
+   "name": "Reserve with Google",
+   "slug": "reserve-with-google",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Reserve%20with%20Google"
+  },
+  {
+   "name": "Revcontent",
+   "slug": "revcontent",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Revcontent"
+  },
+  {
+   "name": "Revolt",
+   "slug": "revolt",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Revolt"
+  },
+  {
+   "name": "Roblox",
+   "slug": "roblox",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Roblox"
+  },
+  {
+   "name": "Rubicon Project",
+   "slug": "rubicon-project",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Rubicon%20Project"
+  },
+  {
+   "name": "RueduCommerce.fr",
+   "slug": "rueducommerce-fr",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/RueduCommerce.fr"
+  },
+  {
+   "name": "SNCF Pro",
+   "slug": "sncf-pro",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/SNCF%20Pro"
+  },
+  {
+   "name": "SOUNDRAW",
+   "slug": "soundraw",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/SOUNDRAW"
+  },
+  {
+   "name": "SambaNova",
+   "slug": "sambanova",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/SambaNova"
+  },
+  {
+   "name": "Samsung",
+   "slug": "samsung",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Samsung"
+  },
+  {
+   "name": "Sana",
+   "slug": "sana",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Sana"
+  },
+  {
+   "name": "Savetz Publishing",
+   "slug": "savetz-publishing",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Savetz%20Publishing"
+  },
+  {
+   "name": "Scaleway",
+   "slug": "scaleway",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Scaleway"
+  },
+  {
+   "name": "Scalingo",
+   "slug": "scalingo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Scalingo"
+  },
+  {
+   "name": "Scribe",
+   "slug": "scribe",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Scribe"
+  },
+  {
+   "name": "Sendinblue",
+   "slug": "sendinblue",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Sendinblue"
+  },
+  {
+   "name": "Shein",
+   "slug": "shein",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/vlopses-us-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/vlopses-us-versions/tree/main/Shein"
+  },
+  {
+   "name": "Shockwave.com",
+   "slug": "shockwave-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Shockwave.com"
+  },
+  {
+   "name": "Signal",
+   "slug": "signal",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Signal"
+  },
+  {
+   "name": "Simpli.fi",
+   "slug": "simpli-fi",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Simpli.fi"
+  },
+  {
+   "name": "Sketchfab",
+   "slug": "sketchfab",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Sketchfab"
+  },
+  {
+   "name": "Skype",
+   "slug": "skype",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Skype"
+  },
+  {
+   "name": "Solana",
+   "slug": "solana",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Solana"
+  },
+  {
+   "name": "Sonic.net",
+   "slug": "sonic-net",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Sonic.net"
+  },
+  {
+   "name": "SoundCloud",
+   "slug": "soundcloud",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/SoundCloud"
+  },
+  {
+   "name": "Spam.org",
+   "slug": "spam-org",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Spam.org"
+  },
+  {
+   "name": "Spark",
+   "slug": "spark",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Spark"
+  },
+  {
+   "name": "Speechify",
+   "slug": "speechify",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Speechify"
+  },
+  {
+   "name": "SponsorBlock",
+   "slug": "sponsorblock",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/SponsorBlock"
+  },
+  {
+   "name": "Stability AI",
+   "slug": "stability-ai",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Stability%20AI"
+  },
+  {
+   "name": "Stack Overflow",
+   "slug": "stack-overflow",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Stack%20Overflow"
+  },
+  {
+   "name": "Stadia",
+   "slug": "stadia",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Stadia"
+  },
+  {
+   "name": "Starbucks",
+   "slug": "starbucks",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Starbucks"
+  },
+  {
+   "name": "Starlink",
+   "slug": "starlink",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Starlink"
+  },
+  {
+   "name": "Steam",
+   "slug": "steam",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Steam"
+  },
+  {
+   "name": "Streamable",
+   "slug": "streamable",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Streamable"
+  },
+  {
+   "name": "Stripchat",
+   "slug": "stripchat",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/vlopses-us-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/vlopses-us-versions/tree/main/Stripchat"
+  },
+  {
+   "name": "Substack",
+   "slug": "substack",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Substack"
+  },
+  {
+   "name": "SurveyMonkey",
+   "slug": "surveymonkey",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/SurveyMonkey"
+  },
+  {
+   "name": "Swiss Post",
+   "slug": "swiss-post",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Swiss%20Post"
+  },
+  {
+   "name": "TIME",
+   "slug": "time",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/TIME"
+  },
+  {
+   "name": "TP-Link",
+   "slug": "tp-link",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/TP-Link"
+  },
+  {
+   "name": "Taboola",
+   "slug": "taboola",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Taboola"
+  },
+  {
+   "name": "Tagged",
+   "slug": "tagged",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Tagged"
+  },
+  {
+   "name": "Tandem Health",
+   "slug": "tandem-health",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Tandem%20Health"
+  },
+  {
+   "name": "Tchap",
+   "slug": "tchap",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Tchap"
+  },
+  {
+   "name": "Teads",
+   "slug": "teads",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Teads"
+  },
+  {
+   "name": "Tempo Labs",
+   "slug": "tempo-labs",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Tempo%20Labs"
+  },
+  {
+   "name": "Temu",
+   "slug": "temu",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/vlopses-us-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/vlopses-us-versions/tree/main/Temu"
+  },
+  {
+   "name": "Tencent",
+   "slug": "tencent",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Tencent"
+  },
+  {
+   "name": "The Guardian",
+   "slug": "the-guardian",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/The%20Guardian"
+  },
+  {
+   "name": "The Mirror",
+   "slug": "the-mirror",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/The%20Mirror"
+  },
+  {
+   "name": "The New York Times",
+   "slug": "the-new-york-times",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/The%20New%20York%20Times"
+  },
+  {
+   "name": "The Reach Group",
+   "slug": "the-reach-group",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/The%20Reach%20Group"
+  },
+  {
+   "name": "The Register",
+   "slug": "the-register",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/The%20Register"
+  },
+  {
+   "name": "The Trade Desk",
+   "slug": "the-trade-desk",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/The%20Trade%20Desk"
+  },
+  {
+   "name": "Thryv YellowPages",
+   "slug": "thryv-yellowpages",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Thryv%20YellowPages"
+  },
+  {
+   "name": "Thunderbird",
+   "slug": "thunderbird",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Thunderbird"
+  },
+  {
+   "name": "Tildes",
+   "slug": "tildes",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Tildes"
+  },
+  {
+   "name": "Together AI",
+   "slug": "together-ai",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Together%20AI"
+  },
+  {
+   "name": "TousAntiCovid",
+   "slug": "tousanticovid",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/TousAntiCovid"
+  },
+  {
+   "name": "Toyota Connected Services",
+   "slug": "toyota-connected-services",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Toyota%20Connected%20Services"
+  },
+  {
+   "name": "Tresorit",
+   "slug": "tresorit",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Tresorit"
+  },
+  {
+   "name": "TruthSocial",
+   "slug": "truthsocial",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/TruthSocial"
+  },
+  {
+   "name": "Tumblr",
+   "slug": "tumblr",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/Tumblr"
+  },
+  {
+   "name": "Twitter",
+   "slug": "twitter",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/Twitter"
+  },
+  {
+   "name": "USA.gov",
+   "slug": "usa-gov",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/USA.gov"
+  },
+  {
+   "name": "Ubiquiti",
+   "slug": "ubiquiti",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Ubiquiti"
+  },
+  {
+   "name": "Upscrolled",
+   "slug": "upscrolled",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/Upscrolled"
+  },
+  {
+   "name": "UrbanDictionary.com",
+   "slug": "urbandictionary-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/UrbanDictionary.com"
+  },
+  {
+   "name": "Uschovna.cz",
+   "slug": "uschovna-cz",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Uschovna.cz"
+  },
+  {
+   "name": "UserDrive.com",
+   "slug": "userdrive-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/UserDrive.com"
+  },
+  {
+   "name": "VR",
+   "slug": "vr",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/VR"
+  },
+  {
+   "name": "ValueImpression",
+   "slug": "valueimpression",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/ValueImpression"
+  },
+  {
+   "name": "Vanco Payment Solutions",
+   "slug": "vanco-payment-solutions",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Vanco%20Payment%20Solutions"
+  },
+  {
+   "name": "Veepee",
+   "slug": "veepee",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Veepee"
+  },
+  {
+   "name": "Verizon",
+   "slug": "verizon",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Verizon"
+  },
+  {
+   "name": "Viaplay",
+   "slug": "viaplay",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Viaplay"
+  },
+  {
+   "name": "Vibe",
+   "slug": "vibe",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-eu-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-eu-versions/tree/main/Vibe"
+  },
+  {
+   "name": "Viber",
+   "slug": "viber",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Viber"
+  },
+  {
+   "name": "Vimeo",
+   "slug": "vimeo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Vimeo"
+  },
+  {
+   "name": "Vinted",
+   "slug": "vinted",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Vinted"
+  },
+  {
+   "name": "Visible",
+   "slug": "visible",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Visible"
+  },
+  {
+   "name": "VocabularySpellingCity",
+   "slug": "vocabularyspellingcity",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/VocabularySpellingCity"
+  },
+  {
+   "name": "Vodafone.ie",
+   "slug": "vodafone-ie",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Vodafone.ie"
+  },
+  {
+   "name": "W3Schools",
+   "slug": "w3schools",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/W3Schools"
+  },
+  {
+   "name": "WPEngine",
+   "slug": "wpengine",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/WPEngine"
+  },
+  {
+   "name": "Wargaming",
+   "slug": "wargaming",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Wargaming"
+  },
+  {
+   "name": "Watch.Hockey",
+   "slug": "watch-hockey",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Watch.Hockey"
+  },
+  {
+   "name": "Waze",
+   "slug": "waze",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Waze"
+  },
+  {
+   "name": "We Heart It",
+   "slug": "we-heart-it",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/We%20Heart%20It"
+  },
+  {
+   "name": "WeChat",
+   "slug": "wechat",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/pga-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/pga-versions/tree/main/WeChat"
+  },
+  {
+   "name": "WeChat Open Platform",
+   "slug": "wechat-open-platform",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/WeChat%20Open%20Platform"
+  },
+  {
+   "name": "WeTransfer",
+   "slug": "wetransfer",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/WeTransfer"
+  },
+  {
+   "name": "WebProNews",
+   "slug": "webpronews",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/WebProNews"
+  },
+  {
+   "name": "Webcrawler",
+   "slug": "webcrawler",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Webcrawler"
+  },
+  {
+   "name": "Webs",
+   "slug": "webs",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Webs"
+  },
+  {
+   "name": "Wenxinyiyan",
+   "slug": "wenxinyiyan",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Wenxinyiyan"
+  },
+  {
+   "name": "Wide Angle Software",
+   "slug": "wide-angle-software",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Wide%20Angle%20Software"
+  },
+  {
+   "name": "Wikimedia Foundation",
+   "slug": "wikimedia-foundation",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Wikimedia%20Foundation"
+  },
+  {
+   "name": "Wikipedia",
+   "slug": "wikipedia",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Wikipedia"
+  },
+  {
+   "name": "WinEveryGame",
+   "slug": "wineverygame",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/WinEveryGame"
+  },
+  {
+   "name": "Windstream",
+   "slug": "windstream",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Windstream"
+  },
+  {
+   "name": "Wire",
+   "slug": "wire",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Wire"
+  },
+  {
+   "name": "Wise",
+   "slug": "wise",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Wise"
+  },
+  {
+   "name": "Wix",
+   "slug": "wix",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Wix"
+  },
+  {
+   "name": "Wolfram",
+   "slug": "wolfram",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Wolfram"
+  },
+  {
+   "name": "WolframAlpha",
+   "slug": "wolframalpha",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/WolframAlpha"
+  },
+  {
+   "name": "Womans Day",
+   "slug": "womans-day",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Womans%20Day"
+  },
+  {
+   "name": "WordPress Foundation",
+   "slug": "wordpress-foundation",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/WordPress%20Foundation"
+  },
+  {
+   "name": "WordPress.com",
+   "slug": "wordpress-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/WordPress.com"
+  },
+  {
+   "name": "WordPress.org",
+   "slug": "wordpress-org",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/WordPress.org"
+  },
+  {
+   "name": "Wordfeud",
+   "slug": "wordfeud",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Wordfeud"
+  },
+  {
+   "name": "Wordtune",
+   "slug": "wordtune",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/Wordtune"
+  },
+  {
+   "name": "World Market",
+   "slug": "world-market",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/World%20Market"
+  },
+  {
+   "name": "XNXX",
+   "slug": "xnxx",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/vlopses-us-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/vlopses-us-versions/tree/main/XNXX"
+  },
+  {
+   "name": "XVideos",
+   "slug": "xvideos",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/vlopses-us-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/vlopses-us-versions/tree/main/XVideos"
+  },
+  {
+   "name": "Xanga",
+   "slug": "xanga",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Xanga"
+  },
+  {
+   "name": "Xfinity",
+   "slug": "xfinity",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Xfinity"
+  },
+  {
+   "name": "Xfinity Residential Services",
+   "slug": "xfinity-residential-services",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Xfinity%20Residential%20Services"
+  },
+  {
+   "name": "Xing",
+   "slug": "xing",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Xing"
+  },
+  {
+   "name": "Y Combinator",
+   "slug": "y-combinator",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Y%20Combinator"
+  },
+  {
+   "name": "Yahoo",
+   "slug": "yahoo",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Yahoo"
+  },
+  {
+   "name": "Yelp",
+   "slug": "yelp",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Yelp"
+  },
+  {
+   "name": "Youtube Kids",
+   "slug": "youtube-kids",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Youtube%20Kids"
+  },
+  {
+   "name": "Yuka",
+   "slug": "yuka",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Yuka"
+  },
+  {
+   "name": "Zillow",
+   "slug": "zillow",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Zillow"
+  },
+  {
+   "name": "Zoosk",
+   "slug": "zoosk",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/dating-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Zoosk"
+  },
+  {
+   "name": "Zora",
+   "slug": "zora",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Zora"
+  },
+  {
+   "name": "eBay",
+   "slug": "ebay",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/eBay"
+  },
+  {
+   "name": "fal",
+   "slug": "fal",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/fal"
+  },
+  {
+   "name": "hi5",
+   "slug": "hi5",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/hi5"
+  },
+  {
+   "name": "hide.me VPN",
+   "slug": "hide-me-vpn",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/hide.me%20VPN"
+  },
+  {
+   "name": "iCloud",
+   "slug": "icloud",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/iCloud"
+  },
+  {
+   "name": "ironSource",
+   "slug": "ironsource",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/ironSource"
+  },
+  {
+   "name": "meet.jit.si",
+   "slug": "meet-jit-si",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/meet.jit.si"
+  },
+  {
+   "name": "pixiv",
+   "slug": "pixiv",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/pixiv"
+  },
+  {
+   "name": "sony.com",
+   "slug": "sony-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/sony.com"
+  },
+  {
+   "name": "sourcehut",
+   "slug": "sourcehut",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/sourcehut"
+  },
+  {
+   "name": "thomsonreuters.com",
+   "slug": "thomsonreuters-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/thomsonreuters.com"
+  },
+  {
+   "name": "timeanddate.com",
+   "slug": "timeanddate-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/timeanddate.com"
+  },
+  {
+   "name": "ubuntu.com",
+   "slug": "ubuntu-com",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/ubuntu.com"
+  },
+  {
+   "name": "ucla.edu",
+   "slug": "ucla-edu",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/ucla.edu"
+  },
+  {
+   "name": "ulster.ac.uk",
+   "slug": "ulster-ac-uk",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/ulster.ac.uk"
+  },
+  {
+   "name": "vidguard.to",
+   "slug": "vidguard-to",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/vidguard.to"
+  },
+  {
+   "name": "xHamster",
+   "slug": "xhamster",
+   "status": "archived",
+   "collection_repo": "OpenTermsArchive/contrib-versions",
+   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/xHamster"
+  }
+ ]
+}

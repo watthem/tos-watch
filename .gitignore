@@ -1,0 +1,24 @@
+# OTA repo clones and Jev answer cache (rebuildable, see pipeline/run.py)
+/cache/
+/datasets/cache/
+
+# Python
+__pycache__/
+*.pyc
+
+# Node / Cloudflare
+node_modules/
+.wrangler/
+.dev.vars*
+!.dev.vars.example
+
+# Env / secrets
+.env
+*.env.local
+!.env.example
+
+# OS
+.DS_Store
+
+# Local scratch (Buttondown exports, logs)
+/temp/

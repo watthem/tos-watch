@@ -1,0 +1,9 @@
+name = "tos-watch"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "tos-watch-subscribers"
+database_id = "30fcb2df-1a36-40d5-a27d-36a988df8b20"
+migrations_dir = "migrations"

@@ -1,0 +1,23 @@
+{
+  "version": "example-1",
+  "alert_threshold": 0.5,
+  "topic_questions": [
+    "data_use",
+    "ai"
+  ],
+  "_note": "A generic starting set so the pipeline runs out of the box. It is not the tuned set tos.watch uses; write your own questions for the changes you care about, and check them against changes you've labelled by hand before trusting the threshold. Put your set in pipeline/questions.json (gitignore it if it's yours).",
+  "questions": {
+    "data_use": {
+      "type": "noul",
+      "instructions": "Does this edit change what personal data the company collects, uses, or shares?"
+    },
+    "ai": {
+      "type": "noul",
+      "instructions": "Does this edit concern AI features or using people's data for AI?"
+    },
+    "noise": {
+      "type": "noul",
+      "instructions": "Is this edit only formatting, headings, dates, or navigation?"
+    }
+  }
+}

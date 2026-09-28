@@ -1,0 +1,14 @@
+{
+  "name": "tos-watch-build",
+  "private": true,
+  "description": "Build-time helpers for the tos.watch static site: @pierre/diffs rendering and self-hosted fonts.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "diffs": "node render-diffs.mjs ../site"
+  },
+  "dependencies": {
+    "@fontsource-variable/public-sans": "^5.3.0",
+    "@fontsource-variable/source-serif-4": "^5.3.0",
+    "@pierre/diffs": "^1.5.1"
+  }
+}
