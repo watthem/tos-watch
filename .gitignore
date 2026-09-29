@@ -1,5 +1,8 @@
-# OTA repo clones and Jev answer cache (rebuildable, see pipeline/run.py)
-/cache/
+# OTA repo clones (rebuildable). The Jev answer cache is tracked: fresh
+# Jev answers differ from cached ones near the threshold, so a CI run
+# without it re-scored all history and wrote 186 old alerts (2026-09-29).
+/cache/*
+!/cache/jev/
 /datasets/cache/
 
 # Python

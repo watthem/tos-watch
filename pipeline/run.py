@@ -48,6 +48,10 @@ CACHE_DIR = ROOT / "cache"
 STATE_PATH = PIPELINE_DIR / "state.json"
 MUSE_SNAPSHOTS_DIR = PIPELINE_DIR / "muse_snapshots"
 ALERTS_DIR = ROOT / "alerts"
+# Alerts the owner rejected as false positives: {stem: reason}. Private (not
+# in the public export). A listed stem is never written again, and the list
+# doubles as negative labels for tuning Jev.
+DISMISSED_PATH = PIPELINE_DIR / "dismissed.json"
 WATCHLIST_PATH = PIPELINE_DIR / "watchlist.json"
 DIRECT_SNAPSHOTS_DIR = PIPELINE_DIR / "direct_snapshots"
 
@@ -252,6 +256,7 @@ def main() -> None:
 
     watchlist = load_watchlist()
     state = load_state()
+    dismissed = json.loads(DISMISSED_PATH.read_text()) if DISMISSED_PATH.exists() else {}
 
     print("Extracting OTA document history...")
     blocks = collect_ota_blocks(watchlist, pull=not args.no_pull)
@@ -302,6 +307,8 @@ def main() -> None:
         path = ALERTS_DIR / fname
         if path.exists() and not args.rerender:
             continue  # already alerted this document version
+        if path.stem in dismissed:
+            continue  # the owner rejected this one as a false positive
         if args.rerender and not path.exists():
             continue
         # .get(q, 0.0): a block may have been Jev-scored and cached before
