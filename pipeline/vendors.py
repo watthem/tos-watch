@@ -33,6 +33,7 @@ import pathlib
 import re
 import subprocess
 import sys
+import urllib.parse
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from lib import jev, ota, paths
@@ -109,7 +110,7 @@ def match(d: pathlib.Path, pull: bool = False) -> None:
                     "doc": doc,
                     "repo": coll,
                     "path": f"{svc}/{f}",
-                    "source_url": f"https://github.com/{slug}/commits/main/{svc}/{f}",
+                    "source_url": f"https://github.com/{slug}/commits/main/" + urllib.parse.quote(f"{svc}/{f}"),
                     "source": f"ota:{slug}",
                 })
                 used.add(coll)
