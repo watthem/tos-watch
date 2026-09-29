@@ -3,10 +3,8 @@
 // path matters as much as the happy path.
 //
 // (a) happy: request -> row created; repeat request increments the count
-//     and does not duplicate; request with an email -> a pending subscriber
-//     is created, tagged requested:<slug>, and a pending vote is recorded
-//     for that same feature (counted once the subscriber later confirms --
-//     see vote.test.js for the confirm-side assertion).
+//     and does not duplicate. A request with an email becomes a Buttondown
+//     tag (see subscribe.test.js); no email is stored here.
 // (b) sad: missing/oversized service is rejected and stores no row; no
 //     route returns stored requests or emails.
 import { env, SELF } from "cloudflare:test";
@@ -22,9 +20,7 @@ async function request(body) {
 }
 
 beforeEach(async () => {
-  await env.DB.prepare("DELETE FROM subscribers").run();
   await env.DB.prepare("DELETE FROM requests").run();
-  await env.DB.prepare("DELETE FROM votes").run();
   _resetRateLimitForTests();
 });
 
@@ -63,26 +59,6 @@ describe("POST /request happy path", () => {
     expect(rows.results.length).toBe(1);
     expect(rows.results[0].unverified_count).toBe(2);
   });
-
-  it("tags a new email as a pending subscriber and records a pending vote", async () => {
-    const res = await request({ service: "Hinge", email: "wants-hinge@example.com" });
-    expect(res.status).toBe(200);
-
-    const sub = await env.DB.prepare(
-      "SELECT status, source FROM subscribers WHERE email = ?"
-    )
-      .bind("wants-hinge@example.com")
-      .first();
-    expect(sub.status).toBe("pending");
-    expect(sub.source).toBe("requested:service-hinge");
-
-    const vote = await env.DB.prepare(
-      "SELECT status FROM votes WHERE feature = ? AND email = ?"
-    )
-      .bind("requested:service-hinge", "wants-hinge@example.com")
-      .first();
-    expect(vote.status).toBe("pending");
-  });
 });
 
 describe("POST /request sad path", () => {
@@ -92,8 +68,6 @@ describe("POST /request sad path", () => {
 
     const rows = await env.DB.prepare("SELECT * FROM requests").all();
     expect(rows.results.length).toBe(0);
-    const subs = await env.DB.prepare("SELECT * FROM subscribers").all();
-    expect(subs.results.length).toBe(0);
   });
 
   it("rejects an oversized service name and stores nothing", async () => {

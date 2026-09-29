@@ -76,13 +76,13 @@ list, database, or Cloudflare account — this is a fully independent copy.
 
 ## What's tos.watch-specific, not required for self-hosting
 
-The Cloudflare Worker in `worker/` (search box backend, subscribe/confirm/
-unsubscribe, service-request and feature-vote logging) is how tos.watch
+The Cloudflare Worker in `worker/` (search box backend, Buttondown signup,
+service-request and feature-vote tagging) is how tos.watch
 itself runs its hosted newsletter and search UI. A self-hosted copy doesn't
 need it at all — `alerts/*.md` and `site/feed.xml` are the whole product.
 If you do want the same search-and-request flow, `worker/` is Apache-2.0
-too, but you'd need your own Cloudflare account, D1 database, and (if you
-want double opt-in email) your own Buttondown account and API key.
+too, but you'd need your own Cloudflare account, a D1 database for the anonymous
+request counts, and your own Buttondown account and API key.
 
 ## Attribution you must keep
 

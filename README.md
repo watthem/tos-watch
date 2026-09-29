@@ -26,7 +26,7 @@ Not affiliated with any company it tracks.
   - a landing page with search;
   - a page per service and per change, with word-level diffs by [`@pierre/diffs`](https://www.npmjs.com/package/@pierre/diffs), Apache-2.0;
   - an RSS feed.
-- `worker/`: a Cloudflare Worker and D1 database for signup, site requests, feature votes, and a mock on-demand check.
+- `worker/`: a Cloudflare Worker for signup, site requests, feature votes, and a mock on-demand check. Emails live only in Buttondown; D1 holds anonymous request counts.
 - [SELF_HOSTING.md](SELF_HOSTING.md): run your own copy for the documents you care about.
 - [ROADMAP.md](ROADMAP.md): what's deliberately not built yet, and why.
 
@@ -113,25 +113,24 @@ npm run deploy    # wrangler deploy
 ```
 
 Endpoints:
-- `POST /subscribe` takes `{email, tracks[]}`. It returns `next: "confirm"` when Buttondown has sent its confirmation email, or `error: "blocked"` when Buttondown's spam firewall rejected the address.
-- `GET /confirm` and `GET /unsubscribe`.
+- `POST /subscribe` takes `{email, source?, tracks?[]}`. It returns `next: "confirm"` when Buttondown has sent its confirmation email, or `error: "blocked"` when Buttondown's spam firewall rejected the address.
 - `POST /request` takes `{service?, url?, email?}`.
 - `POST /vote` takes `{feature, email}`.
 - `GET /check?url=`: the mock above.
 
 No route lists or exports subscriber emails, requests, or votes.
 
-A vote or a request with an email counts only once that address is confirmed; an unknown address gets double opt-in first. The response never reveals which case applied.
+The Worker never stores or logs an email address. Buttondown is the only list: the signup source, `track:<id>` topics, `vote:<feature>` and `requested:<key>` are tags on the Buttondown subscriber. A new address gets Buttondown's double opt-in, so a vote counts once its subscriber is confirmed. A vote never retags or resubscribes someone who unsubscribed. The response never reveals whether an address was already known.
 
 The D1 schema is in `worker/migrations/`. Apply it with `npm run db:migrate:local` or `npm run db:migrate:remote`.
 
-D1 keeps its own copy of the subscriber list. Buttondown sends the double opt-in email and handles one-click unsubscribe. Set the key with:
+Buttondown sends the double opt-in email and handles unsubscribes. Set the key with:
 
 ```
 npx wrangler secret put BUTTONDOWN_API_KEY
 ```
 
-Without it, the Worker logs and skips the Buttondown call.
+Without it, the Worker skips the Buttondown call and keeps no email at all.
 
 ## Licence
 

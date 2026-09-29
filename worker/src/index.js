@@ -2,42 +2,25 @@
  * tos.watch signup + search Worker.
  *
  * Endpoints:
- *   POST /subscribe          {email, source?, tracks?[]}  -> store pending, idempotent
- *   GET  /confirm?token=...  -> pending -> confirmed (also promotes any pending votes)
- *   GET  /unsubscribe?token=... -> any -> unsubscribed
- *   POST /request  {service?, url?, email?}  -> log interest in an untracked/unknown
- *                  service; dedupe by normalized service/url; optional email is a
- *                  verified interest signal (see /vote), not a raw count
- *   POST /vote     {feature, email}  -> a verified +1 on a feature request (e.g. the
- *                  mock on-demand check), gated on a confirmed email
+ *   POST /subscribe  {email, source?, tracks?[]}  -> create the subscriber in Buttondown
+ *   POST /request    {service?, url?, email?}  -> count interest in an untracked/unknown
+ *                    service; dedupe by normalized service/url; an optional email
+ *                    tags that subscriber requested:<key> in Buttondown
+ *   POST /vote       {feature, email}  -> tags that subscriber vote:<feature> in Buttondown
  *   GET  /check?url=...  -> MOCK on-demand check: never fetches the given url, only
- *                  looks it up against the bundled tracked/archived service list
+ *                    looks it up against the bundled tracked/archived service list
  *
- * No endpoint lists or exports subscriber emails, requests, or votes.
- *
- * Email provider: Buttondown (docs.buttondown.com), per the owner's decision
- * 2026-09-26. D1 is our own copy of the list; Buttondown owns the actual
- * double opt-in confirmation email and its own one-click unsubscribe link
- * (docs.buttondown.com/double-opt-in) - that is the ONE side that ever sends
- * real mail. Our own sendConfirmation() below is intentionally never wired
- * to a real sender, so there is no risk of a subscriber getting two
- * confirmation emails. Our own /confirm and /unsubscribe token routes still
- * exist and are tested independently, as our own record of the list; they
- * do not depend on Buttondown being configured.
+ * Buttondown is the only place an email address lives (owner, 2026-09-28:
+ * "remove the PII as early as possible from the services"). It sends the
+ * double opt-in confirmation and owns unsubscribes. The signup source, topics,
+ * votes and requests are tags on the Buttondown subscriber, so a vote counts
+ * once that subscriber has confirmed (type "regular"), and unsubscribing or
+ * deleting them in Buttondown removes everything. D1 keeps only the anonymous
+ * per-service request counts. Nothing here logs an email address.
  *
  * Without the BUTTONDOWN_API_KEY secret (`wrangler secret put
- * BUTTONDOWN_API_KEY`, see README), buttondownSubscribe/buttondownUnsubscribe
- * log and no-op, exactly like sendConfirmation does.
- *
- * /request and /vote share one mechanism (added 2026-09-26, owner chat: "we
- * can actually have an endpoint to mock that and +1 a feature request by
- * attaching a registered verified email"): recordFeatureInterest() below.
- * A confirmed email counts immediately; an unknown or still-pending email
- * creates/reuses a pending subscriber (double opt-in) and the vote only
- * counts once they confirm -- handleConfirm() promotes any pending votes
- * for that email at the same time it confirms the subscriber. Anonymous
- * /request calls (no email) only ever bump the separate unverified_count on
- * the requests row; that number is never conflated with a verified vote.
+ * BUTTONDOWN_API_KEY`, see README) the Buttondown calls no-op and no email is
+ * kept anywhere, which is what local dev and most tests see.
  */
 
 import SERVICES from "./services.json";
@@ -51,10 +34,14 @@ const MAX_FEATURE_LEN = 128;
 const MAX_URL_LEN = 2000;
 
 // Track ids, kept in sync by hand with pipeline/watchlist.json's tracks[]
-// (5 tracks added 2026-09-26; see README for the source of truth). A reader
-// who omits tracks[] on /subscribe gets all of them; an unknown id is
-// dropped rather than stored raw.
+// (5 tracks added 2026-09-26; see README for the source of truth). A form
+// that sends tracks[] tags the subscriber track:<id>; an unknown id is
+// dropped rather than passed on raw.
 const VALID_TRACKS = ["ai-assistants", "dating", "typing", "dev-tools", "consumer"];
+
+// Buttondown subscriber types we must not touch: tagging them could
+// resubscribe someone who left.
+const BUTTONDOWN_SUPPRESSED = ["unsubscribed", "blocked", "complained", "undeliverable", "removed"];
 
 // Best-effort, per-isolate rate limiting. This resets whenever the Worker
 // isolate recycles; acceptable for a low-volume signup form and avoids
@@ -97,12 +84,6 @@ function text(body, status = 200) {
     status,
     headers: { "Content-Type": "text/plain; charset=utf-8", ...corsHeaders() },
   });
-}
-
-function randomToken() {
-  const bytes = new Uint8Array(24);
-  crypto.getRandomValues(bytes);
-  return [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 /** name/service string -> url- and key-safe slug, e.g. "  Hinge  " -> "hinge". */
@@ -165,139 +146,99 @@ for (const s of SERVICES.services || []) {
   if (key && !SERVICES_BY_KEY.has(key)) SERVICES_BY_KEY.set(key, s);
 }
 
-/** Sending is not in scope this weekend; log only. Exported for tests. */
-export async function sendConfirmation(email, link) {
-  console.log(`[tos.watch] would send confirmation to ${email}: ${link}`);
+function buttondownHeaders(env) {
+  return { Authorization: `Token ${env.BUTTONDOWN_API_KEY}`, "Content-Type": "application/json" };
 }
 
 /**
- * Create/upsert the subscriber in Buttondown (default double opt-in: they
- * get type "unactivated" and Buttondown emails them to confirm). Honest
- * no-op when the secret isn't set yet. Best-effort: never throws, never
- * blocks the visitor-facing response on a downstream failure.
- * https://docs.buttondown.com/api-subscribers-create
- */
-/** Returns what happened, for the signup form to show:
- *  "sent"    Buttondown accepted the address and emails its own confirmation
- *            (or already knows it; we don't reveal which),
+ * Create the subscriber in Buttondown (default double opt-in: type
+ * "unactivated" until they confirm Buttondown's own email). Never throws and
+ * never logs the address. Returns what happened:
+ *  "sent"    created; Buttondown emails its confirmation,
+ *  "exists"  Buttondown already has this address,
  *  "blocked" Buttondown's firewall rejected it,
  *  "failed"  anything else went wrong,
- *  "skipped" no API key (local dev and tests). */
-export async function buttondownSubscribe(env, email, source, ip) {
+ *  "skipped" no API key (local dev and tests).
+ * https://docs.buttondown.com/api-subscribers-create (a tag that doesn't
+ * exist yet needs a plan with tags; see the feature_disabled retry below)
+ */
+export async function buttondownCreate(env, email, tags, ip) {
   if (!env.BUTTONDOWN_API_KEY) {
-    console.log(`[tos.watch] BUTTONDOWN_API_KEY not set; not yet syncing ${email} to Buttondown`);
+    console.log("[tos.watch] BUTTONDOWN_API_KEY not set; subscriber not sent to Buttondown");
     return "skipped";
   }
   try {
-    const body = { email_address: email, tags: source ? [source] : undefined };
+    const body = { email_address: email };
+    if (tags && tags.length) body.tags = tags;
     if (ip && ip !== "unknown") body.ip_address = ip;
     const res = await fetch(`${BUTTONDOWN_API_BASE}/subscribers`, {
       method: "POST",
-      headers: {
-        Authorization: `Token ${env.BUTTONDOWN_API_KEY}`,
-        "Content-Type": "application/json",
-      },
+      headers: buttondownHeaders(env),
       body: JSON.stringify(body),
     });
     if (res.ok) return "sent";
-    // Log Buttondown's error code (e.g. email_already_exists vs. a firewall
-    // rejection) without the address itself.
-    const detail = (await res.text()).slice(0, 300);
-    console.log(`[tos.watch] Buttondown subscribe ${res.status}: ${detail}`);
+    // Buttondown's error bodies can echo the address, so log only the code.
     let code = "";
-    try { code = JSON.parse(detail).code || ""; } catch {}
-    if (code === "email_already_exists") return "sent";
+    try { code = JSON.parse(await res.text()).code || ""; } catch {}
+    console.log(`[tos.watch] Buttondown subscribe ${res.status}: ${code || "no code"}`);
+    if (code === "email_already_exists") return "exists";
+    // Plans without tags reject a tag that doesn't exist yet. Losing the tag
+    // is better than losing the signup, so retry once without tags.
+    if (code === "feature_disabled" && body.tags) return buttondownCreate(env, email, [], ip);
     if (code === "subscriber_blocked") return "blocked";
     return "failed";
   } catch (err) {
-    console.log(`[tos.watch] Buttondown subscribe error: ${err}`);
+    console.log(`[tos.watch] Buttondown subscribe error: ${err.name}`);
     return "failed";
   }
 }
 
 /**
- * Mirror an unsubscribe from our own token flow into Buttondown, so someone
- * who unsubscribes via our link stops receiving Buttondown mail too.
+ * Add tags to a subscriber Buttondown already has, keeping their others.
+ * Skips anyone unsubscribed or otherwise suppressed, so a vote never
+ * quietly resubscribes someone who left.
  * https://docs.buttondown.com/api-subscribers-update
  */
-export async function buttondownUnsubscribe(env, email) {
-  if (!env.BUTTONDOWN_API_KEY) {
-    console.log(`[tos.watch] BUTTONDOWN_API_KEY not set; not yet syncing unsubscribe for ${email}`);
-    return;
-  }
+export async function buttondownAddTags(env, email, tags) {
+  if (!env.BUTTONDOWN_API_KEY) return;
   try {
-    const res = await fetch(`${BUTTONDOWN_API_BASE}/subscribers/${encodeURIComponent(email)}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Token ${env.BUTTONDOWN_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ type: "unsubscribed" }),
-    });
+    const url = `${BUTTONDOWN_API_BASE}/subscribers/${encodeURIComponent(email)}`;
+    const res = await fetch(url, { method: "GET", headers: buttondownHeaders(env) });
     if (!res.ok) {
-      console.log(`[tos.watch] Buttondown unsubscribe failed (${res.status}) for ${email}`);
+      console.log(`[tos.watch] Buttondown lookup ${res.status}`);
+      return;
     }
+    const sub = await res.json();
+    if (BUTTONDOWN_SUPPRESSED.includes(sub.type)) return;
+    const current = sub.tags || [];
+    const merged = [...new Set([...current, ...tags])];
+    if (merged.length === current.length) return;
+    const patch = await fetch(url, {
+      method: "PATCH",
+      headers: buttondownHeaders(env),
+      body: JSON.stringify({ tags: merged }),
+    });
+    if (!patch.ok) console.log(`[tos.watch] Buttondown tag update ${patch.status}`);
   } catch (err) {
-    console.log(`[tos.watch] Buttondown unsubscribe error: ${err}`);
+    console.log(`[tos.watch] Buttondown tag error: ${err.name}`);
   }
 }
 
-/** tracks[] from a /subscribe body -> a validated, deduped array. Unknown
- * ids are dropped, never stored raw; an empty/omitted list defaults to all
- * known tracks (checkbox UI ships with everything checked). */
-function normalizeTracks(input) {
-  if (!Array.isArray(input)) return VALID_TRACKS.slice();
-  const valid = [...new Set(input.filter((t) => typeof t === "string" && VALID_TRACKS.includes(t)))];
-  return valid.length ? valid : VALID_TRACKS.slice();
+/** Create the subscriber with these tags, or add the tags if Buttondown
+ * already has them. */
+async function buttondownUpsertTags(env, email, tags, ip) {
+  const outcome = await buttondownCreate(env, email, tags, ip);
+  if (outcome === "exists") await buttondownAddTags(env, email, tags);
+  return outcome;
 }
 
-/**
- * Shared /request + /vote mechanism (2026-09-26): a verified +1 on a
- * feature/service-request key. `feature` is the votes.feature value counted
- * (e.g. "on-demand-check" or "requested:service-hinge"). `sourceTag`
- * (defaults to `feature`) is only used to tag a *brand-new* subscriber row;
- * an already-known email's existing source/status is never overwritten.
- *
- * A confirmed subscriber's vote is recorded as confirmed immediately. A new
- * or still-pending subscriber's vote is recorded as pending; handleConfirm()
- * promotes it to confirmed when that email confirms. Never reveals to the
- * caller which case applied.
- */
-async function recordFeatureInterest(env, feature, email, ip, origin, sourceTag = feature) {
-  const existing = await env.DB.prepare("SELECT status FROM subscribers WHERE email = ?")
-    .bind(email)
-    .first();
-
-  let subscriberStatus = existing ? existing.status : null;
-
-  if (!existing) {
-    const token = randomToken();
-    const now = new Date().toISOString();
-    await env.DB.prepare(
-      "INSERT INTO subscribers (email, status, token, source, created_at) VALUES (?, 'pending', ?, ?, ?)"
-    )
-      .bind(email, token, sourceTag, now)
-      .run();
-    subscriberStatus = "pending";
-    const confirmLink = `${origin}/confirm?token=${token}`;
-    await sendConfirmation(email, confirmLink);
-    await buttondownSubscribe(env, email, sourceTag, ip);
-  }
-
-  const now = new Date().toISOString();
-  if (subscriberStatus === "confirmed") {
-    await env.DB.prepare(
-      "INSERT OR IGNORE INTO votes (feature, email, status, created_at, confirmed_at) VALUES (?, ?, 'confirmed', ?, ?)"
-    )
-      .bind(feature, email, now, now)
-      .run();
-  } else {
-    await env.DB.prepare(
-      "INSERT OR IGNORE INTO votes (feature, email, status, created_at) VALUES (?, ?, 'pending', ?)"
-    )
-      .bind(feature, email, now)
-      .run();
-  }
+/** tracks[] from a /subscribe body -> track:<id> tags. Unknown ids are
+ * dropped; an omitted list adds no track tags (everyone gets every alert). */
+function trackTags(input) {
+  if (!Array.isArray(input)) return [];
+  return [...new Set(input.filter((t) => typeof t === "string" && VALID_TRACKS.includes(t)))].map(
+    (t) => `track:${t}`
+  );
 }
 
 async function handleSubscribe(request, env) {
@@ -318,93 +259,25 @@ async function handleSubscribe(request, env) {
     return json({ ok: false, error: "invalid_email" }, 400);
   }
   const source = typeof body.source === "string" ? body.source.slice(0, 64) : "site";
-  const tracks = normalizeTracks(body.tracks);
+  const tags = [source, ...trackTags(body.tracks)];
 
-  const existing = await env.DB.prepare(
-    "SELECT email, status, token FROM subscribers WHERE email = ?"
-  )
-    .bind(email)
-    .first();
-
-  if (existing) {
-    // Idempotent: repeat signups don't reset an already-pending or
-    // already-confirmed subscriber, and don't leak which case it was. We still
-    // ask Buttondown, so a signup its firewall blocked earlier can go through
-    // on a retry.
-    return subscribeResult(await buttondownSubscribe(env, email, source, ip));
-  }
-
-  const token = randomToken();
-  const now = new Date().toISOString();
-  await env.DB.prepare(
-    "INSERT INTO subscribers (email, status, token, source, tracks, created_at) VALUES (?, 'pending', ?, ?, ?, ?)"
-  )
-    .bind(email, token, source, tracks.join(","), now)
-    .run();
-
-  const confirmLink = `${new URL(request.url).origin}/confirm?token=${token}`;
-  await sendConfirmation(email, confirmLink);
-  return subscribeResult(await buttondownSubscribe(env, email, source, ip));
+  // A repeat signup still asks Buttondown, so an address its firewall blocked
+  // earlier gets through on a retry; the reply never says it was known.
+  return subscribeResult(await buttondownUpsertTags(env, email, tags, ip));
 }
 
-// The D1 row is kept in every case, so a blocked or failed signup can be
-// added by hand later.
 function subscribeResult(outcome) {
   if (outcome === "blocked") return json({ ok: false, error: "blocked" }, 422);
   if (outcome === "failed") return json({ ok: true, next: "saved" });
   return json({ ok: true, next: "confirm" });
 }
 
-async function handleConfirm(request, env) {
-  const token = new URL(request.url).searchParams.get("token") || "";
-  if (!token) return text("Missing or invalid confirmation link.", 400);
-
-  const row = await env.DB.prepare("SELECT email, status FROM subscribers WHERE token = ?")
-    .bind(token)
-    .first();
-  if (!row) return text("Missing or invalid confirmation link.", 400);
-
-  if (row.status === "pending") {
-    const now = new Date().toISOString();
-    await env.DB.prepare(
-      "UPDATE subscribers SET status = 'confirmed', confirmed_at = ? WHERE token = ?"
-    )
-      .bind(now, token)
-      .run();
-    // Promote any votes this email cast while still pending (2026-09-26:
-    // a vote only counts once the voter's email is verified).
-    await env.DB.prepare(
-      "UPDATE votes SET status = 'confirmed', confirmed_at = ? WHERE email = ? AND status = 'pending'"
-    )
-      .bind(now, row.email)
-      .run();
-  }
-  return text("You're confirmed. Thanks for subscribing to tos.watch.");
-}
-
-async function handleUnsubscribe(request, env) {
-  const token = new URL(request.url).searchParams.get("token") || "";
-  if (!token) return text("Missing or invalid unsubscribe link.", 400);
-
-  const row = await env.DB.prepare("SELECT email FROM subscribers WHERE token = ?")
-    .bind(token)
-    .first();
-  if (!row) return text("Missing or invalid unsubscribe link.", 400);
-
-  await env.DB.prepare("UPDATE subscribers SET status = 'unsubscribed' WHERE token = ?")
-    .bind(token)
-    .run();
-  await buttondownUnsubscribe(env, row.email);
-  return text("You're unsubscribed. Sorry to see you go.");
-}
-
 /**
  * POST /request {service?, url?, email?} -- log interest in a service that
  * isn't tracked (or isn't known to us at all). Dedupes by a normalized key
- * so repeat requests increment a count instead of piling up rows. An
- * optional email is routed through recordFeatureInterest() as a verified
- * +1 tagged `requested:<slug>`, on the same confirmed-only-counts rule as
- * /vote; it does not add to the anonymous unverified_count.
+ * so repeat requests increment an anonymous count instead of piling up rows.
+ * An optional email tags that subscriber requested:<key> in Buttondown (and
+ * creates them, double opt-in, if new); it is never stored here.
  */
 async function handleRequest(request, env) {
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
@@ -469,18 +342,18 @@ async function handleRequest(request, env) {
 
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
   if (email && email.length <= 320 && EMAIL_RE.test(email)) {
-    const feature = `requested:${normalizedKey.replace(":", "-")}`;
-    await recordFeatureInterest(env, feature, email, ip, new URL(request.url).origin);
+    await buttondownUpsertTags(env, email, [`requested:${normalizedKey.replace(":", "-")}`], ip);
   }
 
   return json({ ok: true });
 }
 
 /**
- * POST /vote {feature, email} -- a verified +1 on a feature request (e.g.
- * the mock on-demand check). Always returns the same generic response
- * regardless of whether the email was already known/confirmed/pending, so
- * the response itself never reveals subscriber status.
+ * POST /vote {feature, email} -- a +1 on a feature request (e.g. the mock
+ * on-demand check), as a vote:<feature> tag in Buttondown. It counts once
+ * that subscriber has confirmed (type "regular"). Always returns the same
+ * generic response whether or not the email was already known, so the
+ * response itself never reveals subscriber status.
  */
 async function handleVote(request, env) {
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
@@ -502,14 +375,7 @@ async function handleVote(request, env) {
     return json({ ok: false, error: "invalid_vote" }, 400);
   }
 
-  await recordFeatureInterest(
-    env,
-    feature,
-    email,
-    ip,
-    new URL(request.url).origin,
-    `vote:${feature}`
-  );
+  await buttondownUpsertTags(env, email, [`vote:${feature}`], ip);
 
   return json({ ok: true });
 }
@@ -552,12 +418,6 @@ export default {
     }
     if (request.method === "POST" && url.pathname === "/subscribe") {
       return handleSubscribe(request, env);
-    }
-    if (request.method === "GET" && url.pathname === "/confirm") {
-      return handleConfirm(request, env);
-    }
-    if (request.method === "GET" && url.pathname === "/unsubscribe") {
-      return handleUnsubscribe(request, env);
     }
     if (request.method === "POST" && url.pathname === "/request") {
       return handleRequest(request, env);

@@ -1,166 +1,158 @@
-// Tests written from the requirement (tos.watch weekend MVP prompt), before
-// any implementation was assumed to be correct:
+// Tests written from the owner's requirement (2026-09-28, chat: "remove the
+// PII as early as possible from the services"), before the change:
 //
-// (a) happy path: subscribe -> row pending -> confirm with token -> confirmed
-//     -> unsubscribe with token -> unsubscribed.
-// (b) sad path: invalid email rejected, wrong/missing token does not change
-//     any row, and no route returns any stored email.
+// Buttondown is the only place an email address lives. /subscribe, /vote and
+// /request never write an email to D1 or to the Worker logs, and a vote or a
+// request from an existing subscriber is a Buttondown tag. A vote from someone
+// who unsubscribed must not quietly resubscribe them.
 import { env, SELF } from "cloudflare:test";
-import { beforeEach, describe, expect, it } from "vitest";
-import { _resetRateLimitForTests } from "../src/index.js";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import worker, { _resetRateLimitForTests } from "../src/index.js";
 
-async function subscribe(email, source) {
-  return SELF.fetch("https://tos.watch/subscribe", {
+const KEYED = () => ({ ...env, BUTTONDOWN_API_KEY: "test-key" });
+
+function post(path, body, envOverride = KEYED()) {
+  const req = new Request(`https://api.tos.watch${path}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, source }),
+    headers: { "Content-Type": "application/json", "CF-Connecting-IP": "203.0.113.9" },
+    body: JSON.stringify(body),
   });
+  return worker.fetch(req, envOverride);
+}
+
+// A fake Buttondown: `known` maps email -> {type, tags}; records every call.
+function fakeButtondown(known = {}) {
+  const calls = [];
+  const spy = vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init = {}) => {
+    const url = typeof input === "string" ? input : input.url;
+    const method = init.method || "GET";
+    const body = init.body ? JSON.parse(init.body) : null;
+    calls.push({ url, method, body });
+    const email = decodeURIComponent(url.split("/subscribers/")[1] || "");
+    if (method === "POST") {
+      if (known[body.email_address]) {
+        return new Response(JSON.stringify({ code: "email_already_exists" }), { status: 400 });
+      }
+      return new Response("{}", { status: 201 });
+    }
+    if (method === "GET") {
+      const s = known[email];
+      return s ? new Response(JSON.stringify(s), { status: 200 }) : new Response("{}", { status: 404 });
+    }
+    if (method === "PATCH") return new Response("{}", { status: 200 });
+    return new Response("{}", { status: 500 });
+  });
+  return { calls, spy };
+}
+
+async function dbDump() {
+  const tables = await env.DB.prepare(
+    "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '_cf_%' AND name != 'd1_migrations'"
+  ).all();
+  let text = tables.results.map((t) => t.name).join(",");
+  for (const { name } of tables.results) {
+    const rows = await env.DB.prepare(`SELECT * FROM "${name}"`).all();
+    text += JSON.stringify(rows.results);
+  }
+  return text;
 }
 
 beforeEach(async () => {
-  await env.DB.prepare("DELETE FROM subscribers").run();
+  await env.DB.prepare("DELETE FROM requests").run();
   _resetRateLimitForTests();
 });
+afterEach(() => vi.restoreAllMocks());
 
-describe("subscribe -> confirm -> unsubscribe happy path", () => {
-  it("moves a subscriber from pending to confirmed to unsubscribed", async () => {
-    const email = "reader@example.com";
+describe("no email address is kept outside Buttondown", () => {
+  it("subscribe, vote and request leave no email in D1 or the logs", async () => {
+    fakeButtondown();
+    const log = vi.spyOn(console, "log");
 
-    const subRes = await subscribe(email, "landing-page");
-    expect(subRes.status).toBe(200);
+    expect((await post("/subscribe", { email: "reader@example.com", source: "landing-page" })).status).toBe(200);
+    expect((await post("/vote", { feature: "on-demand-check", email: "voter@example.com" })).status).toBe(200);
+    expect((await post("/request", { service: "Hinge", email: "asker@example.com" })).status).toBe(200);
+    // Same, with no Buttondown key (local dev): still nothing stored.
+    await post("/subscribe", { email: "nokey@example.com" }, env);
 
-    const pendingRow = await env.DB.prepare(
-      "SELECT status, token FROM subscribers WHERE email = ?"
-    )
-      .bind(email)
-      .first();
-    expect(pendingRow.status).toBe("pending");
-    expect(typeof pendingRow.token).toBe("string");
-    expect(pendingRow.token.length).toBeGreaterThan(10);
+    const dump = await dbDump();
+    for (const e of ["reader@", "voter@", "asker@", "nokey@"]) expect(dump).not.toContain(e);
+    expect(dump).not.toMatch(/subscribers|votes/);
+    expect(dump).toContain("Hinge"); // the anonymous request count is still kept
 
-    const confirmRes = await SELF.fetch(
-      `https://tos.watch/confirm?token=${pendingRow.token}`
-    );
-    expect(confirmRes.status).toBe(200);
-
-    const confirmedRow = await env.DB.prepare(
-      "SELECT status, confirmed_at FROM subscribers WHERE email = ?"
-    )
-      .bind(email)
-      .first();
-    expect(confirmedRow.status).toBe("confirmed");
-    expect(confirmedRow.confirmed_at).toBeTruthy();
-
-    const unsubRes = await SELF.fetch(
-      `https://tos.watch/unsubscribe?token=${pendingRow.token}`
-    );
-    expect(unsubRes.status).toBe(200);
-
-    const finalRow = await env.DB.prepare(
-      "SELECT status FROM subscribers WHERE email = ?"
-    )
-      .bind(email)
-      .first();
-    expect(finalRow.status).toBe("unsubscribed");
+    const logged = log.mock.calls.flat().join(" ");
+    expect(logged).not.toContain("@example.com");
   });
 
-  it("is idempotent on a repeat subscribe of the same email", async () => {
-    const email = "again@example.com";
-    await subscribe(email);
-    const first = await env.DB.prepare("SELECT token FROM subscribers WHERE email = ?")
-      .bind(email)
-      .first();
-
-    const secondRes = await subscribe(email);
-    expect(secondRes.status).toBe(200);
-
-    const rows = await env.DB.prepare("SELECT token FROM subscribers WHERE email = ?")
-      .bind(email)
-      .all();
-    expect(rows.results.length).toBe(1);
-    expect(rows.results[0].token).toBe(first.token);
+  it("the old token routes are gone", async () => {
+    expect((await SELF.fetch("https://api.tos.watch/confirm?token=x")).status).toBe(404);
+    expect((await SELF.fetch("https://api.tos.watch/unsubscribe?token=x")).status).toBe(404);
   });
 });
 
-describe("sad path: invalid input is rejected without side effects", () => {
-  it("rejects an invalid email and stores no row", async () => {
-    const res = await subscribe("not-an-email");
-    expect(res.status).toBe(400);
-
-    const rows = await env.DB.prepare("SELECT * FROM subscribers").all();
-    expect(rows.results.length).toBe(0);
+describe("Buttondown carries sources, topics, votes and requests as tags", () => {
+  it("a new subscriber is created with the source tag, their visitor IP and valid topics only", async () => {
+    const { calls } = fakeButtondown();
+    const res = await post("/subscribe", {
+      email: "Picker@Example.com ",
+      source: "landing-page",
+      tracks: ["dating", "'; DROP TABLE x; --"],
+    });
+    expect(await res.json()).toEqual({ ok: true, next: "confirm" });
+    const create = calls.find((c) => c.method === "POST");
+    expect(create.body.email_address).toBe("picker@example.com");
+    expect(create.body.ip_address).toBe("203.0.113.9");
+    expect(create.body.tags.sort()).toEqual(["landing-page", "track:dating"]);
   });
 
-  it("does not change any row for a wrong confirm token", async () => {
-    const email = "victim@example.com";
-    await subscribe(email);
-    const before = await env.DB.prepare(
-      "SELECT status FROM subscribers WHERE email = ?"
-    )
-      .bind(email)
-      .first();
-
-    const res = await SELF.fetch("https://tos.watch/confirm?token=not-the-real-token");
-    expect(res.status).toBe(400);
-
-    const after = await env.DB.prepare(
-      "SELECT status FROM subscribers WHERE email = ?"
-    )
-      .bind(email)
-      .first();
-    expect(after.status).toBe(before.status);
+  it("a vote from an existing subscriber adds the tag and keeps their other tags", async () => {
+    const { calls } = fakeButtondown({ "fan@example.com": { type: "regular", tags: ["landing-page"] } });
+    await post("/vote", { feature: "on-demand-check", email: "fan@example.com" });
+    const patch = calls.find((c) => c.method === "PATCH");
+    expect(patch.body).toEqual({ tags: ["landing-page", "vote:on-demand-check"] });
   });
 
-  it("does not change any row for a missing unsubscribe token", async () => {
-    const email = "victim2@example.com";
-    await subscribe(email);
-
-    const res = await SELF.fetch("https://tos.watch/unsubscribe");
-    expect(res.status).toBe(400);
-
-    const after = await env.DB.prepare(
-      "SELECT status FROM subscribers WHERE email = ?"
-    )
-      .bind(email)
-      .first();
-    expect(after.status).toBe("pending");
-  });
-
-  it("subscribes honestly with no Buttondown key configured (no-op, no throw)", async () => {
-    // The owner has not created a Buttondown account yet. With no
-    // BUTTONDOWN_API_KEY secret bound (the default in this test env),
-    // /subscribe must still succeed and record the subscriber locally,
-    // exactly as if Buttondown didn't exist.
-    expect(env.BUTTONDOWN_API_KEY).toBeUndefined();
-
-    const email = "no-key@example.com";
-    const res = await subscribe(email);
+  it("a vote from someone who unsubscribed does not resubscribe or retag them", async () => {
+    const { calls } = fakeButtondown({ "gone@example.com": { type: "unsubscribed", tags: [] } });
+    const res = await post("/vote", { feature: "on-demand-check", email: "gone@example.com" });
     expect(res.status).toBe(200);
-    const body = await res.json();
-    expect(body.ok).toBe(true);
-
-    const row = await env.DB.prepare("SELECT status FROM subscribers WHERE email = ?")
-      .bind(email)
-      .first();
-    expect(row.status).toBe("pending");
+    expect(calls.some((c) => c.method === "PATCH")).toBe(false);
   });
 
-  it("never returns a stored email from any route", async () => {
-    const email = "secret@example.com";
-    const subRes = await subscribe(email);
-    const subText = await subRes.clone().text();
-    expect(subText).not.toContain(email);
+  it("a request with an email tags the subscriber requested:<key>", async () => {
+    const { calls } = fakeButtondown();
+    await post("/request", { service: "Hinge", email: "wants-hinge@example.com" });
+    const create = calls.find((c) => c.method === "POST");
+    expect(create.body.tags).toEqual(["requested:service-hinge"]);
+  });
 
-    const row = await env.DB.prepare("SELECT token FROM subscribers WHERE email = ?")
-      .bind(email)
-      .first();
+  it("vote responses don't reveal whether the email was already known", async () => {
+    fakeButtondown({ "known@example.com": { type: "regular", tags: [] } });
+    const a = await post("/vote", { feature: "f", email: "known@example.com" });
+    const b = await post("/vote", { feature: "f", email: "new@example.com" });
+    expect(a.status).toBe(b.status);
+    expect(await a.json()).toEqual(await b.json());
+  });
 
-    const confirmRes = await SELF.fetch(`https://tos.watch/confirm?token=${row.token}`);
-    const confirmText = await confirmRes.clone().text();
-    expect(confirmText).not.toContain(email);
+  it("still subscribes when the Buttondown plan can't create tags", async () => {
+    const calls = [];
+    vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init = {}) => {
+      const body = JSON.parse(init.body);
+      calls.push(body);
+      if (body.tags && body.tags.length) {
+        return new Response(JSON.stringify({ code: "feature_disabled" }), { status: 403 });
+      }
+      return new Response("{}", { status: 201 });
+    });
+    const res = await post("/subscribe", { email: "free-plan@example.com", source: "landing-page" });
+    expect(await res.json()).toEqual({ ok: true, next: "confirm" });
+    expect(calls.length).toBe(2);
+    expect(calls[1].tags).toBeUndefined();
+  });
 
-    const unsubRes = await SELF.fetch(`https://tos.watch/unsubscribe?token=${row.token}`);
-    const unsubText = await unsubRes.clone().text();
-    expect(unsubText).not.toContain(email);
+  it("rejects an invalid email or missing feature without calling Buttondown", async () => {
+    const { calls } = fakeButtondown();
+    expect((await post("/subscribe", { email: "not-an-email" })).status).toBe(400);
+    expect((await post("/vote", { feature: "", email: "a@example.com" })).status).toBe(400);
+    expect(calls.length).toBe(0);
   });
 });
