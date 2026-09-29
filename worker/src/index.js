@@ -274,7 +274,8 @@ async function handleSubscribe(request, env) {
 
 function subscribeResult(outcome) {
   if (outcome === "blocked") return json({ ok: false, error: "blocked" }, 422);
-  if (outcome === "failed") return json({ ok: true, next: "saved" });
+  // Nothing was saved, so say so; the page tells the visitor to try again.
+  if (outcome === "failed") return json({ ok: false, error: "unavailable" }, 503);
   return json({ ok: true, next: "confirm" });
 }
 
