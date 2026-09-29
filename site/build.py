@@ -359,14 +359,6 @@ def track_blurb(track: dict) -> str:
     return re.sub(r"\s*--\s*", ": ", track.get("description", ""))
 
 
-def track_checkboxes(tracks: list[dict]) -> str:
-    return "\n".join(
-        f'<label class="check"><input type="checkbox" name="tracks" value="{esc(t["id"])}" checked> '
-        f'<span><strong>{esc(t["label"])}</strong> {esc(track_blurb(t))}</span></label>'
-        for t in tracks
-    )
-
-
 # ---------------------------------------------------------------- pages
 
 def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[str]]) -> str:
@@ -399,14 +391,8 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
           <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
           <button class="button" type="submit">Subscribe</button>
         </div>
-        <details class="topics">
-          <summary>Choose topics</summary>
-          <div class="topic-list">
-{track_checkboxes(watchlist.get("tracks", []))}
-          </div>
-        </details>
       </form>
-      <p class="form-note" id="form-note">Free. One email per real change. <a href="https://github.com/watthem/tos-watch">Open source</a>.</p>
+      <p class="form-note" id="form-note">Free. One email per real change, across every topic we watch. <a href="https://github.com/watthem/tos-watch">Open source</a>.</p>
     </div>
     {example}
   </div>
@@ -497,7 +483,7 @@ def service_signup(vendor: str, slug: str, tracks: str, root: str) -> str:
         <button class="button" type="submit">Subscribe</button>
       </div>
     </form>
-    <p class="form-note">Free. One email per real change. Unsubscribe with one click.</p>
+    <p class="form-note">Free. You get every alert we send, {esc(vendor)}’s included. One email per real change. Unsubscribe with one click.</p>
   </div>"""
 
 
