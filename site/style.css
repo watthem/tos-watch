@@ -265,6 +265,14 @@ section { padding: var(--space-8) 0 0; }
 .steps p { color: var(--graphite); margin: 0; }
 @media (min-width: 48rem) { .steps { grid-template-columns: repeat(3, 1fr); gap: var(--space-6); } }
 
+/* Demand signals: one card per feature the owner is deciding whether to build. */
+.signal-grid { display: grid; gap: var(--space-4); margin-top: var(--space-5); }
+@media (min-width: 48rem) { .signal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.signal-card { padding: var(--space-5); background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: var(--shadow-soft); }
+.signal-card h3 { font-size: var(--step-0); margin-bottom: var(--space-2); }
+.signal-card p { color: var(--graphite); margin: 0; }
+.signal-card .request-note { margin-top: var(--space-2); }
+
 /* The one bento: search plus a tile per topic. */
 .bento { display: grid; gap: var(--space-3); grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .tile-search { grid-column: 1 / -1; }

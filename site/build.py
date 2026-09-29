@@ -425,13 +425,40 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
     </ol>
   </div>
 </section>
+
+<section class="signals">
+  <div class="wrap">
+    <h2>Help decide what comes next</h2>
+    <div class="signal-grid">
+      {signal_card("founding-supporter", "Keep it running", "tos.watch is free and run by one person. If a small paid supporter tier opens, would you join? Nothing is charged now.", "Count me in")}
+      {signal_card("vendor-watch", "Watch my company's vendors", "For teams: a private watchlist of the services your company relies on, with alerts to your inbox or a webhook.", "I'd use this")}
+    </div>
+    <p class="form-note">If you're new here, we'll send one confirmation email, and confirming also subscribes you to alerts. Unsubscribe any time.</p>
+  </div>
+</section>
 """
     return layout(
         "tos.watch: know when the fine print changes",
         body,
-        scripts='<script src="subscribe.js"></script>\n<script src="search.js"></script>',
+        scripts='<script src="subscribe.js"></script>\n<script src="search.js"></script>\n<script src="signals.js"></script>',
         path="index.html",
     )
+
+
+def signal_card(feature: str, title: str, text: str, button: str) -> str:
+    """One demand-signal card on the landing page: a POST /vote for `feature`
+    (worker VALID_FEATURES), wired by signals.js."""
+    fid = f"signal-{feature}"
+    return f"""<div class="signal-card">
+        <h3>{esc(title)}</h3>
+        <p>{esc(text)}</p>
+        <form class="signal-form vote-form" data-feature="{esc(feature)}" data-success="Thanks. Confirm the email we send you if you're new, and it counts." novalidate>
+          <label for="{fid}-email" class="visually-hidden">Email</label>
+          <input id="{fid}-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
+          <button class="button button-secondary" type="submit">{esc(button)}</button>
+        </form>
+        <p class="request-note"></p>
+      </div>"""
 
 
 def render_alert_page(e: dict, others: list[dict]) -> str:
@@ -720,7 +747,7 @@ def copy_fonts(site_dir: pathlib.Path) -> None:
 
 
 # Hand-written files in this repo's site/ that every deploy needs.
-STATIC_FILES = ["style.css", "diffs.css", "subscribe.js", "search.js", "services.json"]
+STATIC_FILES = ["style.css", "diffs.css", "subscribe.js", "search.js", "signals.js", "services.json"]
 
 
 def copy_static(site_dir: pathlib.Path) -> None:

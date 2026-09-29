@@ -6,7 +6,8 @@
  *   POST /request    {service?, url?, email?}  -> count interest in an untracked/unknown
  *                    service; dedupe by normalized service/url; an optional email
  *                    tags that subscriber requested:<key> in Buttondown
- *   POST /vote       {feature, email}  -> tags that subscriber vote:<feature> in Buttondown
+ *   POST /vote       {feature, email}  -> counts the vote in D1 (anonymous) and tags that
+ *                    subscriber vote:<feature> in Buttondown; feature is one of VALID_FEATURES
  *   GET  /check?url=...  -> MOCK on-demand check: never fetches the given url, only
  *                    looks it up against the bundled tracked/archived service list
  *
@@ -15,8 +16,9 @@
  * double opt-in confirmation and owns unsubscribes. The signup source, topics,
  * votes and requests are tags on the Buttondown subscriber, so a vote counts
  * once that subscriber has confirmed (type "regular"), and unsubscribing or
- * deleting them in Buttondown removes everything. D1 keeps only the anonymous
- * per-service request counts. Nothing here logs an email address.
+ * deleting them in Buttondown removes everything. D1 keeps only anonymous
+ * counts: per-service requests and per-feature votes. Nothing here logs an
+ * email address.
  *
  * Without the BUTTONDOWN_API_KEY secret (`wrangler secret put
  * BUTTONDOWN_API_KEY`, see README) the Buttondown calls no-op and no email is
@@ -30,7 +32,6 @@ const BUTTONDOWN_API_BASE = "https://api.buttondown.com/v1";
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 5;
 const MAX_SERVICE_LEN = 200;
-const MAX_FEATURE_LEN = 128;
 const MAX_URL_LEN = 2000;
 
 // Track ids, kept in sync by hand with pipeline/watchlist.json's tracks[]
@@ -38,6 +39,11 @@ const MAX_URL_LEN = 2000;
 // that sends tracks[] tags the subscriber track:<id>; an unknown id is
 // dropped rather than passed on raw.
 const VALID_TRACKS = ["ai-assistants", "dating", "typing", "dev-tools", "consumer"];
+
+// Feature ids /vote accepts, each a demand signal the owner reads from D1
+// feature_counts: the mock on-demand check, a paid supporter tier, and
+// vendor watchlists for teams (owner, 2026-09-28: "we should collect signals").
+const VALID_FEATURES = ["on-demand-check", "founding-supporter", "vendor-watch"];
 
 // Buttondown subscriber types we must not touch: tagging them could
 // resubscribe someone who left.
@@ -371,9 +377,16 @@ async function handleVote(request, env) {
   const feature = typeof body.feature === "string" ? body.feature.trim() : "";
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
 
-  if (!feature || feature.length > MAX_FEATURE_LEN || !email || email.length > 320 || !EMAIL_RE.test(email)) {
+  if (!VALID_FEATURES.includes(feature) || !email || email.length > 320 || !EMAIL_RE.test(email)) {
     return json({ ok: false, error: "invalid_vote" }, 400);
   }
+
+  await env.DB.prepare(
+    "INSERT INTO feature_counts (feature, unverified_count, updated_at) VALUES (?, 1, ?) " +
+      "ON CONFLICT(feature) DO UPDATE SET unverified_count = unverified_count + 1, updated_at = excluded.updated_at"
+  )
+    .bind(feature, new Date().toISOString())
+    .run();
 
   await buttondownUpsertTags(env, email, [`vote:${feature}`], ip);
 
