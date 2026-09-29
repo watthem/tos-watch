@@ -1,11 +1,12 @@
 {
   "name": "tos-watch-shape",
   "private": true,
-  "description": "Document-shape checks for tos.watch: Stela chunk hashes plus a FieldTest (Standard Schema) schema per document, to catch layout and extraction changes.",
+  "description": "Document-shape checks for tos.watch: Stela chunk hashes plus a FieldTest (Standard Schema) schema per document, to catch layout and extraction changes; and a FieldTest check of every alert file's front matter and layout.",
   "license": "Apache-2.0",
   "type": "module",
   "dependencies": {
-    "@fieldtest/core": "^1.0.2",
-    "@watthem/stela": "^0.2.1"
+    "@fieldtest/core": "^2.0.0",
+    "@watthem/stela": "^0.2.1",
+    "zod": "^4.1.0"
   }
 }

@@ -19,7 +19,8 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { validateWithSchema, z } from "@fieldtest/core";
+import { check } from "@fieldtest/core";
+import { z } from "zod";
 import { run as stela } from "@watthem/stela";
 
 const CODE = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -163,10 +164,10 @@ for (const d of watchlist.documents) {
     };
     const schema = timed("schema", () => schemaFor(history));
     const tv = performance.now();
-    const result = await validateWithSchema(schema, profile);
+    const result = await check(schema, profile);
     (timers.fieldtest ??= { ms: 0, calls: 0 }).ms += performance.now() - tv;
     timers.fieldtest.calls += 1;
-    if (result && result.issues) {
+    if (!result.ok) {
       flagged.push({ vendor: d.vendor, doc: d.doc, ...profile, issues: result.issues.map((i) => i.message) });
     }
     history.push(profile);
