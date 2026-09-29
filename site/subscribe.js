@@ -43,9 +43,11 @@
         .then(function (res) { return res.json().catch(function () { return {}; }); })
         .then(function (data) {
           if (data && data.ok) {
-            showDone(form, note, email, data.next);
+            showDone(form, note, email);
           } else if (data && data.error === "blocked") {
             fail("Our spam filter stopped this signup. Email hello@tos.watch and we'll add you by hand.");
+          } else if (data && data.error === "unavailable") {
+            fail("We couldn't sign you up just now, so nothing was saved. Please try again in a few minutes.");
           } else if (data && data.error === "rate_limited") {
             fail("Too many tries. Wait a minute and try again.");
           } else {
@@ -59,7 +61,7 @@
   }
 
   // Replace the form with next steps, so it's obvious the signup went through.
-  function showDone(form, note, email, next) {
+  function showDone(form, note, email) {
     var panel = document.createElement("div");
     panel.className = "signup-done";
     panel.setAttribute("role", "status");
@@ -68,14 +70,9 @@
     var title = document.createElement("p");
     title.className = "signup-done-title";
     var detail = document.createElement("p");
-    if (next === "saved") {
-      title.textContent = "You're on the list.";
-      detail.textContent = "We couldn't send the confirmation email just now. We'll send it to " + email + " shortly.";
-    } else {
-      title.textContent = "Check your inbox to finish.";
-      detail.textContent = "We sent a confirmation link to " + email +
-        ". Click it and you're subscribed. Nothing after a few minutes? Look in spam or Promotions.";
-    }
+    title.textContent = "Check your inbox to finish.";
+    detail.textContent = "We sent a confirmation link to " + email +
+      ". Click it and you're subscribed. Nothing after a few minutes? Look in spam or Promotions.";
     panel.appendChild(title);
     panel.appendChild(detail);
 

@@ -156,3 +156,29 @@ describe("Buttondown carries sources, topics, votes and requests as tags", () =>
     expect(calls.length).toBe(0);
   });
 });
+
+// Written from the requirement (timebox 202609291040, LL-2026-09-27-02): when
+// Buttondown fails, nothing is saved, so the response must not say it worked.
+describe("a failed Buttondown signup is not reported as success", () => {
+  it("returns not-ok for a Buttondown 500 and for a network error", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("{}", { status: 500 }));
+    const a = await post("/subscribe", { email: "reader@example.com" });
+    expect(a.status).toBeGreaterThanOrEqual(500);
+    expect(await a.json()).toEqual({ ok: false, error: "unavailable" });
+
+    vi.restoreAllMocks();
+    vi.spyOn(globalThis, "fetch").mockRejectedValue(new TypeError("network"));
+    const b = await post("/subscribe", { email: "reader@example.com" });
+    expect(b.status).toBeGreaterThanOrEqual(500);
+    expect((await b.json()).ok).toBe(false);
+  });
+
+  it("reports a firewall block as blocked", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(JSON.stringify({ code: "subscriber_blocked" }), { status: 400 })
+    );
+    const res = await post("/subscribe", { email: "reader@example.com" });
+    expect(res.status).toBe(422);
+    expect(await res.json()).toEqual({ ok: false, error: "blocked" });
+  });
+});
