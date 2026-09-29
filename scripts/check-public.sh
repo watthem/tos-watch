@@ -12,7 +12,7 @@ cd "$(git rev-parse --show-toplevel)"
 
 fail=0
 bad_paths=$(git ls-files \
-  | grep -E '^(alerts|cache|datasets)/|(^|/)(questions|dismissed|state|drafts_state)\.json$|_snapshots/|^site/(alerts|s)/|^site/[^/]+\.html$|^site/(feed|sitemap)\.xml$' \
+  | grep -E '^(alerts|cache|datasets|customers)/|(^|/)(questions|dismissed|state|drafts_state)\.json$|_snapshots/|^site/(alerts|s)/|^site/[^/]+\.html$|^site/(feed|sitemap)\.xml$' \
   | grep -vx 'datasets/build_services_catalog.py' || true)
 if [[ -n "$bad_paths" ]]; then
   echo "private or generated files are tracked:" >&2

@@ -26,6 +26,11 @@ Usage:
     pipeline/run.py --no-pull       # use whatever is already cloned
     pipeline/run.py --workers 6     # Jev scoring concurrency (default 6)
     pipeline/run.py --dry-run       # extract + filter, skip Jev + writing
+    pipeline/run.py --watchlist W --out DIR
+                                    # a separate watchlist (e.g. one made by
+                                    # pipeline/vendors.py match): alerts and
+                                    # state go to DIR, the site is not rebuilt,
+                                    # and the Jev cache is shared
 
 Requires OPENROUTER_API_KEY in the environment, unless --dry-run.
 """
@@ -253,7 +258,27 @@ def main() -> None:
             "alert are scored, so every Jev answer comes from the cache."
         ),
     )
+    ap.add_argument("--watchlist", type=pathlib.Path, default=None, help="watchlist JSON (default: pipeline/watchlist.json)")
+    ap.add_argument(
+        "--out",
+        type=pathlib.Path,
+        default=None,
+        help=(
+            "write alerts to OUT/alerts and state to OUT/state.json instead of "
+            "the data directory's, and skip the site rebuild. For private "
+            "watchlists (e.g. a team's vendors) whose alerts must never reach "
+            "the public site or the newsletter."
+        ),
+    )
     args = ap.parse_args()
+
+    global WATCHLIST_PATH, ALERTS_DIR, STATE_PATH
+    if args.watchlist:
+        WATCHLIST_PATH = args.watchlist
+    if args.out:
+        ALERTS_DIR = args.out / "alerts"
+        STATE_PATH = args.out / "state.json"
+        ALERTS_DIR.mkdir(parents=True, exist_ok=True)
 
     watchlist = load_watchlist()
     state = load_state()
@@ -348,6 +373,10 @@ def main() -> None:
     save_state(state)
 
     print(f"{new_count} new alert(s) written; {len(groups)} alerting document version(s) total seen this run")
+
+    if args.out:
+        print("Done (--out: site not rebuilt).")
+        return
 
     print("Rebuilding site archive and RSS feed...")
     sys.path.insert(0, str(ROOT / "site"))
