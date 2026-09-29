@@ -61,9 +61,12 @@ import sys
 import urllib.error
 import urllib.request
 
-ROOT = pathlib.Path(__file__).parent.parent
-ALERTS_DIR = ROOT / "alerts"
-STATE_PATH = pathlib.Path(__file__).parent / "drafts_state.json"
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
+from lib import paths  # noqa: E402
+
+ROOT = paths.CODE
+ALERTS_DIR = paths.ALERTS_DIR
+STATE_PATH = paths.DRAFTS_STATE_PATH
 API_URL = "https://api.buttondown.com/v1/emails"
 LOOKBACK_DAYS = 14
 

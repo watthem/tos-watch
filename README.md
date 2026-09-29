@@ -40,6 +40,12 @@ tos.watch is open core. The public code runs end to end. What stays private is t
 
 The alerts themselves are public on [tos.watch](https://tos.watch).
 
+## Code here, data elsewhere
+
+This repo is code only. Everything a run reads or writes, apart from `pipeline/watchlist.json`, lives in a data directory set by `TOS_WATCH_DATA`: alerts, the Jev cache, run state, snapshots, your own `questions.json` and the generated site. Its layout mirrors this repo (`alerts/`, `cache/jev/`, `pipeline/state.json`, `site/`…). Unset, the data directory is this repo, and all of it is gitignored. tos.watch keeps its data in a private repo; see `pipeline/lib/paths.py`.
+
+`scripts/check-public.sh` runs in CI and fails if run data, generated pages, local paths or personal addresses are ever committed here.
+
 ## Data sources and attribution
 
 Policy history comes from [Open Terms Archive](https://opentermsarchive.org/en/) collections, including:
@@ -91,7 +97,7 @@ Without `BUTTONDOWN_API_KEY` it's a dry run that exits 0. `pipeline/drafts_state
 python3 site/build.py       # alert pages, service pages, RSS feed
 ```
 
-tos.watch deploys the `site/` output to Cloudflare Pages.
+The pages go to `$TOS_WATCH_DATA/site/`, along with copies of the static files from this repo's `site/`, so that folder is the whole deployable site. tos.watch deploys it to Cloudflare Pages.
 
 ## Search, request, and the on-demand check
 

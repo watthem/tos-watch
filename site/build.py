@@ -18,6 +18,11 @@ Each changed passage is written as a plain removed/added block inside
 replaces those blocks with @pierre/diffs word diffs; without Node the
 plain blocks stay and still read correctly.
 
+The pages are written to site/ in the data directory ($TOS_WATCH_DATA,
+default: this repo; see pipeline/lib/paths.py). When that is somewhere else,
+the static files (CSS, JS, fonts, services.json) are copied in next to them,
+so the data directory's site/ is the whole deployable site.
+
 Run directly (`python3 site/build.py`) or via pipeline/run.py after a
 scoring pass.
 """
@@ -714,17 +719,33 @@ def copy_fonts(site_dir: pathlib.Path) -> None:
             shutil.copyfile(path, out / name)
 
 
-def render_diffs(root: pathlib.Path) -> str:
-    script = root / "build" / "render-diffs.mjs"
-    if not shutil.which("node") or not (root / "build" / "node_modules").exists():
+# Hand-written files in this repo's site/ that every deploy needs.
+STATIC_FILES = ["style.css", "diffs.css", "subscribe.js", "search.js", "services.json"]
+
+
+def copy_static(site_dir: pathlib.Path) -> None:
+    """Copy the code repo's static files into a site/ that lives elsewhere."""
+    if site_dir.resolve() == SITE_DIR.resolve():
+        return
+    for name in STATIC_FILES:
+        shutil.copyfile(SITE_DIR / name, site_dir / name)
+    shutil.copytree(SITE_DIR / "fonts", site_dir / "fonts", dirs_exist_ok=True)
+
+
+def render_diffs(code_root: pathlib.Path, site_dir: pathlib.Path) -> str:
+    script = code_root / "build" / "render-diffs.mjs"
+    if not shutil.which("node") or not (code_root / "build" / "node_modules").exists():
         return "diffs: node or build/node_modules missing, plain fallback kept"
-    res = subprocess.run(["node", str(script), str(root / "site")], capture_output=True, text=True)
+    res = subprocess.run(["node", str(script), str(site_dir)], capture_output=True, text=True)
     return (res.stdout or res.stderr).strip()
 
 
-def build(root: pathlib.Path) -> None:
-    site_dir = root / "site"
-    entries = load_alerts(root / "alerts")
+def build(code_root: pathlib.Path, data_root: pathlib.Path | None = None) -> None:
+    data_root = data_root or code_root
+    site_dir = data_root / "site"
+    site_dir.mkdir(parents=True, exist_ok=True)
+    copy_static(site_dir)
+    entries = load_alerts(data_root / "alerts")
     watchlist = load_watchlist()
     by_vendor = tracked_vendors(watchlist)
     track_labels = {t["id"]: t["label"] for t in watchlist.get("tracks", [])}
@@ -761,8 +782,11 @@ def build(root: pathlib.Path) -> None:
     (site_dir / "sitemap.xml").write_text(render_sitemap(pages))
     copy_fonts(site_dir)
     print(f"site build: {len(entries)} alerts, {len(by_vendor)} service pages")
-    print(render_diffs(root))
+    print(render_diffs(code_root, site_dir))
 
 
 if __name__ == "__main__":
-    build(pathlib.Path(__file__).parent.parent)
+    import os
+
+    code = pathlib.Path(__file__).resolve().parent.parent
+    build(code, pathlib.Path(os.environ.get("TOS_WATCH_DATA") or code).expanduser().resolve())

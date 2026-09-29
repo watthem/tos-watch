@@ -61,17 +61,23 @@ list, database, or Cloudflare account — this is a fully independent copy.
    (`alerts/YYYY-MM-DD-vendor-doc.md`) are written once per document version,
    so reruns are idempotent.
 
+   To keep your data out of your code checkout (recommended if you'll pull
+   updates or push anywhere), set `TOS_WATCH_DATA=/path/to/your-data` first.
+   Every run writes there instead; see `pipeline/lib/paths.py` for the layout.
+
 5. **Automate it**, either:
-   - **GitHub Actions cron**: `.github/workflows/watch.yml` is already in
-     this repo, inactive until pushed to a remote with the
-     `OPENROUTER_API_KEY` secret set (Settings → Secrets → Actions). It runs
-     the pipeline daily and commits new alert files.
-   - **Local cron**: `0 6 * * * cd /path/to/tos-watch && OPENROUTER_API_KEY=... python3 pipeline/run.py >> pipeline.log 2>&1`
+   - **GitHub Actions cron** in your own data repo: check out that repo and
+     this one side by side, set `TOS_WATCH_DATA` to the data checkout, run
+     `pipeline/run.py --since <30 days ago>`, then commit `alerts/`,
+     `cache/jev/`, `pipeline/` and `site/` back. Keep `cache/jev/` committed,
+     or every run re-scores (and re-alerts) all history. Add the
+     `OPENROUTER_API_KEY` secret (Settings → Secrets → Actions).
+   - **Local cron**: `0 6 * * * cd /path/to/tos-watch && TOS_WATCH_DATA=/path/to/your-data OPENROUTER_API_KEY=... python3 pipeline/run.py >> pipeline.log 2>&1`
 
 6. **Publish your own output.** `python3 site/build.py` regenerates
    `site/alerts/index.html` (a full archive page) and `site/feed.xml` (RSS,
-   newest 50) from `alerts/*.md` — no email service required. Point any
-   static host at `site/`, or just read `alerts/*.md` as plain Markdown, or
+   newest 50) from `alerts/*.md` in the data directory — no email service
+   required. Point any static host at the data directory's `site/`, or just read `alerts/*.md` as plain Markdown, or
    point your own RSS-to-email tool (Buttondown, etc.) at `feed.xml`.
 
 ## What's tos.watch-specific, not required for self-hosting

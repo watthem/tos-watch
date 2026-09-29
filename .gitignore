@@ -1,9 +1,26 @@
-# OTA repo clones (rebuildable). The Jev answer cache is tracked: fresh
-# Jev answers differ from cached ones near the threshold, so a CI run
-# without it re-scored all history and wrote 186 old alerts (2026-09-29).
-/cache/*
-!/cache/jev/
-/datasets/cache/
+# Run data. This repo is code only; a run writes its data to $TOS_WATCH_DATA
+# (pipeline/lib/paths.py), or here when that's unset (self-hosting in place).
+# tos.watch keeps its data, including the Jev cache it must not lose, in a
+# private data repo. scripts/check-public.sh fails CI if any of it is tracked.
+/alerts/
+/cache/
+/datasets/*
+!/datasets/build_services_catalog.py
+/pipeline/questions.json
+/pipeline/dismissed.json
+/pipeline/state.json
+/pipeline/drafts_state.json
+/pipeline/muse_snapshots/
+/pipeline/direct_snapshots/
+
+# Generated site pages (site/build.py). site/ tracks only the static files.
+/site/*.html
+/site/alerts/
+/site/s/
+/site/feed.xml
+/site/sitemap.xml
+/site/robots.txt
+/site/favicon.svg
 
 # Python
 __pycache__/

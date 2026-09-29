@@ -19,17 +19,17 @@ import urllib.request
 JEV_URL = "https://openrouter.ai/api/alpha/decisions"
 JEV_MODEL = "typesafe/jev-1.13"
 
-# The question set: pipeline/questions.json if present (tos.watch's tuned
-# set, kept private), else pipeline/questions.example.json (a generic set
-# that runs but isn't tuned). "version" goes into the cache key, so bump it
+# The question set: pipeline/questions.json in the data directory if present
+# (tos.watch's tuned set, kept in its private data repo; see lib/paths.py),
+# else this repo's pipeline/questions.example.json (a generic set that runs
+# but isn't tuned). "version" goes into the cache key, so bump it
 # whenever the wording changes. The topic questions can trigger an alert;
 # anything else (e.g. "noise") is diagnostic only.
-_PIPELINE_DIR = pathlib.Path(__file__).resolve().parent.parent
+from lib import paths  # noqa: E402
 
 
 def _load_question_set() -> dict:
-    for name in ("questions.json", "questions.example.json"):
-        path = _PIPELINE_DIR / name
+    for path in (paths.QUESTIONS_PATH, paths.QUESTIONS_EXAMPLE_PATH):
         if path.exists():
             return json.loads(path.read_text())
     sys.exit("no pipeline/questions.json or pipeline/questions.example.json")

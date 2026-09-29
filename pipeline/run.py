@@ -40,20 +40,21 @@ import time
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from lib import alerts as alerts_lib
-from lib import direct, extract, filters, jev, muse, ota
+from lib import direct, extract, filters, jev, muse, ota, paths
 
-ROOT = pathlib.Path(__file__).parent.parent
-PIPELINE_DIR = pathlib.Path(__file__).parent
-CACHE_DIR = ROOT / "cache"
-STATE_PATH = PIPELINE_DIR / "state.json"
-MUSE_SNAPSHOTS_DIR = PIPELINE_DIR / "muse_snapshots"
-ALERTS_DIR = ROOT / "alerts"
-# Alerts the owner rejected as false positives: {stem: reason}. Private (not
-# in the public export). A listed stem is never written again, and the list
-# doubles as negative labels for tuning Jev.
-DISMISSED_PATH = PIPELINE_DIR / "dismissed.json"
-WATCHLIST_PATH = PIPELINE_DIR / "watchlist.json"
-DIRECT_SNAPSHOTS_DIR = PIPELINE_DIR / "direct_snapshots"
+# Everything a run reads or writes, apart from the watchlist, lives in the
+# data directory ($TOS_WATCH_DATA, default: this repo). See lib/paths.py.
+ROOT = paths.CODE
+CACHE_DIR = paths.CACHE_DIR
+STATE_PATH = paths.STATE_PATH
+MUSE_SNAPSHOTS_DIR = paths.MUSE_SNAPSHOTS_DIR
+ALERTS_DIR = paths.ALERTS_DIR
+# Alerts the owner rejected as false positives: {stem: reason}. A listed stem
+# is never written again, and the list doubles as negative labels for tuning
+# Jev.
+DISMISSED_PATH = paths.DISMISSED_PATH
+WATCHLIST_PATH = paths.WATCHLIST_PATH
+DIRECT_SNAPSHOTS_DIR = paths.DIRECT_SNAPSHOTS_DIR
 
 
 def load_watchlist() -> dict:
@@ -352,7 +353,7 @@ def main() -> None:
     sys.path.insert(0, str(ROOT / "site"))
     import build as site_build  # noqa: E402
 
-    site_build.build(ROOT)
+    site_build.build(paths.CODE, paths.DATA)
     print("Done.")
 
 
