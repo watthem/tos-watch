@@ -11,12 +11,12 @@ snapshots compare cleanly against it.
 """
 from __future__ import annotations
 
-import hashlib
 import http.cookiejar
 import json
 import pathlib
 import urllib.request
 from html.parser import HTMLParser
+from .extract import para_hash
 
 BLOCK_TAGS = {"p", "li", "h1", "h2", "h3", "h4"}
 # Meta's help center returns an empty JS-shell page (HTTP 400) to a plain
@@ -91,10 +91,6 @@ def fetch_html(url: str) -> str:
     req = urllib.request.Request(url, headers=BROWSER_HEADERS)
     with opener.open(req, timeout=30) as resp:
         return resp.read().decode("utf-8", errors="replace")
-
-
-def para_hash(text: str) -> str:
-    return hashlib.sha256(text.encode()).hexdigest()[:16]
 
 
 def snapshot(url: str) -> list[dict]:
