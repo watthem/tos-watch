@@ -802,6 +802,12 @@ def build(code_root: pathlib.Path, data_root: pathlib.Path | None = None) -> Non
     (site_dir / "404.html").write_text(render_404())
     (site_dir / "favicon.svg").write_text(FAVICON_SVG)
     (site_dir / "robots.txt").write_text(render_robots())
+    # Deployed-build marker: lets the /ship skill match the live site to a commit.
+    try:
+        sha = subprocess.run(["git", "rev-parse", "HEAD"], cwd=code_root, capture_output=True, text=True, check=True).stdout.strip()
+    except (OSError, subprocess.CalledProcessError):
+        sha = "unknown"
+    (site_dir / "version.txt").write_text(sha + "\n")
     pages = [("index.html", ""), ("alerts/index.html", entries[0].get("date", "") if entries else "")]
     pages += [(f"alerts/{e['stem']}.html", e.get("date", "")) for e in entries]
     pages += [("services.html", ""), ("self-hosting.html", "")]

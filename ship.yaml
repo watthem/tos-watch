@@ -1,0 +1,54 @@
+# ship.yaml: read by ~/.claude/skills/ship/verify.mjs
+site: https://tos.watch
+sitemap: /sitemap.xml
+maxPages: 300          # sitemap has ~230 urls (one per alert); raise if needed
+concurrency: 4
+# Deploy facts (found 2026-10-01): static site built by `python3 site/build.py` into
+# $TOS_WATCH_DATA/site/, deployed to Cloudflare Pages (manual; no CI deploy). The Worker
+# (subscribe/request/vote API) deploys separately: `cd worker && npm run deploy`.
+build:
+  - "(cd build && npm install)"
+  - "python3 site/build.py"
+test:
+  - "python3 pipeline/test_draft_emails.py"
+  - "(cd worker && npm test)"
+# Deploy is owner-run for now; /ship stops and asks unless this is filled in.
+deploy: null
+version:
+  url: /version.txt    # written by site/build.py (git SHA of the code checkout)
+ignoreConsole: []
+metaExempt: []         # urls (relative) allowed to skip the OG/Twitter check
+meta: [og:title, og:description, og:url, og:type, twitter:card]
+nav:
+  selector: "nav.nav a[href]"
+  pages: ["/"]
+copy:
+  "/":
+    - "Know when the fine print changes."
+    - "Is your app watched?"
+    - "Latest changes"
+    - "How it works"
+    - "Help decide what comes next"
+  "/alerts/":
+    - "All changes"
+flows:
+  # All flows below POST to the Worker (Buttondown list / D1). submit:false => verifier
+  # fills + validates only and aborts any non-GET request. Owner decides on real submits.
+  - name: landing-subscribe
+    page: /
+    form: "form#subscribe"
+    fields: [{selector: "input[name=email]", value: "ship-verify@example.invalid"}]
+    submit: false
+    success: "Check your email"
+  - name: vote-founding-supporter
+    page: /
+    form: "form.vote-form[data-feature=founding-supporter]"
+    fields: [{selector: "input[name=email]", value: "ship-verify@example.invalid"}]
+    submit: false
+    success: "Thanks."
+  - name: vote-vendor-watch
+    page: /
+    form: "form.vote-form[data-feature=vendor-watch]"
+    fields: [{selector: "input[name=email]", value: "ship-verify@example.invalid"}]
+    submit: false
+    success: "Thanks."
