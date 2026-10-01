@@ -23,18 +23,14 @@ the 2026-09-26 snapshot already checked in):
 """
 from __future__ import annotations
 
-import hashlib
 import json
 import pathlib
 
 from .muse import BROWSER_HEADERS, extract_paragraphs, fetch_html  # noqa: F401 (re-exported)
+from .extract import para_hash
 
 MIN_PARAGRAPH_LEN = 60
 EXCERPT_MAX_CHARS = 300
-
-
-def para_hash(text: str) -> str:
-    return hashlib.sha256(text.encode()).hexdigest()[:16]
 
 
 def snapshot(url: str) -> list[dict]:
