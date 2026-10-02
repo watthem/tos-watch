@@ -19,6 +19,27 @@ API shape (checked 2026-09-27):
   instead of creating a second object.
   https://docs.buttondown.com/api-idempotency-keys
 
+Who a draft is addressed to (checked 2026-10-01)
+-------------------------------------------------
+`filters` on the create call is a FilterGroup tree:
+  {"predicate": "and"|"or", "filters": [{"field": "subscriber.tags",
+   "operator": "contains"|"not_contains", "value": <tag ID>}], "groups": [<FilterGroup>...]}
+Groups nest, so the OR we need is expressible. What it can NOT do: match a tag
+by name or prefix ("any tag starting service:"). Values are tag IDs from
+GET /v1/tags, so "has no service:/track: tag" is spelled as an AND of
+`not_contains` over every such tag that exists today.
+  https://docs.buttondown.com/api-emails-filters
+  https://docs.buttondown.com/api-emails-filter
+An alert about service S on track T goes to subscribers who have
+`service:<slug of S>`, OR `track:<T>`, OR no service:/track: tag at all.
+A tag nobody has yet doesn't exist in Buttondown, so it's simply left out.
+The alert's track comes from its frontmatter, else from the watchlist
+entries for its vendor. If no track can be found, or no service:/track: tags
+exist yet, the draft has no filter and goes to everyone: too many readers is
+better than missing someone who asked. A failed tag lookup does the same.
+Landing-page signups carry all five track:* tags (site/subscribe.js), so
+they match whichever track the alert is on.
+
 Which alerts count as new, and why a committed state file
 ----------------------------------------------------------
 pipeline/drafts_state.json holds `high_water` (the newest alert date seen)
@@ -68,7 +89,13 @@ ROOT = paths.CODE
 ALERTS_DIR = paths.ALERTS_DIR
 STATE_PATH = paths.DRAFTS_STATE_PATH
 API_URL = "https://api.buttondown.com/v1/emails"
+TAGS_URL = "https://api.buttondown.com/v1/tags"
 LOOKBACK_DAYS = 14
+# Other spellings of a track tag known to exist in Buttondown. The worker
+# (worker/src/index.js trackTags) writes `track:<watchlist id>`, i.e.
+# `track:ai-assistants`, but the 2026-10-01 subscriber shows `track:ai`.
+# Unresolved which is live; matching both reaches too many, never too few.
+TRACK_TAG_ALIASES = {"ai-assistants": ["track:ai"]}
 
 sys.path.insert(0, str(ROOT / "site"))
 import build as site  # noqa: E402  (parse_alert, plain_policy_text, BASE_URL, attribution)
@@ -135,6 +162,61 @@ def render_email(entry: dict) -> dict:
     }
 
 
+# ---------------------------------------------------------------- audience
+
+def alert_tracks(entry: dict) -> list[str]:
+    if entry.get("track"):
+        return [entry["track"]]
+    return site.tracked_vendors(site.load_watchlist()).get(entry.get("vendor", ""), [])
+
+
+def audience_tags(entry: dict) -> list[str]:
+    """Tag names an alert's audience is matched on (not counting the
+    untagged subscribers). Empty means: no way to target, send to everyone."""
+    tracks = alert_tracks(entry)
+    slug = site.slugify(entry.get("vendor", ""))
+    if not tracks or not slug:
+        return []
+    names = [f"service:{slug}"]
+    for t in tracks:
+        names += [f"track:{t}", *TRACK_TAG_ALIASES.get(t, [])]
+    return names
+
+
+def build_filters(names: list[str], tag_ids: dict[str, str]) -> dict | None:
+    """The Buttondown FilterGroup for `names` plus untagged subscribers, or
+    None (everyone) when it can't be built safely."""
+    scoped = {n: i for n, i in tag_ids.items() if n.startswith(("service:", "track:"))}
+    if not names or not scoped:
+        return None
+    wanted = [{"field": "subscriber.tags", "operator": "contains", "value": scoped[n]}
+              for n in names if n in scoped]
+    untagged = {"predicate": "and", "groups": [],
+                "filters": [{"field": "subscriber.tags", "operator": "not_contains", "value": i}
+                            for i in scoped.values()]}
+    return {"predicate": "or", "filters": wanted, "groups": [untagged]}
+
+
+def describe_audience(names: list[str]) -> str:
+    if not names:
+        return "everyone (no service/track known for this alert)"
+    return "tagged " + " or ".join(names) + ", or with no service:/track: tag"
+
+
+def list_tags(api_key: str) -> dict[str, str]:
+    """Buttondown tag name -> id, following pagination."""
+    out: dict[str, str] = {}
+    url = TAGS_URL
+    while url:
+        req = urllib.request.Request(url, headers={
+            "Authorization": f"Token {api_key}", "User-Agent": "tos-watch-pipeline"})
+        with urllib.request.urlopen(req, timeout=30) as res:
+            page = json.loads(res.read() or b"{}")
+        out.update({t["name"]: t["id"] for t in page.get("results", [])})
+        url = page.get("next")
+    return out
+
+
 # ---------------------------------------------------------------- state
 
 def load_state(state_path: pathlib.Path) -> dict | None:
@@ -182,7 +264,7 @@ def post_draft(payload: dict, idempotency_key: str, api_key: str) -> dict:
 # ---------------------------------------------------------------- main
 
 def run(alerts_dir: pathlib.Path, state_path: pathlib.Path, api_key: str | None,
-        dry_run: bool = False, post=post_draft) -> list[dict]:
+        dry_run: bool = False, post=post_draft, tags=list_tags) -> list[dict]:
     """Draft every new alert; return the payloads drafted (or, in a dry
     run, that would be). State is saved after each successful draft so a
     failure part-way never re-drafts the ones before it."""
@@ -209,15 +291,38 @@ def run(alerts_dir: pathlib.Path, state_path: pathlib.Path, api_key: str | None,
         return []
 
     drafted = []
+    tag_ids: dict[str, str] | None = None
     for e in new:
         payload = render_email(e)
+        names = audience_tags(e)
         if dry_run:
             print(f"--- would draft {e['stem']} ---")
+            print(f"audience: {describe_audience(names)}")
             print(json.dumps({k: v for k, v in payload.items() if k != "body"}, ensure_ascii=False))
             print(payload["body"])
             drafted.append(payload)
             continue
-        res = post(payload, f"tos-watch-alert-{e['stem']}", api_key)
+        if names and tag_ids is None:
+            try:
+                tag_ids = tags(api_key)
+            except Exception as err:  # reach everyone rather than fail or skip the alert
+                print(f"Could not list Buttondown tags ({err}); drafting to everyone.")
+                tag_ids = {}
+        filters = build_filters(names, tag_ids or {})
+        if filters:
+            payload["filters"] = filters
+        print(f"Audience for {e['stem']}: {describe_audience(names) if filters else 'everyone'}")
+        try:
+            res = post(payload, f"tos-watch-alert-{e['stem']}", api_key)
+        except RuntimeError as err:
+            if "filters" not in payload or " 400" not in str(err):
+                raise
+            # The filter shape is untested against the live API. A draft is only
+            # a draft (the owner sends it), so drop the filter rather than lose it.
+            print(f"Buttondown rejected the audience filter ({err}); drafting to everyone. "
+                  "Set the audience by hand before sending.")
+            payload.pop("filters")
+            res = post(payload, f"tos-watch-alert-{e['stem']}-all", api_key)
         print(f"Drafted {e['stem']} as Buttondown email {res.get('id', '?')} (status {res.get('status', '?')})")
         drafted.append(payload)
         state["handled"] = sorted(set(state["handled"]) | {e["stem"]})
