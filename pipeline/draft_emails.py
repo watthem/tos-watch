@@ -312,7 +312,17 @@ def run(alerts_dir: pathlib.Path, state_path: pathlib.Path, api_key: str | None,
         if filters:
             payload["filters"] = filters
         print(f"Audience for {e['stem']}: {describe_audience(names) if filters else 'everyone'}")
-        res = post(payload, f"tos-watch-alert-{e['stem']}", api_key)
+        try:
+            res = post(payload, f"tos-watch-alert-{e['stem']}", api_key)
+        except RuntimeError as err:
+            if "filters" not in payload or " 400" not in str(err):
+                raise
+            # The filter shape is untested against the live API. A draft is only
+            # a draft (the owner sends it), so drop the filter rather than lose it.
+            print(f"Buttondown rejected the audience filter ({err}); drafting to everyone. "
+                  "Set the audience by hand before sending.")
+            payload.pop("filters")
+            res = post(payload, f"tos-watch-alert-{e['stem']}-all", api_key)
         print(f"Drafted {e['stem']} as Buttondown email {res.get('id', '?')} (status {res.get('status', '?')})")
         drafted.append(payload)
         state["handled"] = sorted(set(state["handled"]) | {e["stem"]})
