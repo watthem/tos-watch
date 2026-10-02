@@ -619,7 +619,7 @@ def render_self_hosting() -> str:
     )
 
 
-LEGAL_UPDATED = "October 1, 2026"  # bump when the text of privacy/terms changes
+LEGAL_UPDATED = "October 2, 2026"  # bump when the text of privacy/terms changes
 
 
 def render_privacy() -> str:
@@ -627,7 +627,7 @@ def render_privacy() -> str:
 <div class="wrap narrow page">
   <h1>Privacy at tos.watch</h1>
   <p class="muted"><em>Last updated: {LEGAL_UPDATED}</em></p>
-  <p>tos.watch is a free newsletter that tells you when a company changes its terms or privacy policy. It's run by Matthew Hendricks in Washington State, USA. Contact: <a href="mailto:hello@tos.watch">hello@tos.watch</a>.</p>
+  <p>tos.watch is a free newsletter that tells you when a company changes its terms or privacy policy. It's run by Matthew Hendricks, a sole proprietorship in Washington State, USA. Contact: <a href="mailto:hello@tos.watch">hello@tos.watch</a>.</p>
   <p>We watch what other companies do with your data, so here's exactly what we do with yours.</p>
 
   <h2 class="h3">What we collect</h2>
@@ -646,7 +646,7 @@ def render_privacy() -> str:
     <li><strong>Cloudflare</strong> hosts the site and our signup service. Like any host, it processes your IP address and basic request details to deliver pages and stop abuse. Our signup service also keeps your IP address in memory for about a minute to limit repeated signups; it is never written to a database or file. See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a>.</li>
   </ul>
   <p>We don't sell, rent or share your email with anyone else, and we don't use it for anything but tos.watch.</p>
-  <p>Buttondown may record whether an email was opened and which links were clicked, under its own settings and policy.</p>
+  <p>Buttondown and the email services that deliver or display our emails may record whether an email was opened and which links were clicked, under their own settings and policies.</p>
 
   <h2 class="h3">How long we keep it</h2>
   <p>Your email address is kept only at Buttondown, until you unsubscribe or ask us to delete it. Your signup source, topic choices, votes and requests are labels on that one record, so deleting it removes them too. Buttondown keeps a record that an address unsubscribed, so it doesn't email you again unless you ask. Our own database and logs don't hold your email address. The counts of requested services and voted features stay, because they contain nothing about you.</p>
