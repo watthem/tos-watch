@@ -127,6 +127,7 @@
       '<button class="button button-secondary" type="submit">Request it</button>' +
       "</form>" +
       '<p class="request-note" data-for="' + id + '"></p>' +
+      '<p class="form-note"><a href="privacy.html">Privacy</a></p>' +
       '<div class="mock-check">' +
       '<p class="result-sub">Coming soon: check any site yourself, right away, instead of waiting for us to add it. Leave your email to vote for it.</p>' +
       '<form class="vote-form" data-feature="on-demand-check">' +
@@ -135,6 +136,7 @@
       '<button class="button button-secondary" type="submit">Tell me when it ships</button>' +
       "</form>" +
       '<p class="request-note" data-for="' + id + '-vote"></p>' +
+      '<p class="form-note"><a href="privacy.html">Privacy</a></p>' +
       "</div>" +
       '<p class="self-host-note"><a href="self-hosting.html">Or run your own copy of tos.watch</a></p>' +
       "</div>";
