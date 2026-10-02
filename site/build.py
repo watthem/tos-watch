@@ -10,6 +10,7 @@ pipeline/lib/alerts.py (no YAML dependency), renders:
 - site/services.html           (every tracked service, by track)
 - site/s/<slug>.html           (one page per tracked service)
 - site/self-hosting.html
+- site/privacy.html, site/terms.html
 - site/feed.xml                (RSS 2.0, newest 50)
 - site/404.html, robots.txt, sitemap.xml, favicon.svg
 
@@ -349,7 +350,7 @@ def layout(title: str, body: str, root: str = "", description: str = "", scripts
 </main>
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <p class="footer-links"><span class="footer-brand">{WORDMARK}<span>tos.watch</span></span><a href="{root}feed.xml">RSS</a><a href="{root}self-hosting.html">Self-hosting</a><a href="https://github.com/watthem/tos-watch">Source on GitHub</a><span>Not affiliated with any company we track.</span></p>
+    <p class="footer-links"><span class="footer-brand">{WORDMARK}<span>tos.watch</span></span><a href="{root}feed.xml">RSS</a><a href="{root}self-hosting.html">Self-hosting</a><a href="{root}privacy.html">Privacy</a><a href="{root}terms.html">Terms</a><a href="https://github.com/watthem/tos-watch">Source on GitHub</a><span>Not affiliated with any company we track.</span></p>
     <p class="footer-fine">{ATTRIBUTION_HTML} Diffs by <a href="https://diffs.com">@pierre/diffs</a> (Apache-2.0).</p>
   </div>
 </footer>
@@ -397,7 +398,7 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
           <button class="button" type="submit">Subscribe</button>
         </div>
       </form>
-      <p class="form-note" id="form-note">Free. One email per real change, across every topic we watch. <a href="https://github.com/watthem/tos-watch">Open source</a>.</p>
+      <p class="form-note" id="form-note">Free. One email per real change, across every topic we watch. <a href="https://github.com/watthem/tos-watch">Open source</a>. <a href="privacy.html">Privacy</a>.</p>
     </div>
     {example}
   </div>
@@ -433,7 +434,7 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
       {signal_card("founding-supporter", "Keep it running", "tos.watch is free and run by one person. If a small paid supporter tier opens, would you join? Nothing is charged now.", "Count me in")}
       {signal_card("vendor-watch", "Watch my company's vendors", "For teams: a private watchlist of the services your company relies on, with alerts to your inbox or a webhook.", "I'd use this")}
     </div>
-    <p class="form-note">If you're new here, we'll send one confirmation email, and confirming also subscribes you to alerts. Unsubscribe any time.</p>
+    <p class="form-note">If you're new here, we'll send one confirmation email, and confirming also subscribes you to alerts. Unsubscribe any time. <a href="privacy.html">Privacy</a>.</p>
   </div>
 </section>
 """
@@ -515,7 +516,7 @@ def service_signup(vendor: str, slug: str, tracks: str, root: str) -> str:
         <button class="button" type="submit">Subscribe</button>
       </div>
     </form>
-    <p class="form-note">Free. You get every alert we send, {esc(vendor)}’s included. One email per real change. Unsubscribe with one click.</p>
+    <p class="form-note">Free. You get every alert we send, {esc(vendor)}’s included. One email per real change. Unsubscribe with one click. <a href="{root}privacy.html">Privacy</a>.</p>
   </div>"""
 
 
@@ -615,6 +616,98 @@ def render_self_hosting() -> str:
         body,
         description="How to run your own copy of tos.watch, the Apache-2.0 policy change watcher.",
         path="self-hosting.html",
+    )
+
+
+LEGAL_UPDATED = "October 1, 2026"  # bump when the text of privacy/terms changes
+
+
+def render_privacy() -> str:
+    body = f"""
+<div class="wrap narrow page">
+  <h1>Privacy at tos.watch</h1>
+  <p class="muted"><em>Last updated: {LEGAL_UPDATED}</em></p>
+  <p>tos.watch is a free newsletter that tells you when a company changes its terms or privacy policy. It's run by Matthew Hendricks in Washington State, USA. Contact: <a href="mailto:hello@tos.watch">hello@tos.watch</a>.</p>
+  <p>We watch what other companies do with your data, so here's exactly what we do with yours.</p>
+
+  <h2 class="h3">What we collect</h2>
+  <ul>
+    <li><strong>Your email address</strong>, when you subscribe, vote for a feature, or give an email with a service request.</li>
+    <li><strong>Which topics you picked, and where you signed up</strong> (the home page or a service's page). These are labels on your record at Buttondown.</li>
+    <li><strong>What you asked us to track</strong>, if you use the request box. We store the service name or link you typed, as an anonymous count that isn't tied to any email. If you also gave an email, your Buttondown record gets a label naming the service (or a simplified form of the link).</li>
+    <li><strong>Feature votes.</strong> We count each vote per feature, with no email attached. If you gave an email, your Buttondown record gets a label for that vote.</li>
+  </ul>
+  <p>If you vote or request something with an email we don't have yet, Buttondown sends you a confirmation email, and confirming also subscribes you to alerts.</p>
+  <p>We don't use cookies, analytics or tracking scripts on tos.watch, and our fonts are hosted by us.</p>
+
+  <h2 class="h3">Who else handles it</h2>
+  <ul>
+    <li><strong>Buttondown</strong> stores our subscriber list and sends the newsletter and the confirmation email. It receives your email address, the labels above, and your IP address, which it uses to block spam signups. See <a href="https://buttondown.com/legal/privacy">Buttondown's privacy policy</a>.</li>
+    <li><strong>Cloudflare</strong> hosts the site and our signup service. Like any host, it processes your IP address and basic request details to deliver pages and stop abuse. Our signup service also keeps your IP address in memory for about a minute to limit repeated signups; it is never written to a database or file. See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a>.</li>
+  </ul>
+  <p>We don't sell, rent or share your email with anyone else, and we don't use it for anything but tos.watch.</p>
+  <p>Buttondown may record whether an email was opened and which links were clicked, under its own settings and policy.</p>
+
+  <h2 class="h3">How long we keep it</h2>
+  <p>Your email address is kept only at Buttondown, until you unsubscribe or ask us to delete it. Your signup source, topic choices, votes and requests are labels on that one record, so deleting it removes them too. Buttondown keeps a record that an address unsubscribed, so it doesn't email you again unless you ask. Our own database and logs don't hold your email address. The counts of requested services and voted features stay, because they contain nothing about you.</p>
+
+  <h2 class="h3">Your choices</h2>
+  <ul>
+    <li>Every email has an unsubscribe link.</li>
+    <li>Write to <a href="mailto:hello@tos.watch">hello@tos.watch</a> to see, correct or delete what we hold about you. We'll answer within 30 days.</li>
+    <li>If you're in the EU or UK, we rely on your consent to email you, and you can withdraw it any time by unsubscribing. You can also complain to your data protection authority.</li>
+  </ul>
+
+  <h2 class="h3">Children</h2>
+  <p>tos.watch isn't meant for children under 13, and we don't knowingly collect their email addresses.</p>
+
+  <h2 class="h3">Changes</h2>
+  <p>If this page changes in a way that affects you, we'll say so in the newsletter. Yes, we watch our own terms too. The code that runs the site is <a href="https://github.com/watthem/tos-watch">open source</a>. See also the <a href="terms.html">terms of use</a>.</p>
+</div>
+"""
+    return layout(
+        "Privacy: tos.watch",
+        body,
+        description="What tos.watch collects when you subscribe, who handles it, and how to have it deleted.",
+        path="privacy.html",
+    )
+
+
+def render_terms() -> str:
+    body = f"""
+<div class="wrap narrow page">
+  <h1>Terms of use</h1>
+  <p class="muted"><em>Last updated: {LEGAL_UPDATED}</em></p>
+  <p>By using tos.watch or subscribing to the newsletter, you agree to these terms.</p>
+
+  <h2 class="h3">What tos.watch is</h2>
+  <p>tos.watch watches public terms of service and privacy policies and tells you when they change. Each alert shows a short excerpt of what changed and links to the full text.</p>
+
+  <h2 class="h3">It isn't legal advice</h2>
+  <p>Alerts are summaries and excerpts, not legal advice. Our filter decides which changes are worth an email, and it can be wrong: it can miss a change, flag one that doesn't matter, or describe one imperfectly. Always read the company's own current terms before relying on them. If a decision matters, talk to a lawyer.</p>
+
+  <h2 class="h3">No warranty</h2>
+  <p>tos.watch is free and provided as is. We don't promise it will be complete, accurate, timely or always available. To the extent the law allows, we aren't liable for any loss from using it or relying on it.</p>
+
+  <h2 class="h3">Where the text comes from</h2>
+  <p>Policy text and version history come from <a href="https://opentermsarchive.org/">Open Terms Archive</a> and its contributing collections, under the <a href="https://opendatacommons.org/licenses/by/1-0/">Open Data Commons Attribution License (ODC-By 1.0)</a>, and from pages we fetch ourselves. The terms themselves belong to the companies that wrote them. We quote short excerpts and link to the source.</p>
+
+  <h2 class="h3">Fair use of the site</h2>
+  <p>Don't abuse the signup or request forms, sign up addresses that aren't yours, or try to break the service. We can remove a subscription or block access if you do.</p>
+
+  <h2 class="h3">The code</h2>
+  <p>The code behind tos.watch is open source under the <a href="https://github.com/watthem/tos-watch/blob/main/LICENSE">Apache License 2.0</a>. That license covers the code, not the alert history or the newsletter.</p>
+
+  <h2 class="h3">Changes</h2>
+  <p>We may update these terms. The date at the top shows the latest version, and meaningful changes will be announced in the newsletter.</p>
+  <p>Questions: <a href="mailto:hello@tos.watch">hello@tos.watch</a>. How we handle your data is on the <a href="privacy.html">privacy page</a>.</p>
+</div>
+"""
+    return layout(
+        "Terms of use: tos.watch",
+        body,
+        description="The terms for using tos.watch and its newsletter.",
+        path="terms.html",
     )
 
 
@@ -798,13 +891,15 @@ def build(code_root: pathlib.Path, data_root: pathlib.Path | None = None) -> Non
     (site_dir / "index.html").write_text(render_home(entries, watchlist, by_vendor))
     (site_dir / "services.html").write_text(render_services(watchlist, by_vendor, counts))
     (site_dir / "self-hosting.html").write_text(render_self_hosting())
+    (site_dir / "privacy.html").write_text(render_privacy())
+    (site_dir / "terms.html").write_text(render_terms())
     (site_dir / "feed.xml").write_text(render_feed(entries))
     (site_dir / "404.html").write_text(render_404())
     (site_dir / "favicon.svg").write_text(FAVICON_SVG)
     (site_dir / "robots.txt").write_text(render_robots())
     pages = [("index.html", ""), ("alerts/index.html", entries[0].get("date", "") if entries else "")]
     pages += [(f"alerts/{e['stem']}.html", e.get("date", "")) for e in entries]
-    pages += [("services.html", ""), ("self-hosting.html", "")]
+    pages += [("services.html", ""), ("self-hosting.html", ""), ("privacy.html", ""), ("terms.html", "")]
     pages += [(f"s/{slugify(v)}.html", "") for v in sorted(by_vendor, key=str.lower)]
     (site_dir / "sitemap.xml").write_text(render_sitemap(pages))
     copy_fonts(site_dir)
