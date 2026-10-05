@@ -132,7 +132,7 @@ npm run deploy    # wrangler deploy
 ```
 
 Endpoints:
-- `POST /subscribe` takes `{email, source?, tracks?[]}`. It returns HTTP 200 with `{ok: true, next: "confirm"}` for a successful creation, an existing address, or a skipped call when no API key is set. This response does not prove delivery of a confirmation email. Buttondown firewall rejection returns HTTP 422 with `error: "blocked"`; creation/network failures return HTTP 503 with `error: "unavailable"`.
+- `POST /subscribe` takes `{email, source?, tracks?[]}`. It returns HTTP 200 with `{ok: true, next: "confirm"}` for a successful creation, an existing address, or a skipped call when no API key is set. This response does not prove delivery of a confirmation email. Buttondown firewall rejection returns HTTP 422 with `error: "blocked"`; if the request to create the subscriber fails (an error status or a network failure), it returns HTTP 503 with `error: "unavailable"`. For an address that already exists, the follow-up tag update is best effort: if it fails, the failure is only logged and the response is still HTTP 200, so the requested `tracks` may not have been saved.
 - `POST /request` takes `{service?, url?, email?}`.
 - `POST /vote` takes `{feature, email}`.
 - `GET /check?url=`: the mock above.
