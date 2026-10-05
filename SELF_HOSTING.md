@@ -3,9 +3,10 @@
 tos.watch's code is Apache-2.0 (see [LICENSE](LICENSE)). You can run your
 own copy for the documents you care about.
 
-Nothing here needs a paid service. The pipeline is stdlib-first Python; the
-only external dependency is an OpenRouter API key for the Jev classifier
-(pay-as-you-go, no subscription).
+Building the static site from existing alerts needs no paid service. The
+pipeline uses Python's standard library; scoring new changes requires an
+OpenRouter API key for the Jev classifier (pay-as-you-go, no subscription).
+Node dependencies in `build/` are optional for enhanced diff rendering.
 
 ## What you get
 

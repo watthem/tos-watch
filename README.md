@@ -61,9 +61,15 @@ The fonts are Public Sans and Source Serif 4, both SIL OFL 1.1. They're self-hos
 ```
 export OPENROUTER_API_KEY=...
 python3 pipeline/run.py             # pull, diff, score, write alerts, rebuild the site
-python3 pipeline/run.py --dry-run   # extract and filter only: no Jev calls, no writes
-python3 pipeline/run.py --no-pull   # reuse what's already cloned in cache/
+python3 pipeline/run.py --dry-run   # collect, extract and filter; skip scoring and alert writing
+python3 pipeline/run.py --no-pull   # reuse OTA clones; HTTP sources are still collected
 ```
+
+`--dry-run` is not an offline or read-only mode: source collection runs
+before the dry-run exit, so it can clone/pull OTA history, fetch HTTP
+sources and write source snapshots. `--no-pull` only skips OTA clone/pull;
+it does not skip the HTTP source collectors. `--out` also creates its
+alerts directory during a dry run.
 
 Reruns are cheap. Jev answers are cached on disk by a hash of the change (`cache/jev/`), and each alert file is written once per document version. `--since YYYY-MM-DD` limits Jev spend on a large backfill.
 
@@ -88,14 +94,20 @@ python3 pipeline/draft_emails.py --dry-run   # print the drafts; no API call, no
 python3 pipeline/test_draft_emails.py        # new alert -> one draft; rerun -> none
 ```
 
-Without `BUTTONDOWN_API_KEY` it's a dry run that exits 0. `pipeline/drafts_state.json` records which alerts already have drafts, and a first run over existing history drafts nothing.
+Without `BUTTONDOWN_API_KEY` it's a dry run that exits 0. The data directory's
+`pipeline/drafts_state.json` records which alerts already have drafts. The
+first authenticated run marks existing history as handled without drafting
+it; later runs draft new alerts once.
 
 ## Site
 
 ```
-(cd build && npm install)   # fonts and the diff renderer
+(cd build && npm ci)   # locked fonts and diff-renderer dependencies
 python3 site/build.py       # alert pages, service pages, RSS feed
 ```
+
+Python builds the site without Node dependencies, keeping a plain diff
+fallback. Installing `build/` dependencies enables `@pierre/diffs` rendering.
 
 The pages go to `$TOS_WATCH_DATA/site/`, along with copies of the static files from this repo's `site/`, so that folder is the whole deployable site. tos.watch deploys it to Cloudflare Pages.
 
@@ -112,14 +124,15 @@ The search box reads the `site/services.json` catalog in the browser, so it's in
 
 ```
 cd worker
-npm install
+npm ci
 npm test          # vitest with the Workers pool (Miniflare), no network
+npm run db:migrate:local
 npm run dev       # wrangler dev with a local D1
 npm run deploy    # wrangler deploy
 ```
 
 Endpoints:
-- `POST /subscribe` takes `{email, source?, tracks?[]}`. It returns `next: "confirm"` when Buttondown has sent its confirmation email, or `error: "blocked"` when Buttondown's spam firewall rejected the address.
+- `POST /subscribe` takes `{email, source?, tracks?[]}`. It returns HTTP 200 with `{ok: true, next: "confirm"}` for a successful creation, an existing address, or a skipped call when no API key is set. This response does not prove delivery of a confirmation email. Buttondown firewall rejection returns HTTP 422 with `error: "blocked"`; if the request to create the subscriber fails (an error status or a network failure), it returns HTTP 503 with `error: "unavailable"`. For an address that already exists, the follow-up tag update is best effort: if it fails, the failure is only logged and the response is still HTTP 200, so the requested `tracks` may not have been saved.
 - `POST /request` takes `{service?, url?, email?}`.
 - `POST /vote` takes `{feature, email}`.
 - `GET /check?url=`: the mock above.
@@ -137,6 +150,34 @@ npx wrangler secret put BUTTONDOWN_API_KEY
 ```
 
 Without it, the Worker skips the Buttondown call and keeps no email at all.
+
+## Local validation
+
+CI uses Node 22 for the Worker. Install the locked dependencies in `build/`
+and `worker/`, then run these from the repository root:
+
+```sh
+python3 pipeline/test_draft_emails.py
+(cd worker && WRANGLER_SEND_METRICS=false npm test)
+bash scripts/check-public.sh
+```
+
+The Python suite has four tests with mocked Buttondown calls. The Worker
+suite has 23 tests across signup, requests and catalog checks, using local
+D1 migrations and mocked external calls. These checks do not validate live
+Buttondown delivery or OpenRouter classification. The pinned Workers test
+pool currently warns that it falls back to compatibility date `2025-03-10`
+from the configured `2026-09-01`; it does not test newer compatibility behavior.
+
+With `npm run dev` running in `worker/`, a local smoke check is:
+
+```sh
+curl 'http://127.0.0.1:8787/check?url=https%3A%2F%2Fwww.grammarly.com'
+```
+
+It returns HTTP 200 with `status: "tracked"` and `slug: "grammarly"`.
+An unknown domain returns `status: "unknown"`; a missing URL returns HTTP
+400. The endpoint reads the bundled catalog and never fetches the supplied URL.
 
 ## Licence
 
