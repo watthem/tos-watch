@@ -152,6 +152,7 @@ def render_email(entry: dict) -> dict:
         sources.append(f"[the current {doc} on {vendor}’s site]({entry['source_url']})")
     if sources:
         body += ["Sources: " + " and ".join(sources) + ".", ""]
+    body += [f"tos.watch is run by one person. If it saves you from missing a change that matters, you can [chip in from $1]({site.SUPPORT_URL}). The alerts stay free either way.", ""]
     body += [f"*{attribution_md()}*"]
 
     return {

@@ -10,7 +10,7 @@ pipeline/lib/alerts.py (no YAML dependency), renders:
 - site/services.html           (every tracked service, by track)
 - site/s/<slug>.html           (one page per tracked service)
 - site/self-hosting.html
-- site/privacy.html, site/terms.html
+- site/privacy.html, site/terms.html, site/support.html
 - site/feed.xml                (RSS 2.0, newest 50)
 - site/404.html, robots.txt, sitemap.xml, favicon.svg
 
@@ -43,6 +43,8 @@ ROOT_DIR = SITE_DIR.parent
 WATCHLIST_PATH = ROOT_DIR / "pipeline" / "watchlist.json"
 API_BASE = "https://api.tos.watch"
 BASE_URL = "https://tos.watch"
+# Stripe Payment Link, "tos.watch founding supporter": customer picks the amount, default $5.
+SUPPORT_URL = "https://buy.stripe.com/8x2bJ21z9gJn8ir7f6bQY0b"
 FEATURED_ALERT = "2025-11-04-linkedin-privacy-policy"
 TOPIC_THRESHOLD = 0.5
 TOPICS = [
@@ -350,7 +352,7 @@ def layout(title: str, body: str, root: str = "", description: str = "", scripts
 </main>
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <p class="footer-links"><span class="footer-brand">{WORDMARK}<span>tos.watch</span></span><a href="{root}feed.xml">RSS</a><a href="{root}self-hosting.html">Self-hosting</a><a href="{root}privacy.html">Privacy</a><a href="{root}terms.html">Terms</a><a href="https://github.com/watthem/tos-watch">Source on GitHub</a><span>Not affiliated with any company we track.</span></p>
+    <p class="footer-links"><span class="footer-brand">{WORDMARK}<span>tos.watch</span></span><a href="{root}feed.xml">RSS</a><a href="{root}self-hosting.html">Self-hosting</a><a href="{root}privacy.html">Privacy</a><a href="{root}terms.html">Terms</a><a href="{root}support.html">Support</a><a href="https://github.com/watthem/tos-watch">Source on GitHub</a><span>Not affiliated with any company we track.</span></p>
     <p class="footer-fine">{ATTRIBUTION_HTML} Diffs by <a href="https://diffs.com">@pierre/diffs</a> (Apache-2.0).</p>
   </div>
 </footer>
@@ -399,6 +401,7 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
         </div>
       </form>
       <p class="form-note" id="form-note">Free. One email per real change, across every topic we watch. <a href="https://github.com/watthem/tos-watch">Open source</a>. <a href="privacy.html">Privacy</a>.</p>
+      <p class="form-note support-note">tos.watch is built and run by one person. If it saves you from missing a change that matters, you can <a href="{SUPPORT_URL}" rel="noopener">chip in from $1</a>. It keeps the alerts coming and pays for the email service. No account needed.</p>
     </div>
     {example}
   </div>
@@ -643,6 +646,7 @@ def render_privacy() -> str:
   <h2 class="h3">Who else handles it</h2>
   <ul>
     <li><strong>Buttondown</strong> stores our subscriber list and sends the newsletter and the confirmation email. It receives your email address, the labels above, and your IP address, which it uses to block spam signups. See <a href="https://buttondown.com/legal/privacy">Buttondown's privacy policy</a>.</li>
+    <li><strong>Stripe</strong> handles payments if you choose to chip in from the <a href="support.html">support page</a>. You enter your card details on Stripe's page, not ours, and we never see them. Stripe tells us the amount and the name or email you give it. See <a href="https://stripe.com/privacy">Stripe's privacy policy</a>.</li>
     <li><strong>Cloudflare</strong> hosts the site and our signup service. Like any host, it processes your IP address and basic request details to deliver pages and stop abuse. Our signup service also keeps your IP address in memory for about a minute to limit repeated signups; it is never written to a database or file. See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a>.</li>
   </ul>
   <p>We don't sell, rent or share your email with anyone else, and we don't use it for anything but tos.watch.</p>
@@ -708,6 +712,22 @@ def render_terms() -> str:
         body,
         description="The terms for using tos.watch and its newsletter.",
         path="terms.html",
+    )
+
+
+def render_support() -> str:
+    body = f"""
+<div class="wrap narrow page">
+  <h1>Support tos.watch</h1>
+  <p><strong>Support tos.watch.</strong> Alerts are free. If you want to help keep them running, pick an amount from $1. Payments go through Stripe; tos.watch never sees your card. This is a voluntary contribution, not a subscription, and it doesn&rsquo;t change what you receive. Questions: reply to any alert email.</p>
+  <p><a class="button" href="{SUPPORT_URL}" rel="noopener">Chip in from $1</a></p>
+</div>
+"""
+    return layout(
+        "Support: tos.watch",
+        body,
+        description="Alerts are free. Chip in from $1 to help keep tos.watch running.",
+        path="support.html",
     )
 
 
@@ -893,13 +913,14 @@ def build(code_root: pathlib.Path, data_root: pathlib.Path | None = None) -> Non
     (site_dir / "self-hosting.html").write_text(render_self_hosting())
     (site_dir / "privacy.html").write_text(render_privacy())
     (site_dir / "terms.html").write_text(render_terms())
+    (site_dir / "support.html").write_text(render_support())
     (site_dir / "feed.xml").write_text(render_feed(entries))
     (site_dir / "404.html").write_text(render_404())
     (site_dir / "favicon.svg").write_text(FAVICON_SVG)
     (site_dir / "robots.txt").write_text(render_robots())
     pages = [("index.html", ""), ("alerts/index.html", entries[0].get("date", "") if entries else "")]
     pages += [(f"alerts/{e['stem']}.html", e.get("date", "")) for e in entries]
-    pages += [("services.html", ""), ("self-hosting.html", ""), ("privacy.html", ""), ("terms.html", "")]
+    pages += [("services.html", ""), ("self-hosting.html", ""), ("privacy.html", ""), ("terms.html", ""), ("support.html", "")]
     pages += [(f"s/{slugify(v)}.html", "") for v in sorted(by_vendor, key=str.lower)]
     (site_dir / "sitemap.xml").write_text(render_sitemap(pages))
     copy_fonts(site_dir)
