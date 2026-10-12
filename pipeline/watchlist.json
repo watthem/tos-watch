@@ -24,6 +24,11 @@
       "id": "consumer",
       "label": "Consumer apps",
       "description": "The broad social, video, and marketplace apps most people use every day."
+    },
+    {
+      "id": "trading-finance",
+      "label": "Trading and finance",
+      "description": "Charting, futures brokers, banks and payment platforms: data use, fees, and what you may do with their data or scripts."
     }
   ],
   "ota_repos": {
@@ -823,6 +828,149 @@
       "parent_company": "X/xAI",
       "headline": true,
       "source": "ota:OpenTermsArchive/pga-versions"
+    },
+    {
+      "vendor": "OpenRouter",
+      "doc": "Terms of Service",
+      "repo": "genai-contrib-versions",
+      "path": "OpenRouter/Terms of Service.md",
+      "source_url": "https://openrouter.ai/terms",
+      "track": "dev-tools",
+      "parent_company": "OpenRouter",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-contrib-versions"
+    },
+    {
+      "vendor": "OpenRouter",
+      "doc": "Privacy Policy",
+      "repo": "genai-contrib-versions",
+      "path": "OpenRouter/Privacy Policy.md",
+      "source_url": "https://openrouter.ai/privacy",
+      "track": "dev-tools",
+      "parent_company": "OpenRouter",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/genai-contrib-versions"
+    },
+    {
+      "vendor": "GitHub",
+      "doc": "Terms of Service",
+      "repo": "contrib-versions",
+      "path": "GitHub/Terms of Service.md",
+      "source_url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+      "track": "dev-tools",
+      "parent_company": "Microsoft",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "GitHub",
+      "doc": "Privacy Policy",
+      "repo": "contrib-versions",
+      "path": "GitHub/Privacy Policy.md",
+      "source_url": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+      "track": "dev-tools",
+      "parent_company": "Microsoft",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Discord",
+      "doc": "Terms of Service",
+      "repo": "contrib-versions",
+      "path": "Discord/Terms of Service.md",
+      "source_url": "https://discord.com/terms",
+      "track": "consumer",
+      "parent_company": "Discord",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Discord",
+      "doc": "Privacy Policy",
+      "repo": "contrib-versions",
+      "path": "Discord/Privacy Policy.md",
+      "source_url": "https://discord.com/privacy",
+      "track": "consumer",
+      "parent_company": "Discord",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Google",
+      "doc": "Terms of Service",
+      "repo": "contrib-versions",
+      "path": "Google/Terms of Service.md",
+      "source_url": "https://policies.google.com/terms",
+      "track": "consumer",
+      "parent_company": "Google",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Google",
+      "doc": "Privacy Policy",
+      "repo": "contrib-versions",
+      "path": "Google/Privacy Policy.md",
+      "source_url": "https://policies.google.com/privacy",
+      "track": "consumer",
+      "parent_company": "Google",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Microsoft",
+      "doc": "Terms of Service",
+      "repo": "contrib-versions",
+      "path": "Microsoft/Terms of Service.md",
+      "source_url": "https://www.microsoft.com/en-us/servicesagreement",
+      "track": "dev-tools",
+      "parent_company": "Microsoft",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Microsoft",
+      "doc": "Privacy Policy",
+      "repo": "contrib-versions",
+      "path": "Microsoft/Privacy Policy.md",
+      "source_url": "https://www.microsoft.com/en-us/privacy/privacystatement",
+      "track": "dev-tools",
+      "parent_company": "Microsoft",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Apple",
+      "doc": "Privacy Policy",
+      "repo": "contrib-versions",
+      "path": "Apple/Privacy Policy.md",
+      "source_url": "https://www.apple.com/legal/privacy/en-ww/",
+      "track": "consumer",
+      "parent_company": "Apple",
+      "headline": true,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Coinbase",
+      "doc": "Terms of Service",
+      "repo": "contrib-versions",
+      "path": "Coinbase/Terms of Service.md",
+      "source_url": "https://www.coinbase.com/legal/user_agreement",
+      "track": "trading-finance",
+      "parent_company": "Coinbase",
+      "headline": false,
+      "source": "ota:OpenTermsArchive/contrib-versions"
+    },
+    {
+      "vendor": "Coinbase",
+      "doc": "Privacy Policy",
+      "repo": "contrib-versions",
+      "path": "Coinbase/Privacy Policy.md",
+      "source_url": "https://www.coinbase.com/legal/privacy",
+      "track": "trading-finance",
+      "parent_company": "Coinbase",
+      "headline": false,
+      "source": "ota:OpenTermsArchive/contrib-versions"
     }
   ],
   "web_pages": [
@@ -885,6 +1033,226 @@
       "track": "typing",
       "parent_company": "Otter.ai",
       "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "TradingView",
+      "doc": "Terms of Use",
+      "url": "https://www.tradingview.com/policies/",
+      "slug": "tradingview-terms",
+      "track": "trading-finance",
+      "parent_company": "TradingView",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "TradingView",
+      "doc": "House Rules",
+      "url": "https://www.tradingview.com/house-rules/",
+      "slug": "tradingview-house-rules",
+      "track": "trading-finance",
+      "parent_company": "TradingView",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "TradingView",
+      "doc": "Privacy Policy",
+      "url": "https://www.tradingview.com/privacy-policy/",
+      "slug": "tradingview-privacy",
+      "track": "trading-finance",
+      "parent_company": "TradingView",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "NinjaTrader",
+      "doc": "Terms and EULA",
+      "url": "https://www.tradovate.com/nt-terms-and-eula/",
+      "slug": "ninjatrader-eula",
+      "track": "trading-finance",
+      "parent_company": "Kraken",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "NinjaTrader",
+      "doc": "Privacy Policy",
+      "url": "https://ninjatrader.com/privacy-policy-ninjatrader-llc/",
+      "slug": "ninjatrader-privacy",
+      "track": "trading-finance",
+      "parent_company": "Kraken",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Tradovate",
+      "doc": "Terms and EULA",
+      "url": "https://www.tradovate.com/terms-and-eula/",
+      "slug": "tradovate-terms",
+      "track": "trading-finance",
+      "parent_company": "Kraken",
+      "headline": false,
+      "source": "direct"
+    },
+    {
+      "vendor": "Topstep",
+      "doc": "Terms of Use",
+      "url": "https://www.topstep.com/terms-of-use",
+      "slug": "topstep-terms",
+      "track": "trading-finance",
+      "parent_company": "Topstep",
+      "headline": false,
+      "source": "direct"
+    },
+    {
+      "vendor": "Stripe",
+      "doc": "Services Agreement",
+      "url": "https://stripe.com/legal/ssa",
+      "slug": "stripe-ssa",
+      "track": "trading-finance",
+      "parent_company": "Stripe",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Stripe",
+      "doc": "Privacy Policy",
+      "url": "https://stripe.com/privacy",
+      "slug": "stripe-privacy",
+      "track": "trading-finance",
+      "parent_company": "Stripe",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "SoFi",
+      "doc": "Terms of Use",
+      "url": "https://www.sofi.com/terms-of-use/",
+      "slug": "sofi-terms",
+      "track": "trading-finance",
+      "parent_company": "SoFi",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "SoFi",
+      "doc": "Online Privacy Policy",
+      "url": "https://www.sofi.com/online-privacy-policy/",
+      "slug": "sofi-privacy",
+      "track": "trading-finance",
+      "parent_company": "SoFi",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Capital One",
+      "doc": "Terms and Conditions",
+      "url": "https://www.capitalone.com/digital/terms-conditions/",
+      "slug": "capitalone-terms",
+      "track": "trading-finance",
+      "parent_company": "Capital One",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Capital One",
+      "doc": "Online Privacy Policy",
+      "url": "https://www.capitalone.com/privacy/online-privacy-policy/",
+      "slug": "capitalone-privacy",
+      "track": "trading-finance",
+      "parent_company": "Capital One",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Slack",
+      "doc": "User Terms of Service",
+      "url": "https://slack.com/terms-of-service/user",
+      "slug": "slack-terms",
+      "track": "dev-tools",
+      "parent_company": "Salesforce",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Slack",
+      "doc": "Privacy Policy",
+      "url": "https://slack.com/trust/privacy/privacy-policy",
+      "slug": "slack-privacy",
+      "track": "dev-tools",
+      "parent_company": "Salesforce",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Help Scout",
+      "doc": "Terms of Service",
+      "url": "https://www.helpscout.com/company/legal/terms-of-service/",
+      "slug": "helpscout-terms",
+      "track": "dev-tools",
+      "parent_company": "Help Scout",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Help Scout",
+      "doc": "Privacy Policy",
+      "url": "https://www.helpscout.com/company/legal/privacy/",
+      "slug": "helpscout-privacy",
+      "track": "dev-tools",
+      "parent_company": "Help Scout",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Obsidian",
+      "doc": "Terms of Service",
+      "url": "https://obsidian.md/terms",
+      "slug": "obsidian-terms",
+      "track": "typing",
+      "parent_company": "Obsidian",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Obsidian",
+      "doc": "Privacy Policy",
+      "url": "https://obsidian.md/privacy",
+      "slug": "obsidian-privacy",
+      "track": "typing",
+      "parent_company": "Obsidian",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Apollo.io",
+      "doc": "Terms of Service",
+      "url": "https://www.apollo.io/terms",
+      "slug": "apollo-terms",
+      "track": "dev-tools",
+      "parent_company": "Apollo.io",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Apollo.io",
+      "doc": "Privacy Policy",
+      "url": "https://www.apollo.io/privacy-policy",
+      "slug": "apollo-privacy",
+      "track": "dev-tools",
+      "parent_company": "Apollo.io",
+      "headline": true,
+      "source": "direct"
+    },
+    {
+      "vendor": "Cloudflare",
+      "doc": "Developer Platform Service-Specific Terms",
+      "url": "https://www.cloudflare.com/service-specific-terms-developer-platform/",
+      "slug": "cloudflare-devplatform",
+      "track": "dev-tools",
+      "parent_company": "Cloudflare",
+      "headline": false,
       "source": "direct"
     }
   ]
