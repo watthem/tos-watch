@@ -55,8 +55,10 @@
             fail("We couldn't sign you up just now, so nothing was saved. Please try again in a few minutes.");
           } else if (data && data.error === "rate_limited") {
             fail("Too many tries. Wait a minute and try again.");
+          } else if (data && data.error === "invalid_email") {
+            fail("That email address doesn't look right. Check it and try again.");
           } else {
-            fail("That didn't work. Check the email address and try again.");
+            fail("That didn't work. Nothing was saved. Try again in a few minutes.");
           }
         })
         .catch(function () {
