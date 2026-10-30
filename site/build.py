@@ -126,8 +126,22 @@ def plain_policy_text(md: str) -> str:
     return "\n".join(line.strip() for line in s.splitlines() if line.strip())
 
 
+def load_verification(alerts_dir: pathlib.Path) -> dict | None:
+    """pipeline/verification.json beside the alerts (pipeline/verify_alerts.py),
+    or None when this install doesn't run the check."""
+    path = alerts_dir.parent / "pipeline" / "verification.json"
+    return json.loads(path.read_text()) if path.exists() else None
+
+
 def load_alerts(alerts_dir: pathlib.Path) -> list[dict]:
+    """Every alert that may be shown. When the verification file exists, an
+    alert is shown only if it passed: no result counts as not passed."""
     entries = [parse_alert(p) for p in sorted(alerts_dir.glob("*.md"))]
+    verification = load_verification(alerts_dir)
+    if verification is not None:
+        entries = [e for e in entries if verification.get(e["stem"], {}).get("status") == "pass"]
+        for e in entries:
+            e["checked"] = verification[e["stem"]]
     entries.sort(key=lambda e: (e.get("date", ""), e["stem"]), reverse=True)
     return entries
 
@@ -465,6 +479,20 @@ def signal_card(feature: str, title: str, text: str, button: str) -> str:
       </div>"""
 
 
+def how_checked_html(e: dict) -> str:
+    c = e.get("checked")
+    if not c:
+        return ""
+    return (
+        '<h2 class="h3">How this was checked</h2>'
+        f'<p class="section-lede">A program, not a person, checked this on {esc(nice_date(c.get("checked_on", "")))}. '
+        "It matched every quoted passage word for word against the archived copy of the document, "
+        "and confirmed that at least one passage is new text, absent from the version before. "
+        "Nothing here is a summary or a guess: the quotes and the links are the evidence. "
+        "Use the sources below to read the original.</p>"
+    )
+
+
 def render_alert_page(e: dict, others: list[dict]) -> str:
     vendor, doc, slug = e.get("vendor", ""), e.get("doc", ""), slugify(e.get("vendor", ""))
     n = len(e["changes"])
@@ -488,6 +516,7 @@ def render_alert_page(e: dict, others: list[dict]) -> str:
   </div>
   <h2 class="h3">Sources</h2>
   <ul class="plain-list">{"".join(sources)}</ul>
+  {how_checked_html(e)}
   {service_signup(vendor, slug, e.get("track", ""), "../")}
   {more}
 </div>
