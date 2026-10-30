@@ -230,6 +230,11 @@
     servicesPromise.then(function (data) {
       var services = (data && data.services) || [];
       var hit = findService(services, q);
+      if (!hit && !looksLikeUrl(q) && matchKey(q).length < 3) {
+        results.innerHTML = '<p class="result-status is-error">Type at least 3 letters of a service name, or paste a link to its terms.</p>';
+        input.focus();
+        return;
+      }
       if (hit && hit.status === "tracked") renderTracked(hit);
       else if (hit && hit.status === "archived") renderArchived(hit);
       else renderNotFound(q);
