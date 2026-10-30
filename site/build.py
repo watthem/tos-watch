@@ -360,7 +360,7 @@ def coverage_bento(stats: list[dict], total_services: int, entries: list[dict], 
       <div class="tile tile-search">
         <div>
           <h2 id="search-heading">Is your app watched?</h2>
-          <p class="section-lede">{total_services} services today. Missing one? Ask us to add it.</p>
+          <p class="section-lede">{total_services} services today.<span class="js-only"> Missing one? Ask us to add it.</span></p>
         </div>
         <form id="search-form" method="post" class="search-form" role="search" aria-labelledby="search-heading" novalidate>
           <label for="search-input" class="visually-hidden">Search for a service or paste a link to its terms</label>
@@ -400,7 +400,7 @@ FAVICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
 <rect x="5.5" y="13.2" width="6" height="1.6" rx=".8" class="f" opacity=".45"/>
 </svg>
 """
-PITCH = "Terms of service and privacy policy monitor: we email you the exact words when a watched app changes them."
+PITCH = "We watch the terms of service and privacy policies of apps you use, and email you the exact words when one changes."
 DEFAULT_DESCRIPTION = PITCH
 OG_IMAGE = f"{BASE_URL}/og.png"
 
@@ -453,7 +453,7 @@ def layout(title: str, body: str, root: str = "", description: str = "", scripts
 <link rel="preload" href="{root}fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{root}style.css">
 <link rel="alternate" type="application/rss+xml" title="tos.watch changes" href="{root}feed.xml">
-<noscript><style>.signup-form,.search-form,.signal-form,.request-form,.vote-form,.nav-subscribe{{display:none}}</style></noscript>
+<noscript><style>.signup-form,.search-form,.signal-form,.request-form,.vote-form,.nav-subscribe,.js-only{{display:none}}</style></noscript>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -468,7 +468,7 @@ def layout(title: str, body: str, root: str = "", description: str = "", scripts
   </div>
 </header>
 <main id="main">
-<noscript><p class="wrap noscript-note">JavaScript is off, so signing up, voting and search are switched off. You can still read every change. To follow them, use the <a href="{root}feed.xml">RSS feed</a>, or email <!--email_off--><a href="mailto:hello@tos.watch?subject=Add%20me%20to%20tos.watch">hello@tos.watch</a><!--/email_off--> and ask to be added by hand.</p></noscript>
+<noscript><p class="wrap noscript-note">JavaScript is off, so signing up, voting and search are switched off. You can still read every change. To follow them, use the <a href="{root}feed.xml">RSS feed</a> (it holds the latest 50 changes), or email <!--email_off--><a href="mailto:hello@tos.watch?subject=Add%20me%20to%20tos.watch">hello@tos.watch</a><!--/email_off--> and ask to be added by hand.</p></noscript>
 {body}
 </main>
 <footer class="site-footer">
@@ -509,9 +509,9 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
         example = f"""
     <figure class="example">
       <figcaption class="example-head">
-        <span class="example-kicker">Example alert</span>
+        <span class="example-kicker">Example</span>
         <span class="example-title">{esc(featured["vendor"])} {esc(featured["doc"])}</span>
-        <time datetime="{esc(featured["date"])}">{nice_date(featured["date"])}</time>
+        <time datetime="{esc(featured["date"])}">A past alert, sent {nice_date(featured["date"])}</time>
       </figcaption>
       {diff_block(best) if best else ""}
       <div class="example-foot">{topic_tags(featured)}<a href="alerts/{featured["stem"]}.html">Read the whole change</a></div>
@@ -531,7 +531,7 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
           <button class="button" type="submit">Subscribe</button>
         </div>
       </form>
-      <p class="form-note" id="form-note">Free. One email per real change, across every category we watch. We keep your email and the page you signed up on.</p>
+      <p class="form-note js-only" id="form-note">Free. One email per real change, across every category we watch. We keep your email and the page you signed up on.</p>
       <p class="form-links"><a href="https://github.com/watthem/tos-watch">Open source</a><a href="privacy.html">Privacy</a></p>
       <p class="form-note support-note">tos.watch is built and run by one person. If it saves you from missing a change that matters, you can <a href="{SUPPORT_URL}" rel="noopener">give from $1</a>. No account needed.</p>
     </div>
@@ -562,7 +562,7 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
   </div>
 </section>
 
-<section class="signals">
+<section class="signals js-only">
   <div class="wrap narrow">
     <h2>Help decide what comes next</h2>
     <p class="section-lede">Two things we might build. Check any you'd use, add your email once, and we count it as a vote. Nothing is built or charged yet.</p>
@@ -680,8 +680,8 @@ def render_alert_page(e: dict, others: list[dict]) -> str:
 
 def service_signup(vendor: str, slug: str, tracks: str, root: str) -> str:
     return f"""
-  <div class="signup-box">
-    <h2 class="h3">Get the next {esc(vendor)} change by email</h2>
+  <div class="signup-box js-only">
+    <h2 class="h3">Get every change by email</h2>
     <form id="subscribe" method="post" class="signup-form" data-source="service:{esc(slug)}" data-tracks="{esc(tracks)}" novalidate>
       <div class="field-row">
         <label for="email-{esc(slug)}" class="visually-hidden">Email address</label>
@@ -689,7 +689,7 @@ def service_signup(vendor: str, slug: str, tracks: str, root: str) -> str:
         <button class="button" type="submit">Subscribe</button>
       </div>
     </form>
-    <p class="form-note">Free. You get every alert we send, including ones about {esc(vendor)}. One email per real change. Unsubscribe with one click. <a href="{root}privacy.html">Privacy</a>.</p>
+    <p class="form-note">Free. You get every alert we send, for all the services we watch, not only {esc(vendor)}. One email per real change. Unsubscribe with one click. <a href="{root}privacy.html">Privacy</a>.</p>
   </div>"""
 
 
@@ -703,7 +703,7 @@ def render_archive(entries: list[dict]) -> str:
     body = f"""
 <div class="wrap page">
   <h1>All changes</h1>
-  <p class="section-lede">Every change we have sent an alert for, newest first. Each one opens the exact words that were removed and added. <a href="#labels">What the labels mean</a>.</p>
+  <p class="section-lede">Every change we have sent an alert for, newest first. Each one opens the exact words that were removed and added. <a href="#labels">What the labels mean</a>. The <a href="../feed.xml">RSS feed</a> holds the latest 50 changes.</p>
   {sections}
   {labels_help_html()}
 </div>
@@ -748,7 +748,7 @@ def render_services(watchlist: dict, by_vendor: dict[str, list[str]], counts: di
         groups += [group_html(t, vs) for t, vs in quiet]
     lede = (
         f"We watch {total} services, grouped by category. {dual_note(total)}{quiet_text} "
-        'Missing one? <a href="index.html#search-heading">Search for it</a> and ask us to add it.'
+        '<span class="js-only">Missing one? <a href="index.html#search-heading">Search for it</a> and ask us to add it.</span>'
     )
     description = f"The {total} apps and services tos.watch watches for privacy policy and terms changes, grouped by category."
     body = f"""
@@ -863,16 +863,16 @@ def render_privacy() -> str:
   <h2 class="h3">What we collect</h2>
   <ul>
     <li><strong>Your email address</strong>, when you subscribe, vote for a feature, or give an email with a service request.</li>
-    <li><strong>The page you signed up on, and its topic.</strong> The page is the home page or a service's page. The topic is that page's category, for example Dating apps. You don't pick a topic: the page sets it, and the home page sets none. Both are saved as labels on your record at Buttondown.</li>
-    <li><strong>What you asked us to track</strong>, if you use the request box. We store the service name or link you typed, as an anonymous count that isn't tied to any email. If you also gave an email, your Buttondown record gets a label naming the service (or a simplified form of the link).</li>
-    <li><strong>Feature votes.</strong> We count each vote per feature, with no email attached. If you gave an email, your Buttondown record gets a label for that vote.</li>
+    <li><strong>The page you signed up on, and its topic.</strong> The page is the home page or a service's page. The topic is that page's category, for example Dating apps. You don't pick a topic: the page sets it, and the home page sets none. Both are saved as tags on your record at Buttondown.</li>
+    <li><strong>What you asked us to track</strong>, if you use the request box. We store the service name or link you typed, as an anonymous count that isn't tied to any email. If you also gave an email, your Buttondown record gets a tag naming the service (or a simplified form of the link).</li>
+    <li><strong>Feature votes.</strong> We count each vote per feature, with no email attached. If you gave an email, your Buttondown record gets a tag for that vote.</li>
   </ul>
   <p>If you vote or request something with an email we don't have yet, Buttondown sends you a confirmation email, and confirming also subscribes you to alerts.</p>
   <p>tos.watch sets no cookies and runs no advertising or tracking scripts, and our fonts are hosted by us. We do count visits with Cloudflare Web Analytics, which is cookieless. It records which pages are viewed, the site that sent the visitor, and the country, browser and device type. It is run by Cloudflare, the company that hosts the site.</p>
 
   <h2 class="h3">Who else handles it</h2>
   <ul>
-    <li><strong>Buttondown</strong> stores our subscriber list and sends the newsletter and the confirmation email. It receives your email address, the labels above, and your IP address, which it uses to block spam signups. See <a href="https://buttondown.com/legal/privacy">Buttondown's privacy policy</a>.</li>
+    <li><strong>Buttondown</strong> stores our subscriber list and sends the newsletter and the confirmation email. It receives your email address, the tags above, and your IP address, which it uses to block spam signups. See <a href="https://buttondown.com/legal/privacy">Buttondown's privacy policy</a>.</li>
     <li><strong>Stripe</strong> handles payments if you choose to give from the <a href="support.html">support page</a>. You enter your card details on Stripe's page, not ours, and we never see them. Stripe tells us the amount and the name or email you give it. See <a href="https://stripe.com/privacy">Stripe's privacy policy</a>.</li>
     <li><strong>Cloudflare</strong> hosts the site and our signup service. Like any host, it processes your IP address and basic request details to deliver pages and stop abuse. Our signup service also keeps your IP address in memory for about a minute to limit repeated signups; it is never written to a database or file. See <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's privacy policy</a>.</li>
   </ul>
@@ -880,7 +880,7 @@ def render_privacy() -> str:
   <p>Buttondown and the email services that deliver or display our emails may record whether an email was opened and which links were clicked, under their own settings and policies.</p>
 
   <h2 class="h3">How long we keep it</h2>
-  <p>Your email address is kept only at Buttondown, until you unsubscribe or ask us to delete it. The page you signed up on, its topic, votes and requests are labels on that one record, so deleting it removes them too. Buttondown keeps a record that an address unsubscribed, so it doesn't email you again unless you ask. Our own database and logs don't hold your email address. The counts of requested services and voted features stay, because they contain nothing about you.</p>
+  <p>Your email address is kept only at Buttondown, until you unsubscribe or ask us to delete it. The page you signed up on, its topic, votes and requests are tags on that one record, so deleting it removes them too. Buttondown keeps a record that an address unsubscribed, so it doesn't email you again unless you ask. Our own database and logs don't hold your email address. The counts of requested services and voted features stay, because they contain nothing about you.</p>
 
   <h2 class="h3">Your choices</h2>
   <ul>
