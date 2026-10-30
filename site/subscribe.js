@@ -6,6 +6,8 @@
 // request body -- the main landing form ships with all five checked.
 (function () {
   var API_BASE = window.TOS_WATCH_API_BASE || "";
+  // Same test the worker applies (worker/src/index.js EMAIL_RE).
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function wireForm(form) {
     var note = form.nextElementSibling;
@@ -15,7 +17,16 @@
       e.preventDefault();
       var emailInput = form.querySelector('input[type="email"]');
       var email = emailInput ? emailInput.value.trim() : "";
-      if (!email) return;
+      var button = form.querySelector('button[type="submit"]');
+
+      function fail(message) {
+        if (button) { button.disabled = false; button.textContent = "Subscribe"; }
+        if (note) { note.textContent = message; note.classList.add("is-error"); note.setAttribute("role", "alert"); }
+        else if (emailInput) { emailInput.setCustomValidity(message); emailInput.reportValidity(); emailInput.setCustomValidity(""); }
+      }
+
+      if (!email) { fail("Enter your email."); if (emailInput) emailInput.focus(); return; }
+      if (!EMAIL_RE.test(email)) { fail("That email address doesn't look right. Check it and try again."); if (emailInput) emailInput.focus(); return; }
 
       var body = { email: email, source: form.dataset.source || "site" };
       var trackInputs = form.querySelectorAll('input[name="tracks"]');
@@ -27,13 +38,7 @@
         body.tracks = form.dataset.tracks.split(",").filter(Boolean);
       }
 
-      var button = form.querySelector('button[type="submit"]');
       if (button) { button.disabled = true; button.textContent = "Subscribing…"; }
-
-      function fail(message) {
-        if (button) { button.disabled = false; button.textContent = "Subscribe"; }
-        if (note) { note.textContent = message; note.classList.add("is-error"); note.setAttribute("role", "alert"); }
-      }
 
       fetch(API_BASE + "/subscribe", {
         method: "POST",

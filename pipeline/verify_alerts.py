@@ -13,7 +13,9 @@ Archive clone (cache/<repo>), not against anything the pipeline produced:
              A quote that is not in the archived text is a fabrication.
   evidence   at least one passage is a real change (Added quote absent from the
              previous version, Removed quote absent from this one) and prose,
-             not table or markup debris. Weaker passages beside it are allowed.
+             not table or markup debris, a table of contents or a menu
+             (lib/noise.py). Weaker passages beside it are allowed; an alert
+             whose passages are all noise is withheld.
 
 Result: pipeline/verification.json {stem: {status, failed, commit, ...}}.
 Only status "pass" alerts are shown on the site and drafted for email. Already
@@ -37,9 +39,12 @@ import time
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from lib import paths
+from lib.noise import is_noise
 
 COMMIT_RE = re.compile(r"^https://github\.com/OpenTermsArchive/([\w.-]+)/commit/([0-9a-f]{40})$")
 MIN_QUOTE_WORDS = 6
+# Bump when a rule changes: results from older rules are checked again.
+RULES = 2
 
 
 def ws(s: str) -> str:
@@ -119,7 +124,7 @@ def readable(quote: str) -> bool:
 def check(path: pathlib.Path, cache: pathlib.Path, snap_dirs: list[pathlib.Path]) -> dict:
     fm, quotes = parse(path)
     failed: list[str] = []
-    out = {"status": "fail", "failed": failed, "checked_on": time.strftime("%Y-%m-%d")}
+    out = {"status": "fail", "failed": failed, "checked_on": time.strftime("%Y-%m-%d"), "rules": RULES}
 
     commit_url = fm.get("ota_commit_url", "")
     m = COMMIT_RE.match(commit_url)
@@ -161,6 +166,8 @@ def check(path: pathlib.Path, cache: pathlib.Path, snap_dirs: list[pathlib.Path]
             weak.append("also in the other version")
         if not readable(q):
             weak.append("table or markup debris")
+        elif is_noise(q):
+            weak.append("navigation or markup noise")
         if not weak:
             strong += 1
     if not failed and not strong:
@@ -177,7 +184,8 @@ def run_verification(alerts: pathlib.Path, cache: pathlib.Path, out: pathlib.Pat
     results = json.loads(out.read_text()) if out.exists() else {}
     snap_dirs = [paths.DIRECT_SNAPSHOTS_DIR, paths.MUSE_SNAPSHOTS_DIR]
     for p in sorted(alerts.glob("*.md")):
-        if results.get(p.stem, {}).get("status") == "pass" and not recheck:
+        prior = results.get(p.stem, {})
+        if prior.get("status") == "pass" and prior.get("rules") == RULES and not recheck:
             continue
         results[p.stem] = check(p, cache, snap_dirs)
     for stem in list(results):
