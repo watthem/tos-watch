@@ -1,9 +1,9 @@
 // Landing-page search box: instant, client-side lookup against
 // site/services.json (every OTA-declared service tos.watch has surveyed,
-// tracked or not, built by datasets/build_services_catalog.py) -- no
-// network round trip just to tell someone whether a name is tracked. The
-// only network calls this file makes are POST /request and POST /vote,
-// both real writes the reader asked for. Nothing here ever fetches an
+// tracked or not; the tracked half is rebuilt from pipeline/watchlist.json
+// by site/build.py on every build) -- no network round trip just to tell
+// someone whether a name is tracked. The only network call this file makes
+// is POST /request, the write the reader asked for. Nothing here ever fetches an
 // arbitrary URL a visitor types in (see ROADMAP.md, "on-demand check").
 (function () {
   var API_BASE = window.TOS_WATCH_API_BASE || "";
@@ -13,6 +13,7 @@
     typing: "Things you type into",
     "dev-tools": "Developer tools",
     consumer: "Consumer apps",
+    "trading-finance": "Trading and finance",
   };
 
   var form = document.getElementById("search-form");
@@ -100,7 +101,7 @@
       '<div class="result result-tracked">' +
       '<p class="result-status">Yes, we watch ' + esc(service.name) + ".</p>" + '<p class="result-sub">Listed under ' + esc(labels.join(" and ")) + ".</p>" +
       '<p><a class="result-link" href="s/' + esc(service.slug) + '.html">See ' +
-      esc(service.name) + "’s changes and subscribe</a></p>" +
+      esc(service.name + (/s$/i.test(service.name) ? "’" : "’s")) + " changes and subscribe</a></p>" +
       "</div>";
   }
 
@@ -127,17 +128,7 @@
       '<button class="button button-secondary" type="submit">Request it</button>' +
       "</form>" +
       '<p class="request-note" data-for="' + id + '"></p>' +
-      '<p class="form-note"><a href="privacy.html">Privacy</a></p>' +
-      '<div class="mock-check">' +
-      '<p class="result-sub">Coming soon: check any site yourself, right away, instead of waiting for us to add it. Leave your email to vote for it.</p>' +
-      '<form class="vote-form" data-feature="on-demand-check">' +
-      '<label for="' + id + '-vote-email" class="visually-hidden">Email</label>' +
-      '<input id="' + id + '-vote-email" name="email" type="email" placeholder="you@example.com" required>' +
-      '<button class="button button-secondary" type="submit">Tell me when it ships</button>' +
-      "</form>" +
-      '<p class="request-note" data-for="' + id + '-vote"></p>' +
-      '<p class="form-note"><a href="privacy.html">Privacy</a></p>' +
-      "</div>" +
+      '<p class="form-note">We count every request and add the most asked-for services first. An email is optional: if you give one, it is saved with your request, and if we don’t have it yet we send one confirmation link, which also signs you up for alerts. <a href="privacy.html">Privacy</a></p>' +
       '<p class="self-host-note"><a href="self-hosting.html">Or run your own copy of tos.watch</a></p>' +
       "</div>";
 
@@ -193,22 +184,7 @@
         }
         return { path: "/request", data: data };
       },
-      "Thanks. Requests decide what we add next."
-    );
-
-    var voteForm = results.querySelector(".vote-form");
-    wire(
-      voteForm,
-      results.querySelector('[data-for="' + id + '-vote"]'),
-      voteForm.querySelector('button[type="submit"]'),
-      "Tell me when it ships",
-      function () {
-        var email = voteForm.querySelector('input[name="email"]').value.trim();
-        if (!email) return { error: "Enter your email." };
-        if (!EMAIL_RE.test(email)) return { error: "That email address doesn't look right. Check it and try again." };
-        return { path: "/vote", data: { feature: voteForm.dataset.feature, email: email } };
-      },
-      "Got it. Confirm the email we send you and your vote counts."
+      "Thanks, your request is counted. The most-asked-for services are added first."
     );
   }
 
@@ -225,7 +201,7 @@
   function renderNotFound(query) {
     renderUntracked({
       heading: "We don’t know “" + esc(query) + "” yet.",
-      sub: "It isn't on tos.watch, and Open Terms Archive has no history for it either.",
+      sub: "It isn't on tos.watch yet. Request it below and we'll count it.",
       historyLink: null,
       serviceValue: query,
       showUrlField: true,

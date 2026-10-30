@@ -8,6 +8,7 @@ not shown).
 """
 from __future__ import annotations
 
+import difflib
 import re
 
 LINK = re.compile(r"\[((?:[^\[\]\\]|\\.)*)\]\([^)]*(?:\)|…$)")
@@ -56,10 +57,46 @@ def same_text(old: str, new: str) -> bool:
     return bool(old and new) and prose(old) == prose(new)
 
 
+ARTICLES = {"the", "a", "an"}
+
+
+def _words(s: str) -> list[str]:
+    """Lower-case words of a quote with markup, punctuation and a word said
+    twice in a row ("when when") removed."""
+    s = re.sub(r"<br\s*/?>", " ", s, flags=re.I)
+    out: list[str] = []
+    for w in re.findall(r"[a-z0-9]+(?:['’][a-z]+)?", prose(s).lower()):
+        if not out or out[-1] != w:
+            out.append(w)
+    return out
+
+
+def typo_only(old: str, new: str) -> bool:
+    """Old and new differ only in a typo: capitalisation, punctuation, spacing
+    or line breaks, a doubled word, a word split or joined ("jail breaking" to
+    "jailbreaking"), or one stray "the", "a" or "an". Never a changed word:
+    "1 year" to "2 years" or "out" to "our" is not one."""
+    if not (old and new):
+        return False
+    a, b = _words(old), _words(new)
+    if "".join(a) == "".join(b):
+        return True
+    ops = [o for o in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes() if o[0] != "equal"]
+    if len(ops) != 1:
+        return False
+    tag, i1, i2, j1, j2 = ops[0]
+    gone = a[i1:i2] + b[j1:j2]
+    return tag in ("delete", "insert") and len(gone) == 1 and gone[0] in ARTICLES
+
+
+def trivial_edit(old: str, new: str) -> bool:
+    return same_text(old, new) or typo_only(old, new)
+
+
 def drop_change(old: str, new: str) -> bool:
     """Should a changed passage (old and/or new quote) be left off the page?
     Yes when either side is furniture, or when every side that exists is noise."""
     sides = [q for q in (old, new) if q]
-    if same_text(old, new):
+    if trivial_edit(old, new):
         return True
     return any(is_furniture(q) for q in sides) or all(is_noise(q) for q in sides)

@@ -39,12 +39,12 @@ import time
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from lib import paths
-from lib.noise import has_header, is_noise, same_text
+from lib.noise import has_header, is_noise, trivial_edit
 
 COMMIT_RE = re.compile(r"^https://github\.com/OpenTermsArchive/([\w.-]+)/commit/([0-9a-f]{40})$")
 MIN_QUOTE_WORDS = 6
 # Bump when a rule changes: results from older rules are checked again.
-RULES = 3
+RULES = 4
 
 
 def ws(s: str) -> str:
@@ -155,11 +155,13 @@ def check(path: pathlib.Path, cache: pathlib.Path, snap_dirs: list[pathlib.Path]
     # paragraph that only moved or was re-split), is a weak passage: the alert
     # needs at least one strong passage to stand on.
     strong = 0
+    strong_kinds: set[str] = set()
     # An edited passage (Removed then Added) whose two sides read the same
-    # once markup is gone is not a change.
+    # once markup is gone, or differ only by a typo (capitalisation, spacing,
+    # a doubled word), is not a change.
     same = set()
     for i in range(len(quotes) - 1):
-        if quotes[i][0] == "Removed" and quotes[i + 1][0] == "Added" and same_text(quotes[i][1], quotes[i + 1][1]):
+        if quotes[i][0] == "Removed" and quotes[i + 1][0] == "Added" and trivial_edit(quotes[i][1], quotes[i + 1][1]):
             same.update((i, i + 1))
     for i, (kind, q) in enumerate(quotes):
         segs = segments(q)
@@ -169,7 +171,7 @@ def check(path: pathlib.Path, cache: pathlib.Path, snap_dirs: list[pathlib.Path]
             continue
         weak = []
         if i in same:
-            weak.append("only markup differs")
+            weak.append("only markup or a typo differs")
         if all(s in other for s in segs):
             weak.append("also in the other version")
         if has_header(q):
@@ -183,10 +185,12 @@ def check(path: pathlib.Path, cache: pathlib.Path, snap_dirs: list[pathlib.Path]
             weak.append("navigation or markup noise")
         if not weak:
             strong += 1
+            strong_kinds.add(kind)
     if not failed and not strong:
         failed.append("evidence: no passage that is both prose and a real change")
     if not failed:
         out["status"] = "pass"
+        out["strong_kinds"] = sorted(strong_kinds)
         out["passages"] = f"{strong} of {len(quotes)} quoted passages checked as new prose"
     return out
 

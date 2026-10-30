@@ -87,4 +87,17 @@
   }
 
   Array.prototype.forEach.call(document.querySelectorAll(".signup-form"), wireForm);
+
+  // A link to #subscribe (the header button) lands with the email field
+  // visible below the sticky header and focused.
+  function focusSubscribe() {
+    var field = document.querySelector("#subscribe input[type=email]");
+    if (field) field.focus();
+  }
+  // After load: the browser's own jump to the fragment would otherwise take focus back.
+  if (location.hash === "#subscribe") window.addEventListener("load", function () { setTimeout(focusSubscribe, 0); });
+  window.addEventListener("hashchange", function () { if (location.hash === "#subscribe") focusSubscribe(); });
+  Array.prototype.forEach.call(document.querySelectorAll('a[href$="#subscribe"]'), function (a) {
+    a.addEventListener("click", function () { setTimeout(focusSubscribe, 0); });
+  });
 })();
