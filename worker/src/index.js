@@ -38,7 +38,7 @@ const MAX_URL_LEN = 2000;
 // (5 tracks added 2026-09-26; see README for the source of truth). A form
 // that sends tracks[] tags the subscriber track:<id>; an unknown id is
 // dropped rather than passed on raw.
-const VALID_TRACKS = ["ai-assistants", "dating", "typing", "dev-tools", "consumer"];
+const VALID_TRACKS = ["ai-assistants", "dating", "typing", "dev-tools", "consumer", "trading-finance"];
 
 // Feature ids /vote accepts, each a demand signal the owner reads from D1
 // feature_counts: the mock on-demand check, a paid supporter tier, and

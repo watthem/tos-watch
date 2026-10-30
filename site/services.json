@@ -1,13 +1,36 @@
 {
- "generated": "2026-09-26",
  "note": "tracked: alerted on tos.watch. archived: has Open Terms Archive history but is not on tos.watch yet -- request it. Anything else is unknown to both.",
  "services": [
+  {
+   "name": "Apollo.io",
+   "slug": "apollo-io",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
+   "name": "Apple",
+   "slug": "apple",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
   {
    "name": "Bumble",
    "slug": "bumble",
    "status": "tracked",
    "tracks": [
     "dating"
+   ]
+  },
+  {
+   "name": "Capital One",
+   "slug": "capital-one",
+   "status": "tracked",
+   "tracks": [
+    "trading-finance"
    ]
   },
   {
@@ -37,6 +60,14 @@
    ]
   },
   {
+   "name": "Coinbase",
+   "slug": "coinbase",
+   "status": "tracked",
+   "tracks": [
+    "trading-finance"
+   ]
+  },
+  {
    "name": "Cursor",
    "slug": "cursor",
    "status": "tracked",
@@ -61,11 +92,27 @@
    ]
   },
   {
+   "name": "Discord",
+   "slug": "discord",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
+   ]
+  },
+  {
    "name": "Facebook",
    "slug": "facebook",
    "status": "tracked",
    "tracks": [
     "consumer"
+   ]
+  },
+  {
+   "name": "GitHub",
+   "slug": "github",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
    ]
   },
   {
@@ -82,6 +129,14 @@
    "status": "tracked",
    "tracks": [
     "typing"
+   ]
+  },
+  {
+   "name": "Google",
+   "slug": "google",
+   "status": "tracked",
+   "tracks": [
+    "consumer"
    ]
   },
   {
@@ -125,6 +180,14 @@
    ]
   },
   {
+   "name": "Help Scout",
+   "slug": "help-scout",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
    "name": "Instagram",
    "slug": "instagram",
    "status": "tracked",
@@ -157,6 +220,14 @@
    ]
   },
   {
+   "name": "Microsoft",
+   "slug": "microsoft",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
    "name": "Microsoft Copilot",
    "slug": "microsoft-copilot",
    "status": "tracked",
@@ -175,6 +246,30 @@
   {
    "name": "Netlify",
    "slug": "netlify",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
+   "name": "NinjaTrader",
+   "slug": "ninjatrader",
+   "status": "tracked",
+   "tracks": [
+    "trading-finance"
+   ]
+  },
+  {
+   "name": "Obsidian",
+   "slug": "obsidian",
+   "status": "tracked",
+   "tracks": [
+    "typing"
+   ]
+  },
+  {
+   "name": "OpenRouter",
+   "slug": "openrouter",
    "status": "tracked",
    "tracks": [
     "dev-tools"
@@ -205,6 +300,14 @@
    ]
   },
   {
+   "name": "Slack",
+   "slug": "slack",
+   "status": "tracked",
+   "tracks": [
+    "dev-tools"
+   ]
+  },
+  {
    "name": "Snapchat",
    "slug": "snapchat",
    "status": "tracked",
@@ -213,11 +316,27 @@
    ]
   },
   {
+   "name": "SoFi",
+   "slug": "sofi",
+   "status": "tracked",
+   "tracks": [
+    "trading-finance"
+   ]
+  },
+  {
    "name": "Spotify",
    "slug": "spotify",
    "status": "tracked",
    "tracks": [
     "consumer"
+   ]
+  },
+  {
+   "name": "Stripe",
+   "slug": "stripe",
+   "status": "tracked",
+   "tracks": [
+    "trading-finance"
    ]
   },
   {
@@ -258,6 +377,30 @@
    "status": "tracked",
    "tracks": [
     "dating"
+   ]
+  },
+  {
+   "name": "Topstep",
+   "slug": "topstep",
+   "status": "tracked",
+   "tracks": [
+    "trading-finance"
+   ]
+  },
+  {
+   "name": "TradingView",
+   "slug": "tradingview",
+   "status": "tracked",
+   "tracks": [
+    "trading-finance"
+   ]
+  },
+  {
+   "name": "Tradovate",
+   "slug": "tradovate",
+   "status": "tracked",
+   "tracks": [
+    "trading-finance"
    ]
   },
   {
@@ -584,13 +727,6 @@
    "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/App%20Store"
   },
   {
-   "name": "Apple",
-   "slug": "apple",
-   "status": "archived",
-   "collection_repo": "OpenTermsArchive/contrib-versions",
-   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Apple"
-  },
-  {
    "name": "Apple Business Connect",
    "slug": "apple-business-connect",
    "status": "archived",
@@ -864,13 +1000,6 @@
    "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Coffee%20Meets%20Bagel"
   },
   {
-   "name": "Coinbase",
-   "slug": "coinbase",
-   "status": "archived",
-   "collection_repo": "OpenTermsArchive/contrib-versions",
-   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Coinbase"
-  },
-  {
    "name": "Coindesk",
    "slug": "coindesk",
    "status": "archived",
@@ -974,13 +1103,6 @@
    "status": "archived",
    "collection_repo": "OpenTermsArchive/contrib-versions",
    "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/DeviantArt"
-  },
-  {
-   "name": "Discord",
-   "slug": "discord",
-   "status": "archived",
-   "collection_repo": "OpenTermsArchive/contrib-versions",
-   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Discord"
   },
   {
    "name": "DisonsDemain",
@@ -1207,13 +1329,6 @@
    "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Gartner"
   },
   {
-   "name": "GitHub",
-   "slug": "github",
-   "status": "archived",
-   "collection_repo": "OpenTermsArchive/contrib-versions",
-   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/GitHub"
-  },
-  {
    "name": "GitLab",
    "slug": "gitlab",
    "status": "archived",
@@ -1247,13 +1362,6 @@
    "status": "archived",
    "collection_repo": "OpenTermsArchive/contrib-versions",
    "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Goodreads"
-  },
-  {
-   "name": "Google",
-   "slug": "google",
-   "status": "archived",
-   "collection_repo": "OpenTermsArchive/contrib-versions",
-   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Google"
   },
   {
    "name": "Google APIs",
@@ -1886,13 +1994,6 @@
    "ota_history_url": "https://github.com/OpenTermsArchive/dating-versions/tree/main/Mektoube"
   },
   {
-   "name": "Microsoft",
-   "slug": "microsoft",
-   "status": "archived",
-   "collection_repo": "OpenTermsArchive/contrib-versions",
-   "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/Microsoft"
-  },
-  {
    "name": "Microsoft Store",
    "slug": "microsoft-store",
    "status": "archived",
@@ -2073,13 +2174,6 @@
    "status": "archived",
    "collection_repo": "OpenTermsArchive/contrib-versions",
    "ota_history_url": "https://github.com/OpenTermsArchive/contrib-versions/tree/main/OnlyFans"
-  },
-  {
-   "name": "OpenRouter",
-   "slug": "openrouter",
-   "status": "archived",
-   "collection_repo": "OpenTermsArchive/genai-contrib-versions",
-   "ota_history_url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/OpenRouter"
   },
   {
    "name": "OpenSea",

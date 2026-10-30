@@ -215,6 +215,8 @@ input:focus-visible { outline-offset: 0; border-color: var(--focus); }
 .kicker { margin: 0 0 var(--space-3); color: var(--accent-strong); font-size: var(--step--1); font-weight: 600; letter-spacing: 0.02em; }
 .lede { font-size: 1.125rem; color: var(--graphite); max-width: 36rem; margin-bottom: var(--space-5); }
 .signup-form { max-width: 30rem; }
+/* The header is sticky (about 61px): keep the signup field clear of it when linked to. */
+#subscribe, #subscribe input { scroll-margin-top: 6rem; }
 @media (min-width: 60rem) {
   .hero { padding: var(--space-8) 0; }
   .hero-inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: var(--space-8); }
