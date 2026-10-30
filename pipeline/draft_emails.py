@@ -152,6 +152,10 @@ def render_email(entry: dict) -> dict:
         sources.append(f"[the current {doc} on {vendor}’s site]({entry['source_url']})")
     if sources:
         body += ["Sources: " + " and ".join(sources) + ".", ""]
+    if entry.get("checked"):
+        body += ["How this was checked: a program matched every quoted passage word for word "
+                 "against the archived copy of the document, and confirmed at least one is new text. "
+                 "Read the original at the links above.", ""]
     body += [f"tos.watch is run by one person. If it saves you from missing a change that matters, you can [chip in from $1]({site.SUPPORT_URL}). The alerts stay free either way.", ""]
     body += [f"*{attribution_md()}*"]
 

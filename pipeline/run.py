@@ -378,6 +378,10 @@ def main() -> None:
         print("Done (--out: site not rebuilt).")
         return
 
+    # Independent check: only alerts that pass reach the site and the drafts.
+    import verify_alerts  # noqa: E402
+
+    verify_alerts.run_verification(ALERTS_DIR, CACHE_DIR, paths.DATA / "pipeline" / "verification.json")
     print("Rebuilding site archive and RSS feed...")
     sys.path.insert(0, str(ROOT / "site"))
     import build as site_build  # noqa: E402
