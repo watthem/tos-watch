@@ -204,7 +204,7 @@
       "Tell me when it ships",
       function () {
         var email = voteForm.querySelector('input[name="email"]').value.trim();
-        if (!email) return null;
+        if (!email) return { error: "Enter your email." };
         if (!EMAIL_RE.test(email)) return { error: "That email address doesn't look right. Check it and try again." };
         return { path: "/vote", data: { feature: voteForm.dataset.feature, email: email } };
       },
@@ -236,7 +236,12 @@
     e.preventDefault();
     var q = input.value.trim();
     if (!q) {
-      results.innerHTML = "";
+      results.innerHTML = '<p class="result-status is-error">Type a service name, or paste a link to its terms.</p>';
+      input.focus();
+      return;
+    }
+    if (!/[a-z0-9]/i.test(q)) {
+      results.innerHTML = '<p class="result-status is-error">That doesn\u2019t look like a service name. Try a name like Grammarly, or a link.</p>';
       return;
     }
     servicesPromise.then(function (data) {

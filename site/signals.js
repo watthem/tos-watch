@@ -45,21 +45,39 @@
       .map(function (c) { return c.value; });
     var email = form.querySelector('input[name="email"]').value.trim();
     if (!features.length) { show("Tick at least one of the two options above.", true); return; }
+    if (!email) { show("Enter your email.", true); return; }
     if (!EMAIL_RE.test(email)) { show("That email address doesn't look right. Check it and try again.", true); return; }
     button.disabled = true;
     button.textContent = "Sending…";
-    // One at a time, so a failure leaves a clear record of which votes went through.
+    // One request per option (the worker takes one feature per /vote), one at a
+    // time and stopping at the first failure, so we always know which votes
+    // went through. Ticks of recorded votes are cleared so a retry can't
+    // send them again.
+    var names = { "founding-supporter": "the paid supporter tier", "vendor-watch": "vendor watchlists for teams" };
+    var recorded = [];
     var failed = null;
     var chain = Promise.resolve();
     features.forEach(function (feature) {
       chain = chain.then(function () {
         if (failed) return;
-        return vote(feature, email).then(function (r) { if (!r.ok) failed = r; });
+        return vote(feature, email).then(function (r) {
+          if (r.ok) {
+            recorded.push(feature);
+            var box = form.querySelector('input[name="feature"][value="' + feature + '"]');
+            if (box) box.checked = false;
+          } else {
+            failed = { feature: feature, error: r.error };
+          }
+        });
       });
     });
     chain.then(function () {
-      if (failed) show(errorMessage(failed.error), true);
-      else {
+      if (failed && recorded.length) {
+        show("Your vote for " + names[recorded[0]] + " was recorded. Your vote for " + names[failed.feature] + " did not go through. " +
+          errorMessage(failed.error).replace(/^That didn't work\. /, "") + " It is still ticked: send again to retry only that one.", true);
+      } else if (failed) {
+        show(errorMessage(failed.error) + " Nothing was recorded.", true);
+      } else {
         show("Thanks. If you're new here, confirm the email we send you and your vote counts.", false);
         form.reset();
       }

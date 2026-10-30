@@ -175,7 +175,9 @@ input:focus-visible { outline-offset: 0; border-color: var(--focus); }
 .signup-done p { margin: 0; }
 .signup-done p + p { margin-top: var(--space-2); color: var(--ink); }
 .signup-done-title { font-weight: 700; color: var(--added); }
-.form-note.is-error { color: var(--removed); font-weight: 600; }
+.form-note.is-error, .result-status.is-error { color: var(--removed); font-weight: 600; }
+.form-links { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); margin: 0 0 var(--space-4); font-size: var(--step--1); }
+.group-stats { color: var(--accent-strong); font-size: 0.875rem; font-weight: 500; }
 
 /* ------------------------------------------------------------ header and footer */
 
@@ -188,18 +190,12 @@ input:focus-visible { outline-offset: 0; border-color: var(--focus); }
 .nav { display: flex; align-items: center; gap: var(--space-4); }
 .nav a:not(.button) { color: var(--ink); text-decoration: none; font-weight: 500; font-size: 0.9375rem; }
 .nav a:not(.button):hover { text-decoration: underline; }
-/* Phones: keep all three links, just tighter. Below ~24rem (iPhone SE,
-   small Androids) the wordmark drops to the mark alone; its text stays for
-   screen readers. */
+/* Phones: keep the site name and all three links, just tighter; on very
+   narrow screens the nav wraps under the name. */
 @media (max-width: 26rem) {
-  .header-inner { gap: var(--space-2); }
+  .header-inner { gap: var(--space-1) var(--space-2); flex-wrap: wrap; padding-block: var(--space-1); }
   .nav { gap: 0.625rem; }
-  .nav a:not(.button), .nav .button { font-size: 0.875rem; }
   .nav .button { padding: 0 var(--space-3); }
-}
-@media (max-width: 24rem) {
-  .wordmark span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .wordmark .mark { width: 1.5rem; height: 1.5rem; }
 }
 
 .site-footer { border-top: 1px solid var(--rule); margin-top: var(--space-8); padding: var(--space-5) 0 var(--space-6); color: var(--graphite); font-size: var(--step--1); }
@@ -215,7 +211,8 @@ input:focus-visible { outline-offset: 0; border-color: var(--focus); }
 
 .hero { background: var(--hero-glow); border-bottom: 1px solid var(--rule); padding: var(--space-7) 0; }
 .hero-inner { display: grid; gap: var(--space-7); align-items: start; }
-.hero h1 { max-width: 14ch; }
+.hero h1 { max-width: 20ch; }
+.kicker { margin: 0 0 var(--space-3); color: var(--accent-strong); font-size: var(--step--1); font-weight: 600; letter-spacing: 0.02em; }
 .lede { font-size: 1.125rem; color: var(--graphite); max-width: 36rem; margin-bottom: var(--space-5); }
 .signup-form { max-width: 30rem; }
 @media (min-width: 60rem) {
@@ -347,8 +344,11 @@ h2.year { font-size: var(--step-1); margin: var(--space-7) 0 0; color: var(--gra
 .service-group { padding: 0; }
 .service-group p { font-size: var(--step--1); }
 .service-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-.service-list li { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; border-bottom: 1px solid var(--rule); }
+.service-list li { border-bottom: 1px solid var(--rule); }
+.service-list a { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); min-height: 2.75rem; padding: var(--space-2) 0; }
 .service-list .muted { font-size: var(--step--1); }
+.service-list a { text-decoration: none; }
+.service-list a > span:first-child { color: var(--link); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
 
 /* ------------------------------------------------------------ diffs */
 
@@ -377,3 +377,18 @@ diffs-container {
 .diff-fallback p { margin: 0; padding: var(--space-3) var(--space-4); font-family: var(--font-text); font-size: 1.0625rem; }
 .diff-del { background: var(--removed-tint); box-shadow: inset 3px 0 var(--removed); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--removed) 60%, transparent); }
 .diff-ins { background: var(--added-tint); box-shadow: inset 3px 0 var(--added); }
+
+/* ------------------------------------------------------------ phones: tap size and text size */
+
+@media (max-width: 40rem) {
+  .nav a:not(.button), .nav .button { display: inline-flex; align-items: center; min-height: 2.75rem; font-size: 1rem; }
+  .nav a:not(.button) { padding: 0 0.125rem; }
+  .site-footer, .footer-fine, .form-note, .form-links, .service-group p, .request-note { font-size: 1rem; }
+  .footer-links a, .form-links a, .plain-list a, .crumbs a, .section-head a, .example-foot a {
+    display: inline-flex; align-items: center; min-height: 2.75rem;
+  }
+  .footer-links { gap: 0 var(--space-5); }
+  .plain-list { list-style: none; padding-left: 0; }
+  .footer-fine a { display: inline-block; line-height: 2.75rem; }
+  .tile-stats { font-size: 0.875rem; }
+}

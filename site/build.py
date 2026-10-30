@@ -37,10 +37,13 @@ import pathlib
 import re
 import shutil
 import subprocess
+import sys
 
 SITE_DIR = pathlib.Path(__file__).parent
 ROOT_DIR = SITE_DIR.parent
 WATCHLIST_PATH = ROOT_DIR / "pipeline" / "watchlist.json"
+sys.path.insert(0, str(ROOT_DIR / "pipeline"))
+from lib.noise import drop_change  # noqa: E402
 API_BASE = "https://api.tos.watch"
 BASE_URL = "https://tos.watch"
 # Stripe Payment Link, "tos.watch founding supporter": customer picks the amount, default $5.
@@ -86,7 +89,8 @@ def parse_alert(path: pathlib.Path) -> dict:
         if k:
             scores[k] = float(v)
     fields["scores"] = scores
-    fields["changes"] = parse_changes(body)
+    # Navigation and table-of-contents passages are not evidence: left off the page.
+    fields["changes"] = [c for c in parse_changes(body) if not drop_change(c["old"], c["new"])]
     fields["stem"] = path.stem
     fields["_path"] = path
     return fields
@@ -114,6 +118,8 @@ def plain_policy_text(md: str) -> str:
     bullet per line so the diff aligns list items."""
     s = md.replace("⁠", "")
     s = re.sub(r"\[((?:[^\[\]\\]|\\.)*)\]\([^)]*(\)|…$)", lambda m: m.group(1) + ("…" if m.group(2) == "…" else ""), s)
+    # A link cut at the start of the excerpt ("app](https://…)"): keep the word, drop the URL.
+    s = re.sub(r"\]\([^)]*(\)|…$)", "", s)
     s = re.sub(r"\\(.)", r"\1", s)
     s = s.replace("**", "")
     s = re.sub(r"(?<!\w)_|_(?!\w)", "", s)
@@ -226,11 +232,11 @@ def diff_block(change: dict) -> str:
     )
 
 
-def change_rows(entries: list[dict], root: str, show_vendor: bool = True) -> str:
+def change_rows(entries: list[dict], root: str, show_vendor: bool = True, empty: str = "") -> str:
     """A ledger of changes: service, document, topics, date. Reads as a
     table on wide screens and as stacked rows on phones."""
     if not entries:
-        return '<p class="empty">No changes yet. We check again with every run.</p>'
+        return f'<p class="empty">{esc(empty) or "No changes yet."}</p>'
     cls = "ledger" if show_vendor else "ledger ledger-one-service"
     head = (
         '<li class="ledger-head" aria-hidden="true">'
@@ -249,17 +255,37 @@ def change_rows(entries: list[dict], root: str, show_vendor: bool = True) -> str
     return f'<ul class="{cls}">' + head + "\n".join(rows) + "</ul>"
 
 
-def coverage_bento(watchlist: dict, by_vendor: dict[str, list[str]], entries: list[dict]) -> str:
-    """The one bento on the site: a search tile plus a tile per track."""
-    tiles = []
+def topic_stats(watchlist: dict, by_vendor: dict[str, list[str]], counts: dict[str, int], entries: list[dict]) -> list[dict]:
+    """One definition of the numbers on the home page, the topic tiles and
+    /services. A service is a watched vendor (each counted once in totals). A
+    change is a published, verified alert. A topic's change count is the sum
+    of its services' own change counts, so it equals the sum of the rows listed
+    under that topic and the number on each service page. A service in two
+    topics is listed under both, so topic numbers can add up to more than the
+    totals."""
+    out = []
     for t in tracks_with_alerts(watchlist, entries):
         vendors = sorted((v for v, ts in by_vendor.items() if t["id"] in ts), key=str.lower)
-        changes = sum(1 for e in entries if e.get("track") == t["id"])
-        names = ", ".join(vendors[:3]) + (f" and {len(vendors) - 3} more" if len(vendors) > 3 else "")
+        out.append({"track": t, "vendors": vendors, "changes": sum(counts.get(v, 0) for v in vendors)})
+    return out
+
+
+def stats_line(n_services: int, n_changes: int) -> str:
+    return f"{n_services} services, {n_changes} changes"
+
+
+DUAL_NOTE = "A service that fits two topics is listed under both, but counted once in the totals."
+
+
+def coverage_bento(stats: list[dict], total_services: int, entries: list[dict]) -> str:
+    """The one bento on the site: a search tile plus a tile per topic."""
+    tiles = []
+    for st in stats:
+        t = st["track"]
         tiles.append(
             f'<a class="tile" href="services.html#{esc(t["id"])}">'
             f'<span class="tile-title">{esc(t["label"])}</span>'
-            f'<span class="tile-stats">{len(vendors)} services, {changes} changes</span></a>'
+            f'<span class="tile-stats">{stats_line(len(st["vendors"]), st["changes"])}</span></a>'
         )
     return f"""
 <section class="coverage">
@@ -268,7 +294,7 @@ def coverage_bento(watchlist: dict, by_vendor: dict[str, list[str]], entries: li
       <div class="tile tile-search">
         <div>
           <h2 id="search-heading">Is your app watched?</h2>
-          <p class="section-lede">{len(by_vendor)} services today. Missing one? Ask us to add it.</p>
+          <p class="section-lede">{total_services} services today. Missing one? Ask us to add it.</p>
         </div>
         <form id="search-form" class="search-form" role="search" aria-labelledby="search-heading" novalidate>
           <label for="search-input" class="visually-hidden">Search for a service or paste a link to its terms</label>
@@ -283,6 +309,7 @@ def coverage_bento(watchlist: dict, by_vendor: dict[str, list[str]], entries: li
         <span class="tile-stats">Open the full ledger</span>
       </a>
     </div>
+    <p class="form-note">The tiles count the services and changes in each topic. {DUAL_NOTE}</p>
   </div>
 </section>"""
 
@@ -307,7 +334,9 @@ FAVICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
 <rect x="5.5" y="13.2" width="6" height="1.6" rx=".8" class="f" opacity=".45"/>
 </svg>
 """
-DEFAULT_DESCRIPTION = "A free email newsletter that tells you when a company changes what it does with your data."
+PITCH = "Terms of service and privacy policy monitor: we email you the exact words when a watched app changes them."
+DEFAULT_DESCRIPTION = PITCH
+OG_IMAGE = f"{BASE_URL}/og.png"
 
 
 def page_url(path: str) -> str:
@@ -343,7 +372,14 @@ def layout(title: str, body: str, root: str = "", description: str = "", scripts
 <meta property="og:type" content="{og_type}">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
+<meta property="og:image" content="{OG_IMAGE}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="tos.watch, Terms of Service watched">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{esc(title)}">
+<meta name="twitter:description" content="{esc(desc)}">
+<meta name="twitter:image" content="{OG_IMAGE}">
 <link rel="icon" href="{root}favicon.svg" type="image/svg+xml">
 <link rel="preload" href="{root}fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{root}style.css">
@@ -391,7 +427,8 @@ def track_blurb(track: dict) -> str:
 
 # ---------------------------------------------------------------- pages
 
-def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[str]]) -> str:
+def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[str]], counts: dict[str, int] | None = None) -> str:
+    counts = counts or {}
     featured = next((e for e in entries if e["stem"] == FEATURED_ALERT), entries[0] if entries else None)
     example = ""
     if featured:
@@ -413,8 +450,9 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
 <section class="hero">
   <div class="wrap hero-inner">
     <div class="hero-copy">
-      <h1>Know when the fine print changes.</h1>
-      <p class="lede">When an app changes what it does with your data, we email you the exact words that changed.</p>
+      <p class="kicker">tos.watch means Terms of Service, watched</p>
+      <h1>Know when an app changes its terms or privacy policy.</h1>
+      <p class="lede">{PITCH}</p>
       <form id="subscribe" class="signup-form" data-source="landing-page" novalidate>
         <div class="field-row">
           <label for="email" class="visually-hidden">Email address</label>
@@ -422,14 +460,15 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
           <button class="button" type="submit">Subscribe</button>
         </div>
       </form>
-      <p class="form-note" id="form-note">Free. One email per real change, across every topic we watch. <a href="https://github.com/watthem/tos-watch">Open source</a>. <a href="privacy.html">Privacy</a>.</p>
+      <p class="form-note" id="form-note">Free. One email per real change, across every topic we watch.</p>
+      <p class="form-links"><a href="https://github.com/watthem/tos-watch">Open source</a><a href="privacy.html">Privacy</a></p>
       <p class="form-note support-note">tos.watch is built and run by one person. If it saves you from missing a change that matters, you can <a href="{SUPPORT_URL}" rel="noopener">chip in from $1</a>. It keeps the alerts coming and pays for the email service. No account needed.</p>
     </div>
     {example}
   </div>
 </section>
 
-{coverage_bento(watchlist, by_vendor, entries)}
+{coverage_bento(topic_stats(watchlist, by_vendor, counts, entries), len(by_vendor), entries)}
 
 <section>
   <div class="wrap">
@@ -474,8 +513,9 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
 </section>
 """
     return layout(
-        "tos.watch: know when the fine print changes",
+        "tos.watch: know when an app changes its terms or privacy policy",
         body,
+        description=PITCH,
         scripts='<script src="subscribe.js"></script>\n<script src="search.js"></script>\n<script src="signals.js"></script>',
         path="index.html",
     )
@@ -487,11 +527,14 @@ def how_checked_html(e: dict) -> str:
         return ""
     return (
         '<h2 class="h3">How this was checked</h2>'
-        f'<p class="section-lede">A program, not a person, checked this on {esc(nice_date(c.get("checked_on", "")))}. '
-        "It matched every quoted passage word for word against the archived copy of the document, "
-        "and confirmed that at least one passage is new text, absent from the version before. "
-        "Nothing here is a summary or a guess: the quotes and the links are the evidence. "
-        "Use the sources below to read the original.</p>"
+        f'<p class="section-lede">The change is dated {esc(nice_date(e.get("date", "")))}, the day the new version of the document was archived. '
+        f'A program, not a person, ran the check below on {esc(nice_date(c.get("checked_on", "")))}. '
+        "Documents are fetched about once a day. The program matched every quoted passage word for word "
+        "against the archived copy of the document, and confirmed that at least one passage is new text, "
+        "absent from the version before. That is the guarantee: the quotes and the Sources above are the evidence.</p>"
+        '<p class="section-lede">The topic labels (AI, Data use, Your rights and the rest) are different. '
+        "An AI model assigns them, and it can be wrong. The program does not check them. "
+        "Trust the quoted words, and read the original if a label matters to you.</p>"
     )
 
 
@@ -530,8 +573,8 @@ def render_alert_page(e: dict, others: list[dict]) -> str:
         body,
         root="../",
         description=(
-            f"{vendor} changed its {doc} on {nice_date(e.get('date', ''))}: "
-            f"{n} passage{'s' if n != 1 else ''} changed{flagged}. The exact words removed and added."
+            f"{vendor} changed its {doc} on {nice_date(e.get('date', ''))}. "
+            f"{n} passage{'s' if n != 1 else ''} changed{flagged}. See the exact words removed and added."
         ),
         scripts='<script src="../subscribe.js"></script>',
         path=f"alerts/{e['stem']}.html",
@@ -578,35 +621,44 @@ def render_archive(entries: list[dict]) -> str:
 
 
 def render_services(watchlist: dict, by_vendor: dict[str, list[str]], counts: dict[str, int], entries: list[dict]) -> str:
-    groups = []
-    listed: set[str] = set()
-    for t in tracks_with_alerts(watchlist, entries):
-        vendors = sorted((v for v, ts in by_vendor.items() if t["id"] in ts), key=str.lower)
-        if not vendors:
-            continue
-        listed.update(vendors)
+    def group_html(t: dict, vendors: list[str]) -> str:
         items = "".join(
-            f'<li><a href="s/{slugify(v)}.html">{esc(v)}</a> <span class="muted">{counts.get(v, 0)} change{"s" if counts.get(v, 0) != 1 else ""}</span></li>'
+            f'<li><a href="s/{slugify(v)}.html"><span>{esc(v)}</span> '
+            + (
+                f'<span class="muted">{counts[v]} change{"s" if counts[v] != 1 else ""}</span>'
+                if counts.get(v, 0)
+                else '<span class="muted">watching, nothing flagged yet</span>'
+            )
+            + "</a></li>"
             for v in vendors
         )
-        groups.append(
+        n_changes = sum(counts.get(v, 0) for v in vendors)
+        return (
             f'<section class="service-group" id="{esc(t["id"])}"><h2 class="h3">{esc(t["label"])}</h2>'
-            f'<p class="muted">{esc(track_blurb(t))}</p><ul class="service-list">{items}</ul></section>'
+            f'<p class="muted">{esc(track_blurb(t))}</p>'
+            f'<p class="group-stats">{stats_line(len(vendors), n_changes)}</p><ul class="service-list">{items}</ul></section>'
         )
+
+    groups = [group_html(st["track"], st["vendors"]) for st in topic_stats(watchlist, by_vendor, counts, entries) if st["vendors"]]
+    # Topics with no published alert yet: still watched, so named here with
+    # their services instead of dropped.
+    shown = {st["track"]["id"] for st in topic_stats(watchlist, by_vendor, counts, entries)}
+    quiet = []
+    for t in watchlist.get("tracks", []):
+        vendors = sorted((v for v, ts in by_vendor.items() if t["id"] in ts), key=str.lower)
+        if t["id"] not in shown and vendors:
+            quiet.append((t, vendors))
     total = len(by_vendor)
-    if groups:
-        lede = (
-            f"{len(listed)} services, grouped by topic. A topic is listed once we have flagged a change in it, "
-            f"so the {total - len(listed)} other services we watch are not shown yet. "
-            'Missing one? <a href="index.html#search-heading">Search for it</a> and ask us to add it.'
-        )
-        description = f"The {len(listed)} apps and services with flagged privacy policy or terms changes on tos.watch, grouped by topic."
-    else:
-        lede = (
-            f"We watch {total} services, but we haven't flagged a change in any of them yet. "
-            'Topics appear here once there is one. <a href="index.html#search-heading">Search for a service</a> to see if we watch it.'
-        )
-        description = "tos.watch watches apps and services for privacy policy and terms changes. Topics are listed here once a change is flagged."
+    quiet_text = ""
+    if quiet:
+        names = " and ".join(f"{t['label']} ({len(vs)} services)" for t, vs in quiet)
+        quiet_text = f" {names} has no flagged change yet, so it is listed last." if len(quiet) == 1 else f" {names} have no flagged change yet, so they are listed last."
+        groups += [group_html(t, vs) for t, vs in quiet]
+    lede = (
+        f"We watch {total} services, grouped by topic. {DUAL_NOTE}{quiet_text} "
+        'Missing one? <a href="index.html#search-heading">Search for it</a> and ask us to add it.'
+    )
+    description = f"The {total} apps and services tos.watch watches for privacy policy and terms changes, grouped by topic."
     body = f"""
 <div class="wrap page">
   <div class="narrow-left">
@@ -624,9 +676,44 @@ def render_services(watchlist: dict, by_vendor: dict[str, list[str]], counts: di
     )
 
 
-def render_service_page(vendor: str, tracks: list[str], track_labels: dict[str, str], entries: list[dict]) -> str:
+def watched_documents(watchlist: dict, vendor: str) -> list[tuple[str, str]]:
+    """(document name, source URL) for every document watched for a vendor."""
+    docs = []
+    for key in ("documents", "web_pages", "direct_pages"):
+        for d in watchlist.get(key, []):
+            if d["vendor"] == vendor:
+                docs.append((d.get("doc", ""), d.get("source_url") or d.get("url") or ""))
+    return sorted(set(docs), key=lambda x: x[0].lower())
+
+
+def documents_html(docs: list[tuple[str, str]], last_checked: str) -> str:
+    if not docs:
+        return ""
+    items = "".join(
+        f'<li><a href="{esc(url)}" rel="noopener">{esc(name)}</a></li>' if url.startswith("https://") else f"<li>{esc(name)}</li>"
+        for name, url in docs
+    )
+    when = f" Last checked {esc(nice_date(last_checked))}." if last_checked else ""
+    return (
+        '<h2 class="h3">Documents we watch</h2>'
+        f'<p class="section-lede">We fetch {"this document" if len(docs) == 1 else f"these {len(docs)} documents"} about once a day and compare each new version with the one before.{when}</p>'
+        f'<ul class="plain-list">{items}</ul>'
+    )
+
+
+def render_service_page(vendor: str, tracks: list[str], track_labels: dict[str, str], entries: list[dict],
+                        docs: list[tuple[str, str]] | None = None, last_checked: str = "") -> str:
     slug = slugify(vendor)
     labels = [track_labels.get(t, t) for t in tracks]
+    docs = docs or []
+    if entries:
+        empty = ""
+    else:
+        empty = (
+            f"We checked {'its document' if len(docs) == 1 else 'its documents'}"
+            + (f" on {nice_date(last_checked)}" if last_checked else "")
+            + " and found nothing to flag. We are still watching, and a change will show up here."
+        )
     body = f"""
 <div class="wrap narrow page">
   <p class="crumbs"><a href="../services.html">Services</a></p>
@@ -634,7 +721,8 @@ def render_service_page(vendor: str, tracks: list[str], track_labels: dict[str, 
   <p class="section-lede">Listed under {esc(" and ".join(labels) or "no topic yet")}. {len(entries)} change{"s" if len(entries) != 1 else ""} flagged so far.</p>
   {service_signup(vendor, slug, ",".join(tracks), "../")}
   <h2 class="h3">Changes</h2>
-  {change_rows(entries, "../", show_vendor=False)}
+  {change_rows(entries, "../", show_vendor=False, empty=empty)}
+  {documents_html(docs, last_checked)}
   <p class="muted small"><a href="../self-hosting.html">Want to run your own copy instead?</a></p>
 </div>
 """
@@ -669,7 +757,7 @@ def render_self_hosting() -> str:
     )
 
 
-LEGAL_UPDATED = "October 2, 2026"  # bump when the text of privacy/terms changes
+LEGAL_UPDATED = "October 30, 2026" # bump when the text of privacy/terms changes
 
 
 def render_privacy() -> str:
@@ -688,7 +776,7 @@ def render_privacy() -> str:
     <li><strong>Feature votes.</strong> We count each vote per feature, with no email attached. If you gave an email, your Buttondown record gets a label for that vote.</li>
   </ul>
   <p>If you vote or request something with an email we don't have yet, Buttondown sends you a confirmation email, and confirming also subscribes you to alerts.</p>
-  <p>We don't use cookies, analytics or tracking scripts on tos.watch, and our fonts are hosted by us.</p>
+  <p>tos.watch sets no cookies and runs no advertising or tracking scripts, and our fonts are hosted by us. We do count visits with Cloudflare Web Analytics, which is cookieless. It records which pages are viewed, the site that sent the visitor, and the country, browser and device type. It is run by Cloudflare, the company that hosts the site.</p>
 
   <h2 class="h3">Who else handles it</h2>
   <ul>
@@ -713,7 +801,7 @@ def render_privacy() -> str:
   <p>tos.watch isn't meant for children under 13, and we don't knowingly collect their email addresses.</p>
 
   <h2 class="h3">Changes</h2>
-  <p>If this page changes in a way that affects you, we'll say so in the newsletter. Yes, we watch our own terms too. The code that runs the site is <a href="https://github.com/watthem/tos-watch">open source</a>. See also the <a href="terms.html">terms of use</a>.</p>
+  <p>If this page changes in a way that affects you, we'll say so in the newsletter. The code that runs the site is <a href="https://github.com/watthem/tos-watch">open source</a>. See also the <a href="terms.html">terms of use</a>.</p>
 </div>
 """
     return layout(
@@ -907,7 +995,7 @@ def copy_fonts(site_dir: pathlib.Path) -> None:
 
 
 # Hand-written files in this repo's site/ that every deploy needs.
-STATIC_FILES = ["style.css", "diffs.css", "subscribe.js", "search.js", "signals.js", "services.json"]
+STATIC_FILES = ["og.png", "style.css", "diffs.css", "subscribe.js", "search.js", "signals.js", "services.json"]
 
 
 def copy_static(site_dir: pathlib.Path) -> None:
@@ -925,6 +1013,31 @@ def render_diffs(code_root: pathlib.Path, site_dir: pathlib.Path) -> str:
         return "diffs: node or build/node_modules missing, plain fallback kept"
     res = subprocess.run(["node", str(script), str(site_dir)], capture_output=True, text=True)
     return (res.stdout or res.stderr).strip()
+
+
+def check_counts_agree(site_dir: pathlib.Path) -> None:
+    """Build-time assertion: the service and change numbers on the home page,
+    its topic tiles and /services must agree (three pages once disagreed).
+    Reads the rendered HTML, so it checks what visitors see."""
+    home = (site_dir / "index.html").read_text()
+    svc = (site_dir / "services.html").read_text()
+    total = int(re.search(r"(\d+) services today", home).group(1))
+    lede_total = int(re.search(r"We watch (\d+) services", svc).group(1))
+    assert total == lede_total, f"home says {total} services, /services says {lede_total}"
+    tiles = {m.group(1): (int(m.group(2)), int(m.group(3))) for m in re.finditer(
+        r'<a class="tile" href="services\.html#([\w-]+)">.*?(\d+) services, (\d+) changes', home)}
+    groups = re.findall(r'<section class="service-group" id="([\w-]+)">(.*?)</section>', svc, re.S)
+    by_id = {}
+    for gid, inner in groups:
+        stats = re.search(r"(\d+) services, (\d+) changes", inner)
+        rows = re.findall(r'<li><a href="s/([\w-]+)\.html">.*?(?:(\d+) changes?|watching, nothing flagged yet)</span>', inner)
+        by_id[gid] = (int(stats.group(1)), int(stats.group(2)), rows)
+        assert len(rows) == int(stats.group(1)), f"/services {gid}: {len(rows)} rows but header says {stats.group(1)}"
+        assert sum(int(n or 0) for _, n in rows) == int(stats.group(2)), f"/services {gid}: rows do not add up to the header"
+    for tid, (n, c) in tiles.items():
+        assert tid in by_id and by_id[tid][:2] == (n, c), f"tile {tid} {(n, c)} disagrees with /services {by_id.get(tid, ('missing',))[:2]}"
+    listed = {slug for _, _, rows in by_id.values() for slug, _ in rows}
+    assert len(listed) == total, f"/services lists {len(listed)} distinct services, home says {total}"
 
 
 def build(code_root: pathlib.Path, data_root: pathlib.Path | None = None) -> None:
@@ -950,12 +1063,17 @@ def build(code_root: pathlib.Path, data_root: pathlib.Path | None = None) -> Non
         (alerts_out / f"{e['stem']}.html").write_text(render_alert_page(e, others))
 
     (site_dir / "s").mkdir(parents=True, exist_ok=True)
+    state_path = data_root / "pipeline" / "state.json"
+    last_checked = ""
+    if state_path.exists():
+        last_checked = str(json.loads(state_path.read_text()).get("last_run", ""))[:10]
     for vendor, tracks in by_vendor.items():
-        page = render_service_page(vendor, tracks, track_labels, per_vendor.get(vendor, []))
+        page = render_service_page(vendor, tracks, track_labels, per_vendor.get(vendor, []),
+                                   watched_documents(watchlist, vendor), last_checked)
         (site_dir / "s" / f"{slugify(vendor)}.html").write_text(page)
 
     counts = {v: len(es) for v, es in per_vendor.items()}
-    (site_dir / "index.html").write_text(render_home(entries, watchlist, by_vendor))
+    (site_dir / "index.html").write_text(render_home(entries, watchlist, by_vendor, counts))
     (site_dir / "services.html").write_text(render_services(watchlist, by_vendor, counts, entries))
     (site_dir / "self-hosting.html").write_text(render_self_hosting())
     (site_dir / "privacy.html").write_text(render_privacy())
@@ -971,6 +1089,7 @@ def build(code_root: pathlib.Path, data_root: pathlib.Path | None = None) -> Non
     pages += [(f"s/{slugify(v)}.html", "") for v in sorted(by_vendor, key=str.lower)]
     (site_dir / "sitemap.xml").write_text(render_sitemap(pages))
     copy_fonts(site_dir)
+    check_counts_agree(site_dir)
     print(f"site build: {len(entries)} alerts, {len(by_vendor)} service pages")
     print(render_diffs(code_root, site_dir))
 
