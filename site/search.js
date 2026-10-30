@@ -47,6 +47,9 @@
     }
   }
 
+  // Names people still use for a service we list under its new name.
+  var ALIASES = { twitter: "X", openai: "ChatGPT" };
+
   function findService(services, query) {
     var q = query.trim();
     if (!q) return null;
@@ -58,8 +61,12 @@
       }
     }
     var qk = matchKey(q);
+    var alias = ALIASES[qk];
+    if (alias) qk = matchKey(alias);
     var exact = services.filter(function (s) { return matchKey(s.name) === qk; })[0];
     if (exact) return exact;
+    // One or two letters only match a name exactly, never as a fragment.
+    if (qk.length < 3) return null;
     var ql = q.toLowerCase();
     var starts = services.filter(function (s) { return s.name.toLowerCase().indexOf(ql) === 0; })[0];
     if (starts) return starts;
@@ -228,4 +235,9 @@
       else renderNotFound(q);
     });
   });
+
+  // "Search for it" on /services links here: put the cursor in the box.
+  function focusFromHash() { if (location.hash === "#search-heading") input.focus({ preventScroll: true }); }
+  if (document.readyState === "complete") focusFromHash(); else window.addEventListener("load", focusFromHash);
+  window.addEventListener("hashchange", focusFromHash);
 })();
