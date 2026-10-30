@@ -252,7 +252,7 @@ def change_rows(entries: list[dict], root: str, show_vendor: bool = True) -> str
 def coverage_bento(watchlist: dict, by_vendor: dict[str, list[str]], entries: list[dict]) -> str:
     """The one bento on the site: a search tile plus a tile per track."""
     tiles = []
-    for t in watchlist.get("tracks", []):
+    for t in tracks_with_alerts(watchlist, entries):
         vendors = sorted((v for v, ts in by_vendor.items() if t["id"] in ts), key=str.lower)
         changes = sum(1 for e in entries if e.get("track") == t["id"])
         names = ", ".join(vendors[:3]) + (f" and {len(vendors) - 3} more" if len(vendors) > 3 else "")
@@ -377,6 +377,14 @@ def layout(title: str, body: str, root: str = "", description: str = "", scripts
 """
 
 
+def tracks_with_alerts(watchlist: dict, entries: list[dict]) -> list[dict]:
+    """The tracks shown on the site: only those with at least one published
+    alert. Every track is still watched and still has its service pages; a
+    topic is listed once there is something real to show for it."""
+    have = {e.get("track") for e in entries}
+    return [t for t in watchlist.get("tracks", []) if t["id"] in have]
+
+
 def track_blurb(track: dict) -> str:
     return re.sub(r"\s*--\s*", ": ", track.get("description", ""))
 
@@ -445,13 +453,23 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
 </section>
 
 <section class="signals">
-  <div class="wrap">
+  <div class="wrap narrow">
     <h2>Help decide what comes next</h2>
-    <div class="signal-grid">
-      {signal_card("founding-supporter", "Keep it running", "tos.watch is free and run by one person. If a small paid supporter tier opens, would you join? Nothing is charged now.", "Count me in")}
-      {signal_card("vendor-watch", "Watch my company's vendors", "For teams: a private watchlist of the services your company relies on, with alerts to your inbox or a webhook.", "I'd use this")}
-    </div>
-    <p class="form-note">If you're new here, we'll send one confirmation email, and confirming also subscribes you to alerts. Unsubscribe any time. <a href="privacy.html">Privacy</a>.</p>
+    <p class="section-lede">Two things we might build. Tick any you'd use, add your email once, and we count it as a vote. Nothing is built or charged yet.</p>
+    <form class="signal-form" novalidate>
+      <fieldset class="signal-options">
+        <legend class="visually-hidden">Which would you use?</legend>
+        <label class="signal-option"><input type="checkbox" name="feature" value="founding-supporter"><span><strong>A paid supporter tier.</strong> tos.watch is free and run by one person. If a small paid tier opens, I'd join.</span></label>
+        <label class="signal-option"><input type="checkbox" name="feature" value="vendor-watch"><span><strong>Vendor watchlists for teams.</strong> A private list of the services your company relies on, with alerts to your inbox or a webhook. I'd use this.</span></label>
+      </fieldset>
+      <div class="field-row">
+        <label for="signal-email" class="visually-hidden">Your email</label>
+        <input id="signal-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
+        <button class="button button-secondary" type="submit">Send my vote</button>
+      </div>
+    </form>
+    <p class="request-note" id="signal-note"></p>
+    <p class="form-note">What happens next: we email you one confirmation link if you're new here, and your vote counts once you confirm. Confirming also subscribes you to alerts; unsubscribe any time. <a href="privacy.html">Privacy</a>.</p>
   </div>
 </section>
 """
@@ -461,22 +479,6 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
         scripts='<script src="subscribe.js"></script>\n<script src="search.js"></script>\n<script src="signals.js"></script>',
         path="index.html",
     )
-
-
-def signal_card(feature: str, title: str, text: str, button: str) -> str:
-    """One demand-signal card on the landing page: a POST /vote for `feature`
-    (worker VALID_FEATURES), wired by signals.js."""
-    fid = f"signal-{feature}"
-    return f"""<div class="signal-card">
-        <h3>{esc(title)}</h3>
-        <p>{esc(text)}</p>
-        <form class="signal-form vote-form" data-feature="{esc(feature)}" data-success="Thanks. Confirm the email we send you if you're new, and it counts." novalidate>
-          <label for="{fid}-email" class="visually-hidden">Email</label>
-          <input id="{fid}-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
-          <button class="button button-secondary" type="submit">{esc(button)}</button>
-        </form>
-        <p class="request-note"></p>
-      </div>"""
 
 
 def how_checked_html(e: dict) -> str:
@@ -575,12 +577,14 @@ def render_archive(entries: list[dict]) -> str:
     )
 
 
-def render_services(watchlist: dict, by_vendor: dict[str, list[str]], counts: dict[str, int]) -> str:
+def render_services(watchlist: dict, by_vendor: dict[str, list[str]], counts: dict[str, int], entries: list[dict]) -> str:
     groups = []
-    for t in watchlist.get("tracks", []):
+    listed: set[str] = set()
+    for t in tracks_with_alerts(watchlist, entries):
         vendors = sorted((v for v, ts in by_vendor.items() if t["id"] in ts), key=str.lower)
         if not vendors:
             continue
+        listed.update(vendors)
         items = "".join(
             f'<li><a href="s/{slugify(v)}.html">{esc(v)}</a> <span class="muted">{counts.get(v, 0)} change{"s" if counts.get(v, 0) != 1 else ""}</span></li>'
             for v in vendors
@@ -589,11 +593,25 @@ def render_services(watchlist: dict, by_vendor: dict[str, list[str]], counts: di
             f'<section class="service-group" id="{esc(t["id"])}"><h2 class="h3">{esc(t["label"])}</h2>'
             f'<p class="muted">{esc(track_blurb(t))}</p><ul class="service-list">{items}</ul></section>'
         )
+    total = len(by_vendor)
+    if groups:
+        lede = (
+            f"{len(listed)} services, grouped by topic. A topic is listed once we have flagged a change in it, "
+            f"so the {total - len(listed)} other services we watch are not shown yet. "
+            'Missing one? <a href="index.html#search-heading">Search for it</a> and ask us to add it.'
+        )
+        description = f"The {len(listed)} apps and services with flagged privacy policy or terms changes on tos.watch, grouped by topic."
+    else:
+        lede = (
+            f"We watch {total} services, but we haven't flagged a change in any of them yet. "
+            'Topics appear here once there is one. <a href="index.html#search-heading">Search for a service</a> to see if we watch it.'
+        )
+        description = "tos.watch watches apps and services for privacy policy and terms changes. Topics are listed here once a change is flagged."
     body = f"""
 <div class="wrap page">
   <div class="narrow-left">
     <h1>Services we watch</h1>
-    <p class="section-lede">{len(by_vendor)} services, grouped by topic. Missing one? <a href="index.html#search-heading">Search for it</a> and ask us to add it.</p>
+    <p class="section-lede">{lede}</p>
   </div>
   <div class="service-groups">{"".join(groups)}</div>
 </div>
@@ -601,7 +619,7 @@ def render_services(watchlist: dict, by_vendor: dict[str, list[str]], counts: di
     return layout(
         "Services we watch: tos.watch",
         body,
-        description=f"The {len(by_vendor)} apps and services whose privacy policies and terms tos.watch watches, grouped by topic.",
+        description=description,
         path="services.html",
     )
 
@@ -938,7 +956,7 @@ def build(code_root: pathlib.Path, data_root: pathlib.Path | None = None) -> Non
 
     counts = {v: len(es) for v, es in per_vendor.items()}
     (site_dir / "index.html").write_text(render_home(entries, watchlist, by_vendor))
-    (site_dir / "services.html").write_text(render_services(watchlist, by_vendor, counts))
+    (site_dir / "services.html").write_text(render_services(watchlist, by_vendor, counts, entries))
     (site_dir / "self-hosting.html").write_text(render_self_hosting())
     (site_dir / "privacy.html").write_text(render_privacy())
     (site_dir / "terms.html").write_text(render_terms())
