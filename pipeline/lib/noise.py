@@ -39,8 +39,27 @@ def is_noise(quote: str) -> bool:
     return is_furniture(quote) or len(prose(quote).split()) < MIN_WORDS
 
 
+# "Last Updated: October 27, 2026 ([previous version](https://…))": the date line
+# at the top of a policy, with the archive's own link to the older copy.
+HEADER = re.compile(
+    r"^\s*[_*]*\s*(?:last\s+)?(?:updated|effective|revised)[^_*(\[]{0,60}?\d{4}\s*"
+    r"(?:\(\s*\[[^\]]*\]\([^)]*\)\s*\))?\s*[_*]*\s*", re.I)
+PREVIOUS = re.compile(r"\s*\(\s*\[previous version\]\([^)]*\)\s*\)")
+
+
+def has_header(quote: str) -> bool:
+    return HEADER.match(quote) is not None
+
+
+def same_text(old: str, new: str) -> bool:
+    """Old and new differ only in markup (a link or an invisible character)."""
+    return bool(old and new) and prose(old) == prose(new)
+
+
 def drop_change(old: str, new: str) -> bool:
     """Should a changed passage (old and/or new quote) be left off the page?
     Yes when either side is furniture, or when every side that exists is noise."""
     sides = [q for q in (old, new) if q]
+    if same_text(old, new):
+        return True
     return any(is_furniture(q) for q in sides) or all(is_noise(q) for q in sides)

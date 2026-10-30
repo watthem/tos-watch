@@ -78,7 +78,7 @@
       } else if (failed) {
         show(errorMessage(failed.error) + " Nothing was recorded.", true);
       } else {
-        show("Thanks. If you're new here, confirm the email we send you and your vote counts.", false);
+        show("Thanks. If you're new here, open the link in the email we send you: it confirms your vote and signs you up for alerts.", false);
         form.reset();
       }
       button.disabled = false;

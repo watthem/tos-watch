@@ -43,7 +43,7 @@ SITE_DIR = pathlib.Path(__file__).parent
 ROOT_DIR = SITE_DIR.parent
 WATCHLIST_PATH = ROOT_DIR / "pipeline" / "watchlist.json"
 sys.path.insert(0, str(ROOT_DIR / "pipeline"))
-from lib.noise import drop_change  # noqa: E402
+from lib.noise import PREVIOUS, drop_change  # noqa: E402
 API_BASE = "https://api.tos.watch"
 BASE_URL = "https://tos.watch"
 # Stripe Payment Link, "tos.watch founding supporter": customer picks the amount, default $5.
@@ -116,7 +116,7 @@ def parse_changes(body: str) -> list[dict]:
 def plain_policy_text(md: str) -> str:
     """Excerpt Markdown (as OTA stores it) -> readable plain text, one
     bullet per line so the diff aligns list items."""
-    s = md.replace("⁠", "")
+    s = PREVIOUS.sub("", md.replace("⁠", ""))
     s = re.sub(r"\[((?:[^\[\]\\]|\\.)*)\]\([^)]*(\)|…$)", lambda m: m.group(1) + ("…" if m.group(2) == "…" else ""), s)
     # A link cut at the start of the excerpt ("app](https://…)"): keep the word, drop the URL.
     s = re.sub(r"\]\([^)]*(\)|…$)", "", s)
@@ -241,7 +241,7 @@ def change_rows(entries: list[dict], root: str, show_vendor: bool = True, empty:
     head = (
         '<li class="ledger-head" aria-hidden="true">'
         + ("<span>Service</span>" if show_vendor else "")
-        + "<span>Document</span><span>Flagged for</span><span>Date</span></li>"
+        + "<span>Document</span><span>Labels</span><span>Date</span></li>"
     )
     rows = []
     for e in entries:
@@ -274,7 +274,7 @@ def stats_line(n_services: int, n_changes: int) -> str:
     return f"{n_services} services, {n_changes} changes"
 
 
-DUAL_NOTE = "A service that fits two topics is listed under both, but counted once in the totals."
+DUAL_NOTE = "A service that fits two categories is listed under both, but counted once in the totals."
 
 
 def coverage_bento(stats: list[dict], total_services: int, entries: list[dict]) -> str:
@@ -296,7 +296,7 @@ def coverage_bento(stats: list[dict], total_services: int, entries: list[dict]) 
           <h2 id="search-heading">Is your app watched?</h2>
           <p class="section-lede">{total_services} services today. Missing one? Ask us to add it.</p>
         </div>
-        <form id="search-form" class="search-form" role="search" aria-labelledby="search-heading" novalidate>
+        <form id="search-form" method="post" class="search-form" role="search" aria-labelledby="search-heading" novalidate>
           <label for="search-input" class="visually-hidden">Search for a service or paste a link to its terms</label>
           <input id="search-input" name="q" type="search" placeholder="Grammarly, Tinder…" autocomplete="off">
           <button class="button button-secondary" type="submit">Search</button>
@@ -306,10 +306,10 @@ def coverage_bento(stats: list[dict], total_services: int, entries: list[dict]) 
       {"".join(tiles)}
       <a class="tile tile-total" href="alerts/index.html">
         <span class="tile-title">{len(entries)} changes since {min((e.get("date", "") for e in entries), default="")[:4]}</span>
-        <span class="tile-stats">Open the full ledger</span>
+        <span class="tile-stats">See every change</span>
       </a>
     </div>
-    <p class="form-note">The tiles count the services and changes in each topic. {DUAL_NOTE}</p>
+    <p class="form-note">The tiles count the services and changes in each category. {DUAL_NOTE}</p>
   </div>
 </section>"""
 
@@ -376,7 +376,7 @@ def layout(title: str, body: str, root: str = "", description: str = "", scripts
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="tos.watch, Terms of Service watched">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{esc(title)}">
 <meta name="twitter:description" content="{esc(desc)}">
 <meta name="twitter:image" content="{OG_IMAGE}">
@@ -384,6 +384,7 @@ def layout(title: str, body: str, root: str = "", description: str = "", scripts
 <link rel="preload" href="{root}fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{root}style.css">
 <link rel="alternate" type="application/rss+xml" title="tos.watch changes" href="{root}feed.xml">
+<noscript><style>.signup-form,.search-form,.signal-form,.request-form,.vote-form{{display:none}}</style></noscript>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -398,6 +399,7 @@ def layout(title: str, body: str, root: str = "", description: str = "", scripts
   </div>
 </header>
 <main id="main">
+<noscript><p class="wrap noscript-note">JavaScript is off, so signing up, voting and search are switched off. You can still read every change, and follow them with the <a href="{root}feed.xml">RSS feed</a>.</p></noscript>
 {body}
 </main>
 <footer class="site-footer">
@@ -453,16 +455,16 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
       <p class="kicker">tos.watch means Terms of Service, watched</p>
       <h1>Know when an app changes its terms or privacy policy.</h1>
       <p class="lede">{PITCH}</p>
-      <form id="subscribe" class="signup-form" data-source="landing-page" novalidate>
+      <form id="subscribe" method="post" class="signup-form" data-source="landing-page" novalidate>
         <div class="field-row">
           <label for="email" class="visually-hidden">Email address</label>
           <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
           <button class="button" type="submit">Subscribe</button>
         </div>
       </form>
-      <p class="form-note" id="form-note">Free. One email per real change, across every topic we watch.</p>
+      <p class="form-note" id="form-note">Free. One email per real change, across every category we watch. We keep your email and the page you signed up on.</p>
       <p class="form-links"><a href="https://github.com/watthem/tos-watch">Open source</a><a href="privacy.html">Privacy</a></p>
-      <p class="form-note support-note">tos.watch is built and run by one person. If it saves you from missing a change that matters, you can <a href="{SUPPORT_URL}" rel="noopener">chip in from $1</a>. It keeps the alerts coming and pays for the email service. No account needed.</p>
+      <p class="form-note support-note">tos.watch is built and run by one person. If it saves you from missing a change that matters, you can <a href="{SUPPORT_URL}" rel="noopener">give from $1</a>. No account needed.</p>
     </div>
     {example}
   </div>
@@ -485,7 +487,7 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
     <h2>How it works</h2>
     <ol class="steps">
       <li><h3>We keep every version</h3><p>Each new version of a policy is compared with the last.</p></li>
-      <li><h3>We skip the noise</h3><p>Typos and reformatting are dropped; changes to your data, AI, money or rights are kept.</p></li>
+      <li><h3>We drop the trivial edits</h3><p>Typos and reformatting are dropped; changes to your data, AI, money or rights are kept.</p></li>
       <li><h3>You get the words</h3><p>What was removed, what was added, and a link to the source.</p></li>
     </ol>
   </div>
@@ -494,8 +496,8 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
 <section class="signals">
   <div class="wrap narrow">
     <h2>Help decide what comes next</h2>
-    <p class="section-lede">Two things we might build. Tick any you'd use, add your email once, and we count it as a vote. Nothing is built or charged yet.</p>
-    <form class="signal-form" novalidate>
+    <p class="section-lede">Two things we might build. Check any you'd use, add your email once, and we count it as a vote. Nothing is built or charged yet.</p>
+    <form method="post" class="signal-form" novalidate>
       <fieldset class="signal-options">
         <legend class="visually-hidden">Which would you use?</legend>
         <label class="signal-option"><input type="checkbox" name="feature" value="founding-supporter"><span><strong>A paid supporter tier.</strong> tos.watch is free and run by one person. If a small paid tier opens, I'd join.</span></label>
@@ -504,11 +506,11 @@ def render_home(entries: list[dict], watchlist: dict, by_vendor: dict[str, list[
       <div class="field-row">
         <label for="signal-email" class="visually-hidden">Your email</label>
         <input id="signal-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
-        <button class="button button-secondary" type="submit">Send my vote</button>
+        <button class="button button-secondary" type="submit">Vote and subscribe</button>
       </div>
     </form>
     <p class="request-note" id="signal-note"></p>
-    <p class="form-note">What happens next: we email you one confirmation link if you're new here, and your vote counts once you confirm. Confirming also subscribes you to alerts; unsubscribe any time. <a href="privacy.html">Privacy</a>.</p>
+    <p class="form-note">Sending a vote also signs you up for alerts. If this address is new to us, we email you one link. Opening that link is the confirm step: it proves the address is yours, counts your vote and starts your alerts. Unsubscribe any time. <a href="privacy.html">Privacy</a>.</p>
   </div>
 </section>
 """
@@ -528,26 +530,29 @@ def how_checked_html(e: dict) -> str:
     return (
         '<h2 class="h3">How this was checked</h2>'
         f'<p class="section-lede">The change is dated {esc(nice_date(e.get("date", "")))}, the day the new version of the document was archived. '
-        f'A program, not a person, ran the check below on {esc(nice_date(c.get("checked_on", "")))}. '
-        "Documents are fetched about once a day. The program matched every quoted passage word for word "
-        "against the archived copy of the document, and confirmed that at least one passage is new text, "
-        "absent from the version before. That is the guarantee: the quotes and the Sources above are the evidence.</p>"
-        '<p class="section-lede">The topic labels (AI, Data use, Your rights and the rest) are different. '
-        "An AI model assigns them, and it can be wrong. The program does not check them. "
-        "Trust the quoted words, and read the original if a label matters to you.</p>"
+        "Documents are fetched about once a day. Two automatic steps stand behind this page, and neither is a person.</p>"
+        '<p class="section-lede">First, an AI model decides which changes are worth an alert. It reads each change and drops typos and reformatting. '
+        "It can be wrong: it can send a change that does not matter and skip one that does.</p>"
+        f'<p class="section-lede">Second, a program checked the quoted passages on {esc(nice_date(c.get("checked_on", "")))}. '
+        "It matched every quoted passage word for word against the archived copy of the document, "
+        "and confirmed that at least one passage is new text, absent from the version before. "
+        "That makes the quotes real. It does not prove that the AI picked the right changes, so the quotes and the Sources above are the evidence, not the AI&#8217;s decision.</p>"
+        '<p class="section-lede">The labels at the top (AI, Data use, Your rights and the rest) are also assigned by an AI model. '
+        "The program does not check them. Trust the quoted words, and read the original if a label matters to you.</p>"
     )
 
 
 def render_alert_page(e: dict, others: list[dict]) -> str:
     vendor, doc, slug = e.get("vendor", ""), e.get("doc", ""), slugify(e.get("vendor", ""))
     n = len(e["changes"])
-    diffs = "\n".join(diff_block(c) for c in e["changes"]) or '<p class="empty">This version was flagged, but its changed passages were too long to excerpt. The source links below show the full text.</p>'
+    diffs = "\n".join(diff_block(c) for c in e["changes"]) or '<p class="empty">This version changed, but its changed passages were too long to excerpt. The source links below show the full text.</p>'
     sources = []
     if e.get("ota_commit_url"):
         sources.append(f'<li><a href="{esc(e["ota_commit_url"])}">The full diff on Open Terms Archive</a></li>')
     if e.get("source_url"):
         sources.append(f'<li><a href="{esc(e["source_url"])}">The current {esc(doc)} on {esc(vendor)}’s site</a></li>')
     more = ""
+    others = [o for o in others if o.get("date", "") < e.get("date", "")]
     if others:
         more = f'<h2 class="h3">Earlier {esc(vendor)} changes</h2>' + change_rows(others[:5], "../", show_vendor=False)
     body = f"""
@@ -567,7 +572,7 @@ def render_alert_page(e: dict, others: list[dict]) -> str:
 </div>
 """
     topics = topics_of(e)
-    flagged = f", flagged for {', '.join(topics)}" if topics else ""
+    flagged = f", labelled {', '.join(topics)}" if topics else ""
     return layout(
         f"{vendor} {doc} change, {nice_date(e.get('date', ''))}: tos.watch",
         body,
@@ -586,14 +591,14 @@ def service_signup(vendor: str, slug: str, tracks: str, root: str) -> str:
     return f"""
   <div class="signup-box">
     <h2 class="h3">Get the next {esc(vendor)} change by email</h2>
-    <form class="signup-form" data-source="service:{esc(slug)}" data-tracks="{esc(tracks)}" novalidate>
+    <form method="post" class="signup-form" data-source="service:{esc(slug)}" data-tracks="{esc(tracks)}" novalidate>
       <div class="field-row">
         <label for="email-{esc(slug)}" class="visually-hidden">Email address</label>
         <input id="email-{esc(slug)}" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
         <button class="button" type="submit">Subscribe</button>
       </div>
     </form>
-    <p class="form-note">Free. You get every alert we send, {esc(vendor)}’s included. One email per real change. Unsubscribe with one click. <a href="{root}privacy.html">Privacy</a>.</p>
+    <p class="form-note">Free. You get every alert we send, including ones about {esc(vendor)}. One email per real change. Unsubscribe with one click. <a href="{root}privacy.html">Privacy</a>.</p>
   </div>"""
 
 
@@ -607,7 +612,7 @@ def render_archive(entries: list[dict]) -> str:
     body = f"""
 <div class="wrap page">
   <h1>All changes</h1>
-  <p class="section-lede">Every change we have flagged, newest first. Each one opens the exact words that were removed and added.</p>
+  <p class="section-lede">Every change we have sent an alert for, newest first. Each one opens the exact words that were removed and added.</p>
   {sections}
 </div>
 """
@@ -615,7 +620,7 @@ def render_archive(entries: list[dict]) -> str:
         "All changes: tos.watch",
         body,
         root="../",
-        description=f"Every privacy policy and terms change tos.watch has flagged, newest first: {len(entries)} so far.",
+        description=f"Every privacy policy and terms change tos.watch has found, newest first: {len(entries)} so far.",
         path="alerts/index.html",
     )
 
@@ -627,7 +632,7 @@ def render_services(watchlist: dict, by_vendor: dict[str, list[str]], counts: di
             + (
                 f'<span class="muted">{counts[v]} change{"s" if counts[v] != 1 else ""}</span>'
                 if counts.get(v, 0)
-                else '<span class="muted">watching, nothing flagged yet</span>'
+                else '<span class="muted">watching, no changes yet</span>'
             )
             + "</a></li>"
             for v in vendors
@@ -652,13 +657,13 @@ def render_services(watchlist: dict, by_vendor: dict[str, list[str]], counts: di
     quiet_text = ""
     if quiet:
         names = " and ".join(f"{t['label']} ({len(vs)} services)" for t, vs in quiet)
-        quiet_text = f" {names} has no flagged change yet, so it is listed last." if len(quiet) == 1 else f" {names} have no flagged change yet, so they are listed last."
+        quiet_text = f" {names} has no change yet, so it is listed last." if len(quiet) == 1 else f" {names} have no change yet, so they are listed last."
         groups += [group_html(t, vs) for t, vs in quiet]
     lede = (
-        f"We watch {total} services, grouped by topic. {DUAL_NOTE}{quiet_text} "
+        f"We watch {total} services, grouped by category. {DUAL_NOTE}{quiet_text} "
         'Missing one? <a href="index.html#search-heading">Search for it</a> and ask us to add it.'
     )
-    description = f"The {total} apps and services tos.watch watches for privacy policy and terms changes, grouped by topic."
+    description = f"The {total} apps and services tos.watch watches for privacy policy and terms changes, grouped by category."
     body = f"""
 <div class="wrap page">
   <div class="narrow-left">
@@ -718,7 +723,7 @@ def render_service_page(vendor: str, tracks: list[str], track_labels: dict[str, 
 <div class="wrap narrow page">
   <p class="crumbs"><a href="../services.html">Services</a></p>
   <h1>{esc(vendor)}</h1>
-  <p class="section-lede">Listed under {esc(" and ".join(labels) or "no topic yet")}. {len(entries)} change{"s" if len(entries) != 1 else ""} flagged so far.</p>
+  <p class="section-lede">Listed under {esc(" and ".join(labels) or "no category yet")}. {len(entries)} change{"s" if len(entries) != 1 else ""} so far.</p>
   {service_signup(vendor, slug, ",".join(tracks), "../")}
   <h2 class="h3">Changes</h2>
   {change_rows(entries, "../", show_vendor=False, empty=empty)}
@@ -733,7 +738,7 @@ def render_service_page(vendor: str, tracks: list[str], track_labels: dict[str, 
         root="../",
         description=(
             f"Get an email when {vendor} changes its privacy policy or terms, with the exact words that changed. "
-            f"{n} change{'s' if n != 1 else ''} flagged so far."
+            f"{n} change{'s' if n != 1 else ''} so far."
         ),
         scripts='<script src="../subscribe.js"></script>',
         path=f"s/{slug}.html",
@@ -765,13 +770,13 @@ def render_privacy() -> str:
 <div class="wrap narrow page">
   <h1>Privacy at tos.watch</h1>
   <p class="muted"><em>Last updated: {LEGAL_UPDATED}</em></p>
-  <p>tos.watch is a free newsletter that tells you when a company changes its terms or privacy policy. It's run by Matthew Hendricks, a sole proprietorship in Washington State, USA. Contact: <a href="mailto:hello@tos.watch">hello@tos.watch</a>.</p>
+  <p>tos.watch is a free newsletter that tells you when a company changes its terms or privacy policy. It's run by Matthew Hendricks, a sole proprietorship in Washington State, USA. Contact: <!--email_off--><a href="mailto:hello@tos.watch">hello@tos.watch</a><!--/email_off-->.</p>
   <p>We watch what other companies do with your data, so here's exactly what we do with yours.</p>
 
   <h2 class="h3">What we collect</h2>
   <ul>
     <li><strong>Your email address</strong>, when you subscribe, vote for a feature, or give an email with a service request.</li>
-    <li><strong>Which topics you picked, and where you signed up</strong> (the home page or a service's page). These are labels on your record at Buttondown.</li>
+    <li><strong>Which categories you picked, and where you signed up</strong> (the home page or a service's page). These are labels on your record at Buttondown.</li>
     <li><strong>What you asked us to track</strong>, if you use the request box. We store the service name or link you typed, as an anonymous count that isn't tied to any email. If you also gave an email, your Buttondown record gets a label naming the service (or a simplified form of the link).</li>
     <li><strong>Feature votes.</strong> We count each vote per feature, with no email attached. If you gave an email, your Buttondown record gets a label for that vote.</li>
   </ul>
@@ -788,12 +793,12 @@ def render_privacy() -> str:
   <p>Buttondown and the email services that deliver or display our emails may record whether an email was opened and which links were clicked, under their own settings and policies.</p>
 
   <h2 class="h3">How long we keep it</h2>
-  <p>Your email address is kept only at Buttondown, until you unsubscribe or ask us to delete it. Your signup source, topic choices, votes and requests are labels on that one record, so deleting it removes them too. Buttondown keeps a record that an address unsubscribed, so it doesn't email you again unless you ask. Our own database and logs don't hold your email address. The counts of requested services and voted features stay, because they contain nothing about you.</p>
+  <p>Your email address is kept only at Buttondown, until you unsubscribe or ask us to delete it. Your signup source, category choices, votes and requests are labels on that one record, so deleting it removes them too. Buttondown keeps a record that an address unsubscribed, so it doesn't email you again unless you ask. Our own database and logs don't hold your email address. The counts of requested services and voted features stay, because they contain nothing about you.</p>
 
   <h2 class="h3">Your choices</h2>
   <ul>
     <li>Every email has an unsubscribe link.</li>
-    <li>Write to <a href="mailto:hello@tos.watch">hello@tos.watch</a> to see, correct or delete what we hold about you. We'll answer within 30 days.</li>
+    <li>Write to <!--email_off--><a href="mailto:hello@tos.watch">hello@tos.watch</a><!--/email_off--> to see, correct or delete what we hold about you. We'll answer within 30 days.</li>
     <li>If you're in the EU or UK, we rely on your consent to email you, and you can withdraw it any time by unsubscribing. You can also complain to your data protection authority.</li>
   </ul>
 
@@ -839,7 +844,7 @@ def render_terms() -> str:
 
   <h2 class="h3">Changes</h2>
   <p>We may update these terms. The date at the top shows the latest version, and meaningful changes will be announced in the newsletter.</p>
-  <p>Questions: <a href="mailto:hello@tos.watch">hello@tos.watch</a>. How we handle your data is on the <a href="privacy.html">privacy page</a>.</p>
+  <p>Questions: <!--email_off--><a href="mailto:hello@tos.watch">hello@tos.watch</a><!--/email_off-->. How we handle your data is on the <a href="privacy.html">privacy page</a>.</p>
 </div>
 """
     return layout(
@@ -873,7 +878,7 @@ def render_404() -> str:
   <h1>Page not found</h1>
   <p class="section-lede">There's nothing at this address. The change or service you were after may have moved.</p>
   <ul class="plain-list">
-    <li><a href="/alerts/">Every change we have flagged</a></li>
+    <li><a href="/alerts/">Every change we have found</a></li>
     <li><a href="/services">Every service we watch</a></li>
     <li><a href="/#search-heading">Search for a service</a></li>
   </ul>
@@ -1030,7 +1035,7 @@ def check_counts_agree(site_dir: pathlib.Path) -> None:
     by_id = {}
     for gid, inner in groups:
         stats = re.search(r"(\d+) services, (\d+) changes", inner)
-        rows = re.findall(r'<li><a href="s/([\w-]+)\.html">.*?(?:(\d+) changes?|watching, nothing flagged yet)</span>', inner)
+        rows = re.findall(r'<li><a href="s/([\w-]+)\.html">.*?(?:(\d+) changes?|watching, no changes yet)</span>', inner)
         by_id[gid] = (int(stats.group(1)), int(stats.group(2)), rows)
         assert len(rows) == int(stats.group(1)), f"/services {gid}: {len(rows)} rows but header says {stats.group(1)}"
         assert sum(int(n or 0) for _, n in rows) == int(stats.group(2)), f"/services {gid}: rows do not add up to the header"
