@@ -104,6 +104,15 @@ describe("Buttondown carries sources, topics, votes and requests as tags", () =>
     expect(create.body.tags.sort()).toEqual(["landing-page", "track:dating"]);
   });
 
+  it("a source the site never sends can't write an audience tag onto an existing subscriber", async () => {
+    const { calls } = fakeButtondown({ "reader@example.com": { type: "regular", tags: [] } });
+    for (const source of ["track:dating", "service:zz-junk", "anything-else"]) {
+      await post("/subscribe", { email: "reader@example.com", source });
+    }
+    const patched = calls.filter((c) => c.method === "PATCH").flatMap((c) => c.body.tags);
+    expect(patched.filter((t) => t !== "site")).toEqual([]);
+  });
+
   it("a vote from an existing subscriber adds the tag and keeps their other tags", async () => {
     const { calls } = fakeButtondown({ "fan@example.com": { type: "regular", tags: ["landing-page"] } });
     await post("/vote", { feature: "on-demand-check", email: "fan@example.com" });
