@@ -152,6 +152,19 @@ for (const s of SERVICES.services || []) {
   if (key && !SERVICES_BY_KEY.has(key)) SERVICES_BY_KEY.set(key, s);
 }
 
+// Slugs of tracked services: the only service:<slug> a signup source may be.
+const TRACKED_SLUGS = new Set((SERVICES.services || []).filter((s) => s.status === "tracked").map((s) => s.slug));
+
+/** The signup form's data-source -> one tag. Only the values the site itself
+ * sends pass: "landing-page", or service:<slug> for a tracked service.
+ * Anything else becomes "site", so a caller can't write an arbitrary tag
+ * (track:*, an unknown service:*) that the draft audience filters trust. */
+function sourceTag(raw) {
+  if (raw === "landing-page") return raw;
+  if (typeof raw === "string" && raw.startsWith("service:") && TRACKED_SLUGS.has(raw.slice(8))) return raw;
+  return "site";
+}
+
 function buttondownHeaders(env) {
   return { Authorization: `Token ${env.BUTTONDOWN_API_KEY}`, "Content-Type": "application/json" };
 }
@@ -264,8 +277,7 @@ async function handleSubscribe(request, env) {
   if (!email || email.length > 320 || !EMAIL_RE.test(email)) {
     return json({ ok: false, error: "invalid_email" }, 400);
   }
-  const source = typeof body.source === "string" ? body.source.slice(0, 64) : "site";
-  const tags = [source, ...trackTags(body.tracks)];
+  const tags = [sourceTag(body.source), ...trackTags(body.tracks)];
 
   // A repeat signup still asks Buttondown, so an address its firewall blocked
   // earlier gets through on a retry; the reply never says it was known.
